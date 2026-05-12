@@ -8,6 +8,19 @@ import {
 } from "react-router-dom";
 
 import { useState } from "react";
+import { auth, db } from "./firebase";
+
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+
+import {
+  collection,
+  addDoc,
+  getDocs,
+} from "firebase/firestore";
 
 /* HOME */
 
@@ -527,11 +540,65 @@ function Login() {
   const adminPassword =
     "123456";
 
-  const handleLogin = () => {
-    const users =
-      JSON.parse(
-        localStorage.getItem("users")
-      ) || [];
+  const handleLogin = async () => {
+  try {
+    const userCredential =
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+    const snapshot =
+      await getDocs(
+        collection(db, "users")
+      );
+
+    let foundUser = null;
+
+    snapshot.forEach((doc) => {
+      if (
+        doc.data().uid ===
+        userCredential.user.uid
+      ) {
+        foundUser = {
+          id: doc.id,
+          ...doc.data(),
+        };
+      }
+    });
+
+    if (!foundUser) {
+      alert("User not found");
+      return;
+    }
+
+    if (
+      foundUser.approvalStatus !==
+      "Approved"
+    ) {
+      alert(
+        "Waiting for admin approval"
+      );
+
+      return;
+    }
+
+    localStorage.setItem(
+      "loggedIn",
+      "true"
+    );
+
+    localStorage.setItem(
+      "currentUser",
+      JSON.stringify(foundUser)
+    );
+
+    navigate("/dashboard");
+  } catch (error) {
+    alert(error.message);
+  }
+};
 
     // ADMIN LOGIN
 
@@ -651,15 +718,52 @@ function Signup() {
     setDocumentPreview] =
     useState("");
 
-  const handleSignup = () => {
-    if (
-      !name ||
-      !email ||
-      !password
-    ) {
-      alert("Fill all fields");
-      return;
-    }
+  const handleSignup = async () => {
+  if (!name || !email || !password) {
+    alert("Fill all fields");
+    return;
+  }
+
+  try {
+    const userCredential =
+      await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+    await addDoc(
+      collection(db, "users"),
+      {
+        uid:
+          userCredential.user.uid,
+
+        name,
+        email,
+
+        approvalStatus:
+          "Pending",
+
+        document:
+          documentPreview,
+
+        dailyLearning:
+          "2 Hours",
+
+        dailyEarning:
+          "₹0",
+      }
+    );
+
+    alert(
+      "Account created successfully"
+    );
+
+    navigate("/login");
+  } catch (error) {
+    alert(error.message);
+  }
+};
 
     const userData = {
       name,
