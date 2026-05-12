@@ -2,65 +2,65 @@ function App() {
   return (
     <div
       style={{
-        background: "#0b0f19",
-        color: "white",
+        background: "#0f172a",
         minHeight: "100vh",
+        color: "white",
         padding: "60px",
         fontFamily: "Arial",
         textAlign: "center",
       }}
     >
-      <h1 style={{ fontSize: "60px" }}>
+      <h1 style={{ fontSize: "60px", marginBottom: "20px" }}>
         Support & Growth
       </h1>
 
-      <p style={{ fontSize: "24px", marginTop: "20px" }}>
-        Learn AI, Blockchain & Cybersecurity
+      <p style={{ fontSize: "24px", color: "#cbd5e1" }}>
+        Learn. Grow. Build Your Future.
       </p>
 
       <div
         style={{
           display: "flex",
           justifyContent: "center",
-          gap: "20px",
-          marginTop: "50px",
+          gap: "30px",
+          marginTop: "60px",
           flexWrap: "wrap",
         }}
       >
         <div
           style={{
-            background: "#111827",
+            background: "#1e293b",
             padding: "30px",
-            borderRadius: "15px",
+            borderRadius: "20px",
             width: "250px",
           }}
         >
-          <h2>AI</h2>
-          <p>Master artificial intelligence tools and automation.</p>
+          <h2>Mentorship</h2>
+          <p>Get guidance from experienced mentors.</p>
         </div>
 
         <div
           style={{
-            background: "#111827",
+            background: "#1e293b",
             padding: "30px",
-            borderRadius: "15px",
+            borderRadius: "20px",
             width: "250px",
           }}
         >
-          <h2>Blockchain</h2>
-          <p>Learn future-ready Web3 and blockchain skills.</p>
+          <h2>Courses</h2>
+          <p>Learn AI, Finance, Business and more.</p>
         </div>
 
         <div
           style={{
-            background: "#111827",
+            background: "#1e293b",
             padding: "30px",
-            borderRadius: "15px",
+            borderRadius: "20px",
             width: "250px",
           }}
         >
-          <h2>Cybersecurity</h2>
-          <p>Build strong cybersecurity knowledge and protection skills.</p>
+          <h2>Community</h2>
+          <p>Connect with ambitious people and grow together.</p>
         </div>
       </div>
 
