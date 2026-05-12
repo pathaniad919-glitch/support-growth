@@ -110,11 +110,11 @@ body {
 
 .start-btn {
   margin-top: 40px;
-  background: linear-gradient(90deg,#00c6ff,#0072ff);
+  background: linear-gradient(90deg, #00c6ff, #7b2ff7);
   border: none;
   padding: 18px 45px;
   border-radius: 14px;
-  color: white;
+  color:white;
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
@@ -189,22 +189,23 @@ body {
   padding:40px 20px;
   text-align:center;
   border-radius:25px;
-  background:rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.08);
   backdrop-filter:blur(10px);
-  border:1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
 .stat-box h2{
   font-size:52px;
   margin-bottom:10px;
-  background:linear-gradient(90deg,#7b2ff7,#00c6ff);
+  background:linear-gradient(90deg#7b2ff7,#00c6ff);
+  background-clip: text;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
 
 .stat-box p{
   font-size:18px;
-  color:#d1d1d1;
+  color: #d1d1d1;
 }
 .testimonials{
   padding:100px 40px;

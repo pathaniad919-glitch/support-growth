@@ -1,327 +1,1163 @@
-import "./App.css";
-import logo from "./assets/logo.png";
-
-import { useEffect, useState } from "react";
-
 import {
-  signInWithPopup,
-  signOut,
-  onAuthStateChanged
-} from "firebase/auth";
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 
-import {
-  auth,
-  provider
-} from "./firebase";
+import { useState } from "react";
 
-function App() {
+/* HOME */
 
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-
-    return () => unsubscribe();
-
-  }, []);
-
-  // GOOGLE LOGIN
-  const handleLogin = async () => {
-
-    try {
-
-      await signInWithPopup(auth, provider);
-
-    } catch (error) {
-
-      console.log(error);
-
-    }
-
-  };
-
-  // LOGOUT
-  const handleLogout = async () => {
-
-    try {
-
-      await signOut(auth);
-
-    } catch (error) {
-
-      console.log(error);
-
-    }
-
-  };
+function Home() {
+  const isLoggedIn =
+    localStorage.getItem("loggedIn") ===
+    "true";
 
   return (
-
-    <div className="app">
-
-      {/* VIDEO BACKGROUND */}
-      <video autoPlay muted loop playsInline className="video-bg">
-        <source src="/bgvideo.mp4" type="video/mp4" />
+    <div
+      style={{
+        position: "relative",
+        minHeight: "100vh",
+        overflow: "hidden",
+        fontFamily: "Arial, sans-serif",
+        color: "white",
+      }}
+    >
+      {/* VIDEO */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        style={{
+          position: "absolute",
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          top: 0,
+          left: 0,
+          zIndex: -2,
+        }}
+      >
+        <source
+          src="/bgvideo.mp4"
+          type="video/mp4"
+        />
       </video>
 
       {/* OVERLAY */}
-      <div className="overlay"></div>
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "rgba(0,0,0,0.75)",
+          zIndex: -1,
+        }}
+      />
 
       {/* NAVBAR */}
-      <nav className="navbar">
+      <nav
+        style={{
+          display: "flex",
+          justifyContent:
+            "space-between",
+          alignItems: "center",
+          padding: "25px 60px",
+          flexWrap: "wrap",
+          gap: "20px",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "15px",
+          }}
+        >
+          <img
+            src="/logo.png"
+            alt="logo"
+            style={{
+              width: "70px",
+              height: "70px",
+              objectFit: "contain",
+            }}
+          />
 
-        <img
-          src={logo}
-          alt="Support & Growth"
-          className="logo"
-        />
+          <div>
+            <h2
+              style={{
+                margin: 0,
+                fontSize: "24px",
+              }}
+            >
+              SUPPORT & GROWTH
+            </h2>
 
-        {/* NAV LINKS */}
-        <div className="nav-links">
+            <p
+              style={{
+                margin: 0,
+                fontSize: "12px",
+                color: "#d1d5db",
+              }}
+            >
+              LEARN • EARN • GROW
+            </p>
+          </div>
+        </div>
 
-          <a href="#">Home</a>
-
-          <a href="#courses">
+        <div
+          style={{
+            display: "flex",
+            gap: "20px",
+            alignItems: "center",
+          }}
+        >
+          <a href="#courses" style={menuStyle}>
             Courses
           </a>
 
-          <a href="#testimonials">
-            Testimonials
+          <a href="#pricing" style={menuStyle}>
+            Pricing
           </a>
 
-          <a href="#why">
-            Why Us
+          <a href="#reviews" style={menuStyle}>
+            Reviews
           </a>
 
-        </div>
-
-        {/* LOGIN / LOGOUT */}
-        <div className="nav-buttons">
-
-          {user ? (
-
-            <button
-              className="join-btn"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
-
+          {!isLoggedIn ? (
+            <Link to="/login">
+              <button style={loginBtn}>
+                Login
+              </button>
+            </Link>
           ) : (
-
-            <button
-              className="join-btn"
-              onClick={handleLogin}
-            >
-              Login With Google
-            </button>
-
+            <Link to="/dashboard">
+              <button style={loginBtn}>
+                Dashboard
+              </button>
+            </Link>
           )}
-
         </div>
-
       </nav>
 
       {/* HERO */}
-      <section className="hero">
 
-        <h1>
-          Build Your Future With AI & Business Skills
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          textAlign: "center",
+          paddingTop: "120px",
+          paddingLeft: "20px",
+          paddingRight: "20px",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "78px",
+            maxWidth: "1100px",
+            lineHeight: "1.1",
+          }}
+        >
+          Build Your Future <br />
+          With AI & Business Skills
         </h1>
 
-        <p>
-          Learn AI, Finance, Marketing, Cybersecurity and Personal Growth
-          through practical workshops and mentorship programs.
+        <p
+          style={{
+            marginTop: "25px",
+            fontSize: "24px",
+            color: "#d1d5db",
+            maxWidth: "850px",
+            lineHeight: "1.6",
+          }}
+        >
+          Learn AI, Branding,
+          Dropshipping, Freelancing,
+          Marketing and Business Growth
+          through premium mentorship.
         </p>
 
-        <button className="start-btn">
-          Start Learning
-        </button>
-
-      </section>
-
-      {/* FEATURES */}
-      <section className="features">
-
-        <div className="feature-card">
-          <h2>🤖 AI Learning</h2>
-
-          <p>
-            Learn ChatGPT, Automation, AI Tools and future technologies.
-          </p>
-        </div>
-
-        <div className="feature-card">
-          <h2>💰 Business Growth</h2>
-
-          <p>
-            Master sales, marketing, finance and scaling systems.
-          </p>
-        </div>
-
-        <div className="feature-card">
-          <h2>🛡️ Cyber Security</h2>
-
-          <p>
-            Understand ethical hacking and digital protection.
-          </p>
-        </div>
-
-      </section>
-
-      {/* STATS */}
-      <section className="stats">
-
-        <div className="stat-box">
-          <h2>10K+</h2>
-          <p>Students Learning</p>
-        </div>
-
-        <div className="stat-box">
-          <h2>50+</h2>
-          <p>Live Workshops</p>
-        </div>
-
-        <div className="stat-box">
-          <h2>25+</h2>
-          <p>Expert Mentors</p>
-        </div>
-
-        <div className="stat-box">
-          <h2>100%</h2>
-          <p>Growth Mindset</p>
-        </div>
-
-      </section>
+        {!isLoggedIn ? (
+          <Link to="/signup">
+            <button style={joinBtn}>
+              Start Learning
+            </button>
+          </Link>
+        ) : (
+          <Link to="/dashboard">
+            <button style={joinBtn}>
+              Open Dashboard
+            </button>
+          </Link>
+        )}
+      </div>
 
       {/* COURSES */}
-      <section className="courses" id="courses">
 
-        <h1 className="course-title">
-          Premium Learning Programs
-        </h1>
+      <section
+        id="courses"
+        style={{
+          padding: "120px 60px",
+        }}
+      >
+        <h2
+          style={{
+            textAlign: "center",
+            fontSize: "55px",
+            marginBottom: "40px",
+          }}
+        >
+          Premium Skill Programs
+        </h2>
 
-        <div className="course-container">
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns:
+              "repeat(auto-fit,minmax(300px,1fr))",
+            gap: "30px",
+          }}
+        >
+          {[
+  {
+    icon: "🤖",
+    title: "AI Mastery",
+    desc:
+      "Learn ChatGPT automation, AI business systems, prompt engineering, AI workflows and advanced AI income systems used by modern digital businesses.",
+  },
 
-          <div className="course-card">
-            <h2>AI Mastery Program</h2>
+  {
+    icon: "🛒",
+    title:
+      "Dropshipping Empire",
+    desc:
+      "Master Shopify store building, winning product research, supplier systems, Facebook ads and ecommerce automation strategies.",
+  },
 
-            <p>
-              Learn ChatGPT, Automation, AI tools,
-              Prompt Engineering and AI business systems.
-            </p>
+  {
+    icon: "🚀",
+    title: "Brand Building",
+    desc:
+      "Build a strong personal brand with authority positioning, storytelling, viral strategies and audience psychology.",
+  },
 
-            <button className="course-btn">
-              Explore Program
-            </button>
-          </div>
+  {
+    icon: "💻",
+    title:
+      "Digital Products",
+    desc:
+      "Create ebooks, templates, premium courses and scalable digital products that generate passive income online.",
+  },
 
-          <div className="course-card">
-            <h2>Business Growth Academy</h2>
+  {
+    icon: "📈",
+    title:
+      "Marketing Psychology",
+    desc:
+      "Understand customer behavior, emotional selling, persuasion systems and conversion-focused marketing techniques.",
+  },
 
-            <p>
-              Learn branding, sales psychology,
-              social media growth and income systems.
-            </p>
+  {
+    icon: "🌍",
+    title: "Freelancing",
+    desc:
+      "Learn client hunting, proposal writing, AI freelancing systems and premium service delivery for global clients.",
+  },
 
-            <button className="course-btn">
-              Explore Program
-            </button>
-          </div>
+  {
+    icon: "🎬",
+    title:
+      "Content Creation",
+    desc:
+      "Master YouTube, Instagram Reels, cinematic editing, storytelling hooks, viral content strategy and creator monetization.",
+  },
 
-          <div className="course-card">
-            <h2>Cyber Security Bootcamp</h2>
+  {
+    icon: "📱",
+    title:
+      "Social Media Handling",
+    desc:
+      "Learn Instagram growth, Facebook management, LinkedIn branding, analytics, scheduling and audience engagement systems.",
+  },
 
-            <p>
-              Learn ethical hacking, cyber protection,
-              privacy systems and digital security basics.
-            </p>
+  {
+    icon: "✍️",
+    title:
+      "Content Writing",
+    desc:
+      "Master copywriting, SEO writing, script writing, storytelling frameworks and high-converting content creation for brands.",
+  },
 
-            <button className="course-btn">
-              Explore Program
-            </button>
-          </div>
+  {
+    icon: "🎯",
+    title:
+      "Sales & Closing",
+    desc:
+      "Learn communication psychology, objection handling, premium sales techniques and high-ticket client closing systems.",
+  },
 
+  {
+    icon: "🧠",
+    title:
+      "Mindset & Leadership",
+    desc:
+      "Develop discipline, confidence, leadership mindset and high-performance habits required for business success.",
+  },
+
+  {
+    icon: "⚡",
+    title:
+      "Business Automation",
+    desc:
+      "Build automated workflows using CRM systems, AI tools, lead funnels and productivity systems for online businesses.",
+  },
+].map((course) => (
+            <div
+              key={course.title}
+              style={courseCard}
+            >
+              <div
+                style={{
+                  fontSize: "70px",
+                  marginBottom: "20px",
+                }}
+              >
+                {course.icon}
+              </div>
+
+              <h2>{course.title}</h2>
+
+              <p
+                style={{
+                  color: "#d1d5db",
+                  lineHeight: "1.8",
+                }}
+              >
+                {course.desc}
+              </p>
+
+              <div
+                style={{
+                  marginTop: "20px",
+                  background:
+                    "rgba(239,68,68,0.15)",
+                  padding: "12px",
+                  borderRadius: "12px",
+                  color: "#fca5a5",
+                  fontWeight: "bold",
+                  textAlign: "center",
+                }}
+              >
+                🔒 Subscription Required
+              </div>
+            </div>
+          ))}
         </div>
-
       </section>
 
-      {/* TESTIMONIALS */}
-      <section className="testimonials" id="testimonials">
+      {/* PRICING */}
 
-        <h1 className="testimonial-title">
-          What Students Say
-        </h1>
+      <section
+        id="pricing"
+        style={{
+          padding: "0 60px 120px",
+        }}
+      >
+        <h2
+          style={{
+            textAlign: "center",
+            fontSize: "55px",
+            marginBottom: "40px",
+          }}
+        >
+          Membership Plans
+        </h2>
 
-        <div className="testimonial-container">
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns:
+              "repeat(auto-fit,minmax(320px,1fr))",
+            gap: "30px",
+          }}
+        >
+          {[
+            {
+              plan: "Starter",
+              price: "₹999",
+            },
 
-          <div className="testimonial-card">
-            <p>
-              “This platform completely changed my mindset and helped
-              me understand AI and business deeply.”
-            </p>
+            {
+              plan: "Growth",
+              price: "₹1999",
+            },
 
-            <h3>— Rahul Sharma</h3>
-          </div>
+            {
+              plan: "Elite",
+              price: "₹7999",
+            },
+          ].map((item) => (
+            <div
+              key={item.plan}
+              style={courseCard}
+            >
+              <h2>{item.plan}</h2>
 
-          <div className="testimonial-card">
-            <p>
-              “The mentorship and workshops are next level.
-              Very practical and powerful learning.”
-            </p>
+              <h1
+                style={{
+                  fontSize: "60px",
+                }}
+              >
+                {item.price}
+              </h1>
 
-            <h3>— Priya Verma</h3>
-          </div>
-
-          <div className="testimonial-card">
-            <p>
-              “Support & Growth feels like the future of learning
-              and earning platforms.”
-            </p>
-
-            <h3>— Aman Thakur</h3>
-          </div>
-
+              <button style={joinBtn}>
+                Buy Now
+              </button>
+            </div>
+          ))}
         </div>
-
       </section>
 
-      {/* WHY US */}
-      <section className="founder" id="why">
+      {/* REVIEWS */}
 
-        <div className="founder-card">
+      <section
+        id="reviews"
+        style={{
+          padding: "0 60px 120px",
+        }}
+      >
+        <h2
+          style={{
+            textAlign: "center",
+            fontSize: "55px",
+            marginBottom: "40px",
+          }}
+        >
+          Student Success Stories
+        </h2>
 
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns:
+              "repeat(auto-fit,minmax(320px,1fr))",
+            gap: "30px",
+          }}
+        >
+          {[
+            {
+              name: "Rahul Sharma",
+              result:
+                "Started earning ₹80,000/month freelancing using AI tools.",
+            },
+
+            {
+              name: "Aman Verma",
+              result:
+                "Scaled ecommerce business to ₹5 lakh monthly revenue.",
+            },
+
+            {
+              name: "Simran Kaur",
+              result:
+                "Built a successful Instagram brand and collaborations.",
+            },
+
+            {
+              name: "Rohit Bansal",
+              result:
+                "Created multiple digital income streams.",
+            },
+          ].map((review) => (
+            <div
+              key={review.name}
+              style={courseCard}
+            >
+              <h3>{review.name}</h3>
+
+              <p
+                style={{
+                  color: "#d1d5db",
+                  lineHeight: "1.9",
+                }}
+              >
+                “{review.result}”
+              </p>
+
+              <div
+                style={{
+                  marginTop: "20px",
+                  color: "#facc15",
+                  fontSize: "22px",
+                }}
+              >
+                ⭐⭐⭐⭐⭐
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+/* LOGIN */
+
+function Login() {
+  const navigate = useNavigate();
+
+  const [email, setEmail] =
+    useState("");
+
+  const [password, setPassword] =
+    useState("");
+
+  const adminEmail =
+    "admin@gmail.com";
+
+  const adminPassword =
+    "123456";
+
+  const handleLogin = () => {
+    const users =
+      JSON.parse(
+        localStorage.getItem("users")
+      ) || [];
+
+    // ADMIN LOGIN
+
+    if (
+      email.trim() === adminEmail &&
+      password.trim() === adminPassword
+    ) {
+      localStorage.setItem(
+        "adminLoggedIn",
+        "true"
+      );
+
+      alert("Admin Login Successful");
+
+      navigate("/admin");
+
+      return;
+    }
+
+    const foundUser = users.find(
+      (u) =>
+        u.email === email &&
+        u.password === password
+    );
+
+    if (!foundUser) {
+      alert("Invalid Login");
+      return;
+    }
+
+    if (
+      foundUser.approvalStatus !==
+      "Approved"
+    ) {
+      alert(
+        "Waiting for admin approval."
+      );
+      return;
+    }
+
+    localStorage.setItem(
+      "loggedIn",
+      "true"
+    );
+
+    localStorage.setItem(
+      "currentUser",
+      JSON.stringify(foundUser)
+    );
+
+    navigate("/dashboard");
+  };
+
+  return (
+    <div style={authContainer}>
+      <div style={authCard}>
+        <h1 style={authHeading}>
+          Welcome Back
+        </h1>
+
+        <p style={authText}>
+          Login to access dashboard.
+        </p>
+
+        <input
+          type="email"
+          placeholder="Email Address"
+          style={inputStyle}
+          value={email}
+          onChange={(e) =>
+            setEmail(e.target.value)
+          }
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          style={inputStyle}
+          value={password}
+          onChange={(e) =>
+            setPassword(e.target.value)
+          }
+        />
+
+        <button
+          style={joinBtn}
+          onClick={handleLogin}
+        >
+          Login
+        </button>
+
+        <Link to="/signup">
+          <button style={secondaryBtn}>
+            Create Account
+          </button>
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+/* SIGNUP */
+
+function Signup() {
+  const navigate = useNavigate();
+
+  const [name, setName] =
+    useState("");
+
+  const [email, setEmail] =
+    useState("");
+
+  const [password, setPassword] =
+    useState("");
+
+  const [documentPreview,
+    setDocumentPreview] =
+    useState("");
+
+  const handleSignup = () => {
+    if (
+      !name ||
+      !email ||
+      !password
+    ) {
+      alert("Fill all fields");
+      return;
+    }
+
+    const userData = {
+      name,
+      email,
+      password,
+      approvalStatus: "Pending",
+      document: documentPreview,
+      dailyLearning: "2 Hours",
+      dailyEarning: "₹0",
+    };
+
+    const existingUsers =
+      JSON.parse(
+        localStorage.getItem("users")
+      ) || [];
+
+    existingUsers.push(userData);
+
+    localStorage.setItem(
+      "users",
+      JSON.stringify(existingUsers)
+    );
+
+    alert(
+      "Account created. Wait for admin approval."
+    );
+
+    navigate("/login");
+  };
+
+  return (
+    <div style={authContainer}>
+      <div style={authCard}>
+        <h1 style={authHeading}>
+          Create Account
+        </h1>
+
+        <p style={authText}>
+          Upload PAN/Aadhaar for
+          approval.
+        </p>
+
+        <input
+          type="text"
+          placeholder="Full Name"
+          style={inputStyle}
+          value={name}
+          onChange={(e) =>
+            setName(e.target.value)
+          }
+        />
+
+        <input
+          type="email"
+          placeholder="Email Address"
+          style={inputStyle}
+          value={email}
+          onChange={(e) =>
+            setEmail(e.target.value)
+          }
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          style={inputStyle}
+          value={password}
+          onChange={(e) =>
+            setPassword(e.target.value)
+          }
+        />
+
+        <input
+          type="file"
+          style={{
+            marginBottom: "20px",
+            color: "white",
+          }}
+          onChange={(e) => {
+            const file =
+              e.target.files[0];
+
+            if (file) {
+              const reader =
+                new FileReader();
+
+              reader.onloadend =
+                () => {
+                  setDocumentPreview(
+                    reader.result
+                  );
+                };
+
+              reader.readAsDataURL(
+                file
+              );
+            }
+          }}
+        />
+
+        {documentPreview && (
+          <img
+            src={documentPreview}
+            alt="document"
+            style={{
+              width: "100%",
+              borderRadius: "14px",
+              marginBottom: "20px",
+            }}
+          />
+        )}
+
+        <button
+          style={joinBtn}
+          onClick={handleSignup}
+        >
+          Create Account
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* DASHBOARD */
+
+function Dashboard() {
+  const navigate = useNavigate();
+
+  const user = JSON.parse(
+    localStorage.getItem(
+      "currentUser"
+    )
+  );
+
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem(
+      "loggedIn"
+    );
+
+    localStorage.removeItem(
+      "currentUser"
+    );
+
+    navigate("/login");
+  };
+
+  return (
+    <div
+      style={{
+        background: "#050816",
+        minHeight: "100vh",
+        color: "white",
+        padding: "40px",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          justifyContent:
+            "space-between",
+          alignItems: "center",
+        }}
+      >
+        <div>
           <h1>
-            Why Choose Support & Growth?
+            Welcome {user?.name} 🚀
           </h1>
 
           <p>
-            We focus on practical skills, modern technology,
-            business mindset and real-world growth systems
-            that help students prepare for the future digital economy.
+            Status:
+            {" "}
+            {user?.approvalStatus}
           </p>
-
-          <div className="why-points">
-
-            <div>✅ Practical Learning</div>
-
-            <div>✅ AI & Business Focus</div>
-
-            <div>✅ Modern Growth Skills</div>
-
-            <div>✅ Live Mentorship</div>
-
-          </div>
-
         </div>
 
-      </section>
+        <button
+          style={loginBtn}
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+      </div>
 
+      <div
+        style={{
+          marginTop: "40px",
+          display: "grid",
+          gridTemplateColumns:
+            "repeat(auto-fit,minmax(300px,1fr))",
+          gap: "25px",
+        }}
+      >
+        <div style={dashboardCard}>
+          <h2>📚 Learning</h2>
+
+          <p
+            style={{
+              fontSize: "30px",
+            }}
+          >
+            {user?.dailyLearning}
+          </p>
+        </div>
+
+        <div style={dashboardCard}>
+          <h2>💰 Earnings</h2>
+
+          <p
+            style={{
+              fontSize: "30px",
+            }}
+          >
+            {user?.dailyEarning}
+          </p>
+        </div>
+      </div>
     </div>
+  );
+}
 
+/* ADMIN PANEL */
+
+function AdminPanel() {
+  const navigate = useNavigate();
+
+  const users =
+    JSON.parse(
+      localStorage.getItem("users")
+    ) || [];
+
+  const approveUser = (email) => {
+    const updatedUsers = users.map(
+      (user) => {
+        if (user.email === email) {
+          return {
+            ...user,
+            approvalStatus:
+              "Approved",
+          };
+        }
+
+        return user;
+      }
+    );
+
+    localStorage.setItem(
+      "users",
+      JSON.stringify(updatedUsers)
+    );
+
+    alert("User Approved");
+
+    window.location.reload();
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem(
+      "adminLoggedIn"
+    );
+
+    navigate("/login");
+  };
+
+  return (
+    <div
+      style={{
+        background: "#050816",
+        minHeight: "100vh",
+        color: "white",
+        padding: "40px",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          justifyContent:
+            "space-between",
+          alignItems: "center",
+        }}
+      >
+        <h1>Admin Panel 👑</h1>
+
+        <button
+          style={loginBtn}
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+      </div>
+
+      <div
+        style={{
+          marginTop: "40px",
+          display: "grid",
+          gap: "25px",
+        }}
+      >
+        {users.map((user, index) => (
+          <div
+            key={index}
+            style={dashboardCard}
+          >
+            <h2>Registered User</h2>
+
+            <p>Name: {user.name}</p>
+
+            <p>Email: {user.email}</p>
+
+            <p>
+              Status:
+              {" "}
+              {user.approvalStatus}
+            </p>
+
+            {user.document && (
+              <img
+                src={user.document}
+                alt="document"
+                style={{
+                  width: "300px",
+                  borderRadius: "14px",
+                  marginTop: "20px",
+                }}
+              />
+            )}
+
+            {user.approvalStatus !==
+              "Approved" && (
+              <button
+                style={joinBtn}
+                onClick={() =>
+                  approveUser(
+                    user.email
+                  )
+                }
+              >
+                Approve User
+              </button>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* STYLES */
+
+const courseCard = {
+  background:
+    "rgba(255,255,255,0.08)",
+  padding: "35px",
+  borderRadius: "22px",
+  backdropFilter: "blur(10px)",
+  border:
+    "1px solid rgba(255,255,255,0.1)",
+};
+
+const dashboardCard = {
+  background:
+    "linear-gradient(180deg, rgba(15,23,42,0.98), rgba(15,23,42,0.9))",
+  padding: "30px",
+  borderRadius: "24px",
+  border:
+    "1px solid rgba(255,255,255,0.08)",
+};
+
+const menuStyle = {
+  color: "white",
+  textDecoration: "none",
+  fontSize: "18px",
+};
+
+const loginBtn = {
+  padding: "12px 30px",
+  borderRadius: "12px",
+  border:
+    "1px solid #8b5cf6",
+  background: "transparent",
+  color: "white",
+  fontSize: "16px",
+  cursor: "pointer",
+};
+
+const joinBtn = {
+  marginTop: "20px",
+  padding: "16px 40px",
+  borderRadius: "14px",
+  border: "none",
+  background:
+    "linear-gradient(to right,#8b5cf6,#38bdf8)",
+  color: "white",
+  fontSize: "18px",
+  cursor: "pointer",
+  fontWeight: "bold",
+  width: "100%",
+};
+
+const secondaryBtn = {
+  marginTop: "15px",
+  padding: "14px 30px",
+  borderRadius: "12px",
+  border:
+    "1px solid #8b5cf6",
+  background: "transparent",
+  color: "white",
+  fontSize: "16px",
+  cursor: "pointer",
+  width: "100%",
+};
+
+const authContainer = {
+  background: "#050816",
+  minHeight: "100vh",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "20px",
+};
+
+const authCard = {
+  width: "460px",
+  background:
+    "linear-gradient(180deg, rgba(15,23,42,0.98), rgba(15,23,42,0.9))",
+  padding: "50px",
+  borderRadius: "28px",
+  border:
+    "1px solid rgba(255,255,255,0.08)",
+  boxShadow:
+    "0 0 40px rgba(139,92,246,0.18)",
+};
+
+const authHeading = {
+  fontSize: "42px",
+  textAlign: "center",
+  color: "#ffffff",
+  fontWeight: "700",
+  marginBottom: "10px",
+};
+
+const authText = {
+  textAlign: "center",
+  color: "#cbd5e1",
+  marginBottom: "35px",
+  lineHeight: "1.8",
+};
+
+const inputStyle = {
+  padding: "18px",
+  marginBottom: "20px",
+  borderRadius: "14px",
+  border:
+    "1px solid rgba(255,255,255,0.08)",
+  outline: "none",
+  background:
+    "rgba(255,255,255,0.05)",
+  color: "white",
+  fontSize: "16px",
+  width: "100%",
+  boxSizing: "border-box",
+};
+
+/* APP */
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={<Home />}
+        />
+
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+
+        <Route
+          path="/signup"
+          element={<Signup />}
+        />
+
+        <Route
+          path="/dashboard"
+          element={<Dashboard />}
+        />
+
+        <Route
+          path="/admin"
+          element={<AdminPanel />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
