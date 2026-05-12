@@ -2,82 +2,131 @@ function App() {
   return (
     <div
       style={{
-        background: "#0f172a",
+        background: "#020617",
         minHeight: "100vh",
         color: "white",
-        padding: "60px",
         fontFamily: "Arial",
-        textAlign: "center",
       }}
     >
-      <h1 style={{ fontSize: "60px", marginBottom: "20px" }}>
-        Support & Growth
-      </h1>
+      {/* Navbar */}
+      <nav
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          padding: "25px 60px",
+          alignItems: "center",
+          borderBottom: "1px solid #1e293b",
+        }}
+      >
+        <h1 style={{ color: "#8b5cf6" }}>Support & Growth</h1>
 
-      <p style={{ fontSize: "24px", color: "#cbd5e1" }}>
-        Learn. Grow. Build Your Future.
-      </p>
+        <div style={{ display: "flex", gap: "25px" }}>
+          <p>Home</p>
+          <p>Courses</p>
+          <p>Mentorship</p>
+          <p>Community</p>
+        </div>
+      </nav>
 
+      {/* Hero Section */}
+      <div
+        style={{
+          textAlign: "center",
+          padding: "100px 20px",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "70px",
+            marginBottom: "20px",
+            lineHeight: "1.1",
+          }}
+        >
+          Build Your <span style={{ color: "#8b5cf6" }}>Future</span>
+        </h1>
+
+        <p
+          style={{
+            color: "#94a3b8",
+            fontSize: "22px",
+            maxWidth: "700px",
+            margin: "auto",
+          }}
+        >
+          Learn AI, Finance, Business & Personal Growth with mentorship,
+          courses and a powerful community.
+        </p>
+
+        <button
+          style={{
+            marginTop: "40px",
+            padding: "18px 40px",
+            background: "#8b5cf6",
+            border: "none",
+            borderRadius: "12px",
+            color: "white",
+            fontSize: "18px",
+            cursor: "pointer",
+          }}
+        >
+          Get Started
+        </button>
+      </div>
+
+      {/* Cards */}
       <div
         style={{
           display: "flex",
           justifyContent: "center",
           gap: "30px",
-          marginTop: "60px",
           flexWrap: "wrap",
+          paddingBottom: "100px",
         }}
       >
-        <div
-          style={{
-            background: "#1e293b",
-            padding: "30px",
-            borderRadius: "20px",
-            width: "250px",
-          }}
-        >
-          <h2>Mentorship</h2>
-          <p>Get guidance from experienced mentors.</p>
-        </div>
+        {[
+          {
+            title: "Mentorship",
+            text: "1-on-1 mentorship from experts.",
+          },
+          {
+            title: "Courses",
+            text: "Learn AI, Finance & Business.",
+          },
+          {
+            title: "Community",
+            text: "Connect with ambitious people.",
+          },
+        ].map((item, index) => (
+          <div
+            key={index}
+            style={{
+              background: "#111827",
+              padding: "35px",
+              width: "280px",
+              borderRadius: "20px",
+              border: "1px solid #1e293b",
+            }}
+          >
+            <h2>{item.title}</h2>
 
-        <div
-          style={{
-            background: "#1e293b",
-            padding: "30px",
-            borderRadius: "20px",
-            width: "250px",
-          }}
-        >
-          <h2>Courses</h2>
-          <p>Learn AI, Finance, Business and more.</p>
-        </div>
-
-        <div
-          style={{
-            background: "#1e293b",
-            padding: "30px",
-            borderRadius: "20px",
-            width: "250px",
-          }}
-        >
-          <h2>Community</h2>
-          <p>Connect with ambitious people and grow together.</p>
-        </div>
+            <p style={{ color: "#94a3b8", marginTop: "15px" }}>
+              {item.text}
+            </p>
+          </div>
+        ))}
       </div>
 
-      <button
+      {/* Footer */}
+      <footer
         style={{
-          marginTop: "50px",
-          padding: "15px 35px",
-          fontSize: "18px",
-          background: "#8b5cf6",
-          border: "none",
-          borderRadius: "10px",
-          color: "white",
-          cursor: "pointer",
+          textAlign: "center",
+          padding: "30px",
+          borderTop: "1px solid #1e293b",
+          color: "#64748b",
         }}
       >
-        Join Now
-      </button>
+        © 2026 Support & Growth. All rights reserved.
+      </footer>
     </div>
   );
 }
