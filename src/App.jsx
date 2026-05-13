@@ -318,7 +318,6 @@ function Home() {
       </section>
 
       {/* PRICING */}
-      {isLoggedIn && (
       <section
         id="pricing"
         style={{
@@ -453,7 +452,6 @@ function Home() {
           </div>
         )}
       </section>
-      )}
 
       {/* REVIEWS */}
       <section
@@ -530,7 +528,6 @@ function Home() {
 /* LOGIN */
 
 function Login() {
-
   const navigate = useNavigate();
 
   const [email, setEmail] =
@@ -539,98 +536,86 @@ function Login() {
   const [password, setPassword] =
     useState("");
 
+    const adminEmail = "admin@gmail.com";
+const adminPassword = "123456";
+
   const handleLogin = () => {
-
-    const savedUser = JSON.parse(
-      localStorage.getItem("user")
-    );
-
-    const adminEmail =
-      "admin@gmail.com";
-
-    const adminPassword =
-      "123456";
-
-    // ADMIN LOGIN
-    if (
-      email.trim() === adminEmail &&
-      password.trim() === adminPassword
-    ) {
-
-      localStorage.setItem(
-        "adminLoggedIn",
-        "true"
-      );
-
-      alert(
-        "Admin Login Successful"
-      );
-
-      navigate("/admin");
-
-      return;
-    }
-
-    // USER NOT FOUND
-    if (!savedUser) {
-
-      alert(
-        "Please create account first."
-      );
-
-      navigate("/signup");
-
-      return;
-    }
-
-    // USER LOGIN
-    if (
-      email.trim() === savedUser.email &&
-      password.trim() === savedUser.password
-    ) {
-      if (!savedUser.approved) {
-
-  alert(
-    "Your account is waiting for admin approval."
+  const savedUser = JSON.parse(
+    localStorage.getItem("user")
   );
 
-  return;
+  // ADMIN LOGIN
+if (
+  email.trim() === adminEmail &&
+  password.trim() === adminPassword
+) {
+  localStorage.setItem(
+    "adminLoggedIn",
+    "true"
+  );
+alert("Admin Login Successful");
+
+navigate("/admin");
+
+return;
 }
 
-      localStorage.setItem(
-        "loggedIn",
-        "true"
-      );
+  if (!savedUser) {
+    alert(
+      "Please create an account first."
+    );
 
-      alert("Login Successful");
+    navigate("/signup");
+    return;
+  }
 
-      navigate("/dashboard");
+  if (
+    email.trim() === savedUser.email &&
+    password.trim() === savedUser.password
+  ) {
+    localStorage.setItem(
+      "loggedIn",
+      "true"
+    );
 
-    } else {
+    alert("Login Successful");
 
-      alert(
-        "Invalid email or password"
-      );
-    }
-  };
+    navigate("/dashboard");
+  } else {
+    alert(
+      "Invalid email or password"
+    );
+  }
+  // VALID LOGIN
+  if (
+    email === savedUser.email &&
+    password === savedUser.password
+  ) {
+    localStorage.setItem(
+      "loggedIn",
+      "true"
+    );
 
+    navigate("/dashboard");
+  } else {
+    alert(
+      "Invalid email or password."
+    );
+  }
+};
   return (
-
     <div style={authContainer}>
-
       <div style={authCard}>
-
         <h1 style={authHeading}>
           Welcome Back
         </h1>
 
         <p style={authText}>
-          Access your premium dashboard
-          and courses.
+          Access your premium dashboard and
+          courses.
         </p>
 
         <input
-          type="email"
           placeholder="Email Address"
           style={inputStyle}
           value={email}
@@ -640,8 +625,8 @@ function Login() {
         />
 
         <input
-          type="password"
           placeholder="Password"
+          type="password"
           style={inputStyle}
           value={password}
           onChange={(e) =>
@@ -657,15 +642,11 @@ function Login() {
         </button>
 
         <Link to="/signup">
-
           <button style={secondaryBtn}>
             Create Account
           </button>
-
         </Link>
-
       </div>
-
     </div>
   );
 }
@@ -675,52 +656,42 @@ function Login() {
 function Signup() {
   const navigate = useNavigate();
 
-  const [name, setName] =
-    useState("");
-
-  const [email, setEmail] =
-    useState("");
-
-  const [password, setPassword] =
-    useState("");
-
-  const [documentFile, setDocumentFile] =
-    useState(null);
-
-  const [preview, setPreview] =
-    useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSignup = () => {
+    if (
+      name.trim() === "" ||
+      email.trim() === "" ||
+      password.trim() === ""
+    ) {
+      alert("Please fill all fields");
+      return;
+    }
 
-  if (
-    name.trim() === "" ||
-    email.trim() === "" ||
-    password.trim() === ""
-  ) {
-    alert("Please fill all fields");
-    return;
-  }
+    const userData = {
+      name,
+      email,
+      password,
+      dailyLearning: "2 Hours",
+      dailyEarning: "₹0",
+    };
 
-  const userData = {
-    name,
-    email,
-    password,
-    approved: false,
-    dailyLearning: "2 Hours",
-    dailyEarning: "₹0",
+    localStorage.setItem(
+      "user",
+      JSON.stringify(userData)
+    );
+
+    localStorage.setItem(
+      "loggedIn",
+      "true"
+    );
+
+    alert("Account Created Successfully");
+
+    navigate("/dashboard");
   };
-
-  localStorage.setItem(
-    "user",
-    JSON.stringify(userData)
-  );
-
-  alert(
-    "Account Created. Waiting for admin approval."
-  );
-
-  navigate("/login");
-};
 
   return (
     <div style={authContainer}>
@@ -764,63 +735,6 @@ function Signup() {
           }
         />
 
-        {/* PAN / AADHAAR */}
-
-        <p
-          style={{
-            color: "#cbd5e1",
-            marginBottom: "10px",
-            marginTop: "10px",
-          }}
-        >
-          Upload PAN/Aadhaar
-        </p>
-
-        <input
-          type="file"
-          accept="image/*"
-          style={{
-            color: "white",
-            marginBottom: "20px",
-          }}
-          onChange={(e) => {
-            const file =
-              e.target.files[0];
-
-            setDocumentFile(file);
-
-            if (file) {
-              const reader =
-                new FileReader();
-
-              reader.onloadend =
-                () => {
-                  setPreview(
-                    reader.result
-                  );
-                };
-
-              reader.readAsDataURL(
-                file
-              );
-            }
-          }}
-        />
-
-        {preview && (
-          <img
-            src={preview}
-            alt="document"
-            style={{
-              width: "100%",
-              borderRadius: "14px",
-              marginBottom: "20px",
-              border:
-                "1px solid rgba(255,255,255,0.1)",
-            }}
-          />
-        )}
-
         <button
           style={joinBtn}
           onClick={handleSignup}
@@ -858,13 +772,10 @@ function Dashboard() {
   }
 
   const handleLogout = () => {
+    localStorage.clear();
 
-  localStorage.removeItem(
-    "loggedIn"
-  );
-
-  navigate("/login");
-};
+    navigate("/login");
+  };
 
   return (
     <div
@@ -1081,9 +992,7 @@ function AdminPanel() {
   const navigate = useNavigate();
 
   const adminLoggedIn =
-    localStorage.getItem(
-      "adminLoggedIn"
-    );
+    localStorage.getItem("adminLoggedIn");
 
   if (adminLoggedIn !== "true") {
     return <Navigate to="/login" />;
@@ -1092,58 +1001,13 @@ function AdminPanel() {
   const user = JSON.parse(
     localStorage.getItem("user")
   );
-const approveUser = () => {
-
-  const updatedUser = {
-    ...user,
-    approved: true,
-  };
-
-  localStorage.setItem(
-    "user",
-    JSON.stringify(updatedUser)
-  );
-
-  alert("User Approved");
-};
 
   const handleLogout = () => {
-
-  localStorage.removeItem(
-    "adminLoggedIn"
-  );
-
-  navigate("/login");
-};
-
-    const updatedUser = {
-      ...user,
-      approvalStatus: "Approved",
-    };
-
-    localStorage.setItem(
-      "user",
-      JSON.stringify(updatedUser)
+    localStorage.removeItem(
+      "adminLoggedIn"
     );
 
-    alert("User Approved");
-    window.location.reload();
-  };
-
-  const rejectUser = () => {
-
-    const updatedUser = {
-      ...user,
-      approvalStatus: "Rejected",
-    };
-
-    localStorage.setItem(
-      "user",
-      JSON.stringify(updatedUser)
-    );
-
-    alert("User Rejected");
-    window.location.reload();
+    navigate("/login");
   };
 
   return (
@@ -1178,7 +1042,7 @@ const approveUser = () => {
               color: "#cbd5e1",
             }}
           >
-            User Verification System
+            Full Website Control
           </p>
         </div>
 
@@ -1190,94 +1054,61 @@ const approveUser = () => {
         </button>
       </div>
 
-      <div style={dashboardCard}>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns:
+            "repeat(auto-fit,minmax(300px,1fr))",
+          gap: "25px",
+        }}
+      >
 
-        <h2
-          style={{
-            marginBottom: "20px",
-          }}
-        >
-          Registered User
-        </h2>
+        <div style={dashboardCard}>
+          <h2>Total Users</h2>
 
-        <p>
-          <strong>Name:</strong>{" "}
-          {user?.name}
-        </p>
-
-        <p>
-          <strong>Email:</strong>{" "}
-          {user?.email}
-        </p>
-
-        <p>
-          <strong>Status:</strong>{" "}
-          {user?.approvalStatus}
-        </p>
-        <button
-  onClick={approveUser}
-  style={joinBtn}
->
-  Approve User
-</button>
-
-        {user?.document && (
-          <div
+          <p
             style={{
-              marginTop: "25px",
+              fontSize: "40px",
+              color: "#38bdf8",
             }}
           >
-            <h3>
-              Uploaded PAN/Aadhaar
-            </h3>
+            1
+          </p>
+        </div>
 
-            <img
-              src={user.document}
-              alt="document"
-              style={{
-                width: "320px",
-                borderRadius: "16px",
-                border:
-                  "1px solid rgba(255,255,255,0.1)",
-              }}
-            />
-          </div>
-        )}
+        <div style={dashboardCard}>
+          <h2>Registered User</h2>
 
-        <div
-          style={{
-            display: "flex",
-            gap: "20px",
-            marginTop: "30px",
-            flexWrap: "wrap",
-          }}
-        >
-          <button
-            onClick={approveUser}
+          <p
             style={{
-              ...joinBtn,
-              background:
-                "linear-gradient(to right,#22c55e,#16a34a)",
+              color: "#d1d5db",
+              lineHeight: "1.8",
             }}
           >
-            Approve User
-          </button>
+            {user?.name}
+            <br />
+            {user?.email}
+          </p>
+        </div>
 
-          <button
-            onClick={rejectUser}
+        <div style={dashboardCard}>
+          <h2>Admin Access</h2>
+
+          <p
             style={{
-              ...joinBtn,
-              background:
-                "linear-gradient(to right,#ef4444,#dc2626)",
+              fontSize: "30px",
+              color: "#4ade80",
             }}
           >
-            Reject User
-          </button>
+            Active
+          </p>
         </div>
 
       </div>
     </div>
   );
+}
+
 /* STYLES */
 
 const courseCard = {
