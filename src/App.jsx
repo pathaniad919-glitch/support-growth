@@ -876,34 +876,36 @@ function Signup() {
   const [password, setPassword] = useState("");
 
   const handleSignup = () => {
-    if (
-      name.trim() === "" ||
-      email.trim() === "" ||
-      password.trim() === ""
-    ) {
-      alert("Please fill all fields");
-      return;
-    }
 
-    const userData = {
-      name,
-      email,
-      password,
-      approved: false,
-      dailyLearning: "2 Hours",
-      dailyEarning: "₹0",
-    };
+  if (
+    name.trim() === "" ||
+    email.trim() === "" ||
+    password.trim() === ""
+  ) {
+    alert("Please fill all fields");
+    return;
+  }
 
-    localStorage.setItem(
-      "user",
-      JSON.stringify(userData)
-    );
+  const userData = {
+    name,
+    email,
+    password,
+    approved: false,
+    dailyLearning: "2 Hours",
+    dailyEarning: "₹0",
+  };
 
-    alert(
-  "Signup successful. Wait for admin approval."
-);
+  localStorage.setItem(
+    "user",
+    JSON.stringify(userData)
+  );
 
-navigate("/login");
+  alert(
+    "Signup successful. Wait for admin approval."
+  );
+
+  navigate("/login");
+};
 
   return (
     <div style={authContainer}>
