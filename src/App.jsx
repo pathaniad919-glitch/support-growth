@@ -899,15 +899,11 @@ function Signup() {
       JSON.stringify(userData)
     );
 
-    localStorage.setItem(
-      "loggedIn",
-      "true"
-    );
+    alert(
+  "Signup successful. Wait for admin approval."
+);
 
-    alert("Account Created Successfully");
-
-    navigate("/dashboard");
-  };
+navigate("/login");
 
   return (
     <div style={authContainer}>
