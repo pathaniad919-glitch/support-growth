@@ -9,8 +9,6 @@ import {
 
 import { useState } from "react";
 
-/* HOME */
-
 function Home() {
   const [selectedPlan, setSelectedPlan] =
     useState(null);
@@ -116,8 +114,8 @@ function Home() {
         <div
           style={{
             display: "flex",
-            gap: "20px",
             alignItems: "center",
+            gap: "30px",
           }}
         >
           <a href="#courses" style={menuStyle}>
@@ -166,6 +164,7 @@ function Home() {
             fontSize: "78px",
             maxWidth: "1100px",
             lineHeight: "1.1",
+            fontWeight: "bold",
           }}
         >
           Build Your Future <br />
@@ -213,7 +212,7 @@ function Home() {
           style={{
             textAlign: "center",
             fontSize: "55px",
-            marginBottom: "40px",
+            marginBottom: "20px",
           }}
         >
           Premium Skill Programs
@@ -224,41 +223,53 @@ function Home() {
             display: "grid",
             gridTemplateColumns:
               "repeat(auto-fit,minmax(300px,1fr))",
-            gap: "30px",
+            gap: "35px",
           }}
         >
           {[
             {
               icon: "🤖",
               title: "AI Mastery",
+              desc:
+                "Learn AI tools, automation and online income systems.",
             },
 
             {
               icon: "🛒",
               title:
                 "Dropshipping Empire",
+              desc:
+                "Build ecommerce stores and scaling systems.",
             },
 
             {
               icon: "🚀",
               title: "Brand Building",
+              desc:
+                "Build authority and social media influence.",
             },
 
             {
               icon: "💻",
               title:
                 "Digital Products",
+              desc:
+                "Create ebooks, templates and digital assets.",
             },
 
             {
               icon: "📈",
               title:
                 "Marketing Psychology",
+              desc:
+                "Understand customer psychology and sales systems.",
             },
 
             {
               icon: "🌍",
               title: "Freelancing",
+              desc:
+                "Build global freelance income streams.",
             },
           ].map((course) => (
             <div
@@ -282,15 +293,32 @@ function Home() {
                   lineHeight: "1.8",
                 }}
               >
-                Premium mentorship and
-                advanced business systems.
+                {course.desc}
               </p>
+
+              {!isLoggedIn && (
+                <div
+                  style={{
+                    marginTop: "20px",
+                    background:
+                      "rgba(239,68,68,0.15)",
+                    padding: "12px",
+                    borderRadius: "12px",
+                    color: "#fca5a5",
+                    fontWeight: "bold",
+                    textAlign: "center",
+                  }}
+                >
+                  🔒 Signup Required
+                </div>
+              )}
             </div>
           ))}
         </div>
       </section>
 
       {/* PRICING */}
+      {isLoggedIn && (
       <section
         id="pricing"
         style={{
@@ -301,7 +329,7 @@ function Home() {
           style={{
             textAlign: "center",
             fontSize: "55px",
-            marginBottom: "40px",
+            marginBottom: "20px",
           }}
         >
           Membership Plans
@@ -312,23 +340,29 @@ function Home() {
             display: "grid",
             gridTemplateColumns:
               "repeat(auto-fit,minmax(320px,1fr))",
-            gap: "30px",
+            gap: "35px",
           }}
         >
           {[
             {
               plan: "Starter",
               price: "₹999",
+              reason:
+                "Perfect for beginners starting online business skills.",
             },
 
             {
               plan: "Growth",
               price: "₹1999",
+              reason:
+                "For serious learners building personal brands and income systems.",
             },
 
             {
               plan: "Elite",
               price: "₹7999",
+              reason:
+                "Private mentorship and premium advanced business systems.",
             },
           ].map((item) => (
             <div
@@ -345,6 +379,16 @@ function Home() {
                 {item.price}
               </h1>
 
+              <p
+                style={{
+                  color: "#d1d5db",
+                  lineHeight: "1.8",
+                  marginBottom: "25px",
+                }}
+              >
+                {item.reason}
+              </p>
+
               <button
                 style={joinBtn}
                 onClick={() =>
@@ -357,6 +401,7 @@ function Home() {
           ))}
         </div>
 
+        {/* PAYMENT POPUP */}
         {selectedPlan && (
           <div
             style={{
@@ -373,10 +418,12 @@ function Home() {
           >
             <div
               style={{
-                width: "400px",
+                width: "450px",
                 background: "#0f172a",
                 padding: "40px",
                 borderRadius: "24px",
+                border:
+                  "1px solid rgba(255,255,255,0.1)",
               }}
             >
               <h1>
@@ -386,11 +433,12 @@ function Home() {
               <p
                 style={{
                   color: "#d1d5db",
-                  marginTop: "20px",
+                  lineHeight: "1.8",
+                  marginTop: "15px",
                 }}
               >
-                Payment gateway will be
-                added later.
+                Payment gateway integration
+                will be added here later.
               </p>
 
               <button
@@ -405,8 +453,9 @@ function Home() {
           </div>
         )}
       </section>
-            {/* REVIEWS */}
+      )}
 
+      {/* REVIEWS */}
       <section
         id="reviews"
         style={{
@@ -417,7 +466,7 @@ function Home() {
           style={{
             textAlign: "center",
             fontSize: "55px",
-            marginBottom: "40px",
+            marginBottom: "20px",
           }}
         >
           Student Success Stories
@@ -428,7 +477,7 @@ function Home() {
             display: "grid",
             gridTemplateColumns:
               "repeat(auto-fit,minmax(320px,1fr))",
-            gap: "30px",
+            gap: "35px",
           }}
         >
           {[
@@ -460,34 +509,16 @@ function Home() {
               key={review.name}
               style={courseCard}
             >
-              <h3
-                style={{
-                  fontSize: "28px",
-                  marginBottom: "15px",
-                }}
-              >
-                {review.name}
-              </h3>
+              <h3>{review.name}</h3>
 
               <p
                 style={{
-                  color: "#d1d5db",
+                  color: "#e2e8f0",
                   lineHeight: "1.9",
-                  fontSize: "18px",
                 }}
               >
                 “{review.result}”
               </p>
-
-              <div
-                style={{
-                  marginTop: "20px",
-                  color: "#facc15",
-                  fontSize: "22px",
-                }}
-              >
-                ⭐⭐⭐⭐⭐
-              </div>
             </div>
           ))}
         </div>
@@ -499,6 +530,7 @@ function Home() {
 /* LOGIN */
 
 function Login() {
+
   const navigate = useNavigate();
 
   const [email, setEmail] =
@@ -507,28 +539,32 @@ function Login() {
   const [password, setPassword] =
     useState("");
 
-  const adminEmail =
-    "admin@gmail.com";
-
-  const adminPassword =
-    "123456";
-
   const handleLogin = () => {
+
     const savedUser = JSON.parse(
       localStorage.getItem("user")
     );
+
+    const adminEmail =
+      "admin@gmail.com";
+
+    const adminPassword =
+      "123456";
 
     // ADMIN LOGIN
     if (
       email.trim() === adminEmail &&
       password.trim() === adminPassword
     ) {
+
       localStorage.setItem(
         "adminLoggedIn",
         "true"
       );
 
-      alert("Admin Login Successful");
+      alert(
+        "Admin Login Successful"
+      );
 
       navigate("/admin");
 
@@ -537,6 +573,7 @@ function Login() {
 
     // USER NOT FOUND
     if (!savedUser) {
+
       alert(
         "Please create account first."
       );
@@ -548,21 +585,17 @@ function Login() {
 
     // USER LOGIN
     if (
-      email.trim() ===
-        savedUser.email &&
-      password.trim() ===
-        savedUser.password
+      email.trim() === savedUser.email &&
+      password.trim() === savedUser.password
     ) {
-      if (
-        savedUser.approvalStatus !==
-        "Approved"
-      ) {
-        alert(
-          "Waiting for admin approval."
-        );
+      if (!savedUser.approved) {
 
-        return;
-      }
+  alert(
+    "Your account is waiting for admin approval."
+  );
+
+  return;
+}
 
       localStorage.setItem(
         "loggedIn",
@@ -572,22 +605,28 @@ function Login() {
       alert("Login Successful");
 
       navigate("/dashboard");
+
     } else {
+
       alert(
-        "Invalid Email or Password"
+        "Invalid email or password"
       );
     }
   };
 
   return (
+
     <div style={authContainer}>
+
       <div style={authCard}>
+
         <h1 style={authHeading}>
           Welcome Back
         </h1>
 
         <p style={authText}>
-          Login to access dashboard.
+          Access your premium dashboard
+          and courses.
         </p>
 
         <input
@@ -614,15 +653,19 @@ function Login() {
           style={joinBtn}
           onClick={handleLogin}
         >
-          Login
+          Access Dashboard
         </button>
 
         <Link to="/signup">
+
           <button style={secondaryBtn}>
             Create Account
           </button>
+
         </Link>
+
       </div>
+
     </div>
   );
 }
@@ -641,42 +684,43 @@ function Signup() {
   const [password, setPassword] =
     useState("");
 
-  const [documentPreview,
-    setDocumentPreview] =
+  const [documentFile, setDocumentFile] =
+    useState(null);
+
+  const [preview, setPreview] =
     useState("");
 
   const handleSignup = () => {
-    if (
-      !name ||
-      !email ||
-      !password
-    ) {
-      alert("Fill all fields");
 
-      return;
-    }
+  if (
+    name.trim() === "" ||
+    email.trim() === "" ||
+    password.trim() === ""
+  ) {
+    alert("Please fill all fields");
+    return;
+  }
 
-    const userData = {
-      name,
-      email,
-      password,
-      approvalStatus: "Pending",
-      document: documentPreview,
-      dailyLearning: "2 Hours",
-      dailyEarning: "₹0",
-    };
-
-    localStorage.setItem(
-      "user",
-      JSON.stringify(userData)
-    );
-
-    alert(
-      "Account created. Wait for admin approval."
-    );
-
-    navigate("/login");
+  const userData = {
+    name,
+    email,
+    password,
+    approved: false,
+    dailyLearning: "2 Hours",
+    dailyEarning: "₹0",
   };
+
+  localStorage.setItem(
+    "user",
+    JSON.stringify(userData)
+  );
+
+  alert(
+    "Account Created. Waiting for admin approval."
+  );
+
+  navigate("/login");
+};
 
   return (
     <div style={authContainer}>
@@ -686,8 +730,8 @@ function Signup() {
         </h1>
 
         <p style={authText}>
-          Upload your PAN/Aadhaar for
-          approval.
+          Create your account to unlock
+          premium dashboard access.
         </p>
 
         <input
@@ -712,7 +756,7 @@ function Signup() {
 
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Create Password"
           style={inputStyle}
           value={password}
           onChange={(e) =>
@@ -720,15 +764,30 @@ function Signup() {
           }
         />
 
+        {/* PAN / AADHAAR */}
+
+        <p
+          style={{
+            color: "#cbd5e1",
+            marginBottom: "10px",
+            marginTop: "10px",
+          }}
+        >
+          Upload PAN/Aadhaar
+        </p>
+
         <input
           type="file"
+          accept="image/*"
           style={{
-            marginBottom: "20px",
             color: "white",
+            marginBottom: "20px",
           }}
           onChange={(e) => {
             const file =
               e.target.files[0];
+
+            setDocumentFile(file);
 
             if (file) {
               const reader =
@@ -736,7 +795,7 @@ function Signup() {
 
               reader.onloadend =
                 () => {
-                  setDocumentPreview(
+                  setPreview(
                     reader.result
                   );
                 };
@@ -748,14 +807,16 @@ function Signup() {
           }}
         />
 
-        {documentPreview && (
+        {preview && (
           <img
-            src={documentPreview}
+            src={preview}
             alt="document"
             style={{
               width: "100%",
               borderRadius: "14px",
               marginBottom: "20px",
+              border:
+                "1px solid rgba(255,255,255,0.1)",
             }}
           />
         )}
@@ -764,7 +825,7 @@ function Signup() {
           style={joinBtn}
           onClick={handleSignup}
         >
-          Create Account
+          Create Premium Account
         </button>
 
         <Link to="/login">
@@ -776,7 +837,6 @@ function Signup() {
     </div>
   );
 }
-
 /* DASHBOARD */
 
 function Dashboard() {
@@ -789,6 +849,7 @@ function Dashboard() {
     localStorage.getItem("user")
   );
 
+  /* PROTECTED ROUTE */
   if (
     isLoggedIn !== "true" ||
     !user
@@ -797,12 +858,13 @@ function Dashboard() {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem(
-      "loggedIn"
-    );
 
-    navigate("/login");
-  };
+  localStorage.removeItem(
+    "loggedIn"
+  );
+
+  navigate("/login");
+};
 
   return (
     <div
@@ -819,43 +881,54 @@ function Dashboard() {
           justifyContent:
             "space-between",
           alignItems: "center",
+          marginBottom: "40px",
+          flexWrap: "wrap",
+          gap: "20px",
         }}
       >
         <div>
-          <h1>
-            Welcome {user?.name} 🚀
+          <h1
+            style={{
+              fontSize: "52px",
+            }}
+          >
+            Welcome Back, {user?.name} 🚀
           </h1>
 
-          <p>
-            Status:
-            {" "}
-            {user?.approvalStatus}
+          <p
+            style={{
+              color: "#d1d5db",
+            }}
+          >
+            Track your learning and growth.
           </p>
         </div>
 
         <button
-          style={loginBtn}
           onClick={handleLogout}
+          style={loginBtn}
         >
           Logout
         </button>
       </div>
 
+      {/* STATS */}
       <div
         style={{
-          marginTop: "40px",
           display: "grid",
           gridTemplateColumns:
-            "repeat(auto-fit,minmax(300px,1fr))",
+            "repeat(auto-fit,minmax(250px,1fr))",
           gap: "25px",
+          marginBottom: "50px",
         }}
       >
         <div style={dashboardCard}>
-          <h2>📚 Learning</h2>
+          <h2>📚 Daily Learning</h2>
 
           <p
             style={{
-              fontSize: "30px",
+              fontSize: "34px",
+              color: "#38bdf8",
             }}
           >
             {user?.dailyLearning}
@@ -863,24 +936,148 @@ function Dashboard() {
         </div>
 
         <div style={dashboardCard}>
-          <h2>💰 Earnings</h2>
+          <h2>💰 Daily Earning</h2>
 
           <p
             style={{
-              fontSize: "30px",
+              fontSize: "34px",
+              color: "#4ade80",
             }}
           >
             {user?.dailyEarning}
           </p>
         </div>
+
+        <div style={dashboardCard}>
+          <h2>🔥 Courses Access</h2>
+
+          <p
+            style={{
+              fontSize: "34px",
+              color: "#facc15",
+            }}
+          >
+            6 Courses
+          </p>
+        </div>
+      </div>
+
+      {/* COURSES */}
+      <h1
+        style={{
+          marginBottom: "30px",
+          fontSize: "42px",
+        }}
+      >
+        Your Premium Courses
+      </h1>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns:
+            "repeat(auto-fit,minmax(320px,1fr))",
+          gap: "30px",
+        }}
+      >
+        {[
+          {
+            icon: "🤖",
+            title: "AI Mastery",
+            progress: "72%",
+          },
+
+          {
+            icon: "🛒",
+            title:
+              "Dropshipping Empire",
+            progress: "48%",
+          },
+
+          {
+            icon: "🚀",
+            title: "Brand Building",
+            progress: "91%",
+          },
+
+          {
+            icon: "💻",
+            title:
+              "Digital Products",
+            progress: "36%",
+          },
+        ].map((course) => (
+          <div
+            key={course.title}
+            style={dashboardCard}
+          >
+            <div
+              style={{
+                fontSize: "60px",
+                marginBottom: "20px",
+              }}
+            >
+              {course.icon}
+            </div>
+
+            <h2>{course.title}</h2>
+
+            <div
+              style={{
+                marginTop: "15px",
+                marginBottom: "15px",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent:
+                    "space-between",
+                  marginBottom: "8px",
+                }}
+              >
+                <span>Progress</span>
+
+                <span>
+                  {course.progress}
+                </span>
+              </div>
+
+              <div
+                style={{
+                  width: "100%",
+                  height: "10px",
+                  borderRadius: "20px",
+                  background:
+                    "rgba(255,255,255,0.1)",
+                }}
+              >
+                <div
+                  style={{
+                    width:
+                      course.progress,
+                    height: "10px",
+                    borderRadius: "20px",
+                    background:
+                      "linear-gradient(to right,#8b5cf6,#38bdf8)",
+                  }}
+                />
+              </div>
+            </div>
+
+            <button style={joinBtn}>
+              Watch Course
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );
 }
-
-/* ADMIN PANEL */
+/* PASTE ADMIN PANEL HERE */
 
 function AdminPanel() {
+
   const navigate = useNavigate();
 
   const adminLoggedIn =
@@ -895,8 +1092,30 @@ function AdminPanel() {
   const user = JSON.parse(
     localStorage.getItem("user")
   );
+const approveUser = () => {
 
-  const approveUser = () => {
+  const updatedUser = {
+    ...user,
+    approved: true,
+  };
+
+  localStorage.setItem(
+    "user",
+    JSON.stringify(updatedUser)
+  );
+
+  alert("User Approved");
+};
+
+  const handleLogout = () => {
+
+  localStorage.removeItem(
+    "adminLoggedIn"
+  );
+
+  navigate("/login");
+};
+
     const updatedUser = {
       ...user,
       approvalStatus: "Approved",
@@ -908,16 +1127,23 @@ function AdminPanel() {
     );
 
     alert("User Approved");
-
     window.location.reload();
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem(
-      "adminLoggedIn"
+  const rejectUser = () => {
+
+    const updatedUser = {
+      ...user,
+      approvalStatus: "Rejected",
+    };
+
+    localStorage.setItem(
+      "user",
+      JSON.stringify(updatedUser)
     );
 
-    navigate("/login");
+    alert("User Rejected");
+    window.location.reload();
   };
 
   return (
@@ -935,67 +1161,123 @@ function AdminPanel() {
           justifyContent:
             "space-between",
           alignItems: "center",
+          marginBottom: "40px",
         }}
       >
-        <h1>Admin Panel 👑</h1>
+        <div>
+          <h1
+            style={{
+              fontSize: "50px",
+            }}
+          >
+            Admin Panel 👑
+          </h1>
+
+          <p
+            style={{
+              color: "#cbd5e1",
+            }}
+          >
+            User Verification System
+          </p>
+        </div>
 
         <button
-          style={loginBtn}
           onClick={handleLogout}
+          style={loginBtn}
         >
           Logout
         </button>
       </div>
 
-      <div
-        style={{
-          marginTop: "40px",
-        }}
-      >
-        <div style={dashboardCard}>
-          <h2>Registered User</h2>
+      <div style={dashboardCard}>
 
-          <p>
-            Name: {user?.name}
-          </p>
+        <h2
+          style={{
+            marginBottom: "20px",
+          }}
+        >
+          Registered User
+        </h2>
 
-          <p>
-            Email: {user?.email}
-          </p>
+        <p>
+          <strong>Name:</strong>{" "}
+          {user?.name}
+        </p>
 
-          <p>
-            Status:
-            {" "}
-            {user?.approvalStatus}
-          </p>
+        <p>
+          <strong>Email:</strong>{" "}
+          {user?.email}
+        </p>
 
-          {user?.document && (
+        <p>
+          <strong>Status:</strong>{" "}
+          {user?.approvalStatus}
+        </p>
+        <button
+  onClick={approveUser}
+  style={joinBtn}
+>
+  Approve User
+</button>
+
+        {user?.document && (
+          <div
+            style={{
+              marginTop: "25px",
+            }}
+          >
+            <h3>
+              Uploaded PAN/Aadhaar
+            </h3>
+
             <img
               src={user.document}
               alt="document"
               style={{
-                width: "300px",
-                borderRadius: "14px",
-                marginTop: "20px",
+                width: "320px",
+                borderRadius: "16px",
+                border:
+                  "1px solid rgba(255,255,255,0.1)",
               }}
             />
-          )}
+          </div>
+        )}
 
-          {user?.approvalStatus !==
-            "Approved" && (
-            <button
-              style={joinBtn}
-              onClick={approveUser}
-            >
-              Approve User
-            </button>
-          )}
+        <div
+          style={{
+            display: "flex",
+            gap: "20px",
+            marginTop: "30px",
+            flexWrap: "wrap",
+          }}
+        >
+          <button
+            onClick={approveUser}
+            style={{
+              ...joinBtn,
+              background:
+                "linear-gradient(to right,#22c55e,#16a34a)",
+            }}
+          >
+            Approve User
+          </button>
+
+          <button
+            onClick={rejectUser}
+            style={{
+              ...joinBtn,
+              background:
+                "linear-gradient(to right,#ef4444,#dc2626)",
+            }}
+          >
+            Reject User
+          </button>
         </div>
+
       </div>
     </div>
   );
-}
-
 /* STYLES */
 
 const courseCard = {
@@ -1112,8 +1394,6 @@ const inputStyle = {
   boxSizing: "border-box",
 };
 
-/* APP */
-
 function App() {
   return (
     <BrowserRouter>
@@ -1139,9 +1419,9 @@ function App() {
         />
 
         <Route
-          path="/admin"
-          element={<AdminPanel />}
-        />
+  path="/admin"
+  element={<AdminPanel />}
+/>
       </Routes>
     </BrowserRouter>
   );
