@@ -481,7 +481,6 @@ function Home() {
   </section>
 )}
 
-
       {/* REVIEWS */}
       <section
         id="reviews"
@@ -773,11 +772,7 @@ function Login() {
     const adminEmail = "admin@gmail.com";
 const adminPassword = "123456";
 
-  const handleLogin = () => {
-
-  const savedUser = JSON.parse(
-    localStorage.getItem("user")
-  );
+  const handleLogin = async () => {
 
   // ADMIN LOGIN
   if (
@@ -795,36 +790,49 @@ const adminPassword = "123456";
       "true"
     );
 
-    alert("Admin Login Successful");
-
     navigate("/admin");
 
     return;
   }
 
-  // USER NOT FOUND
-  if (!savedUser) {
+  try {
 
-    alert(
-      "Please create an account first."
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
     );
 
-    navigate("/signup");
+    const querySnapshot =
+      await getDocs(
+        collection(db, "users")
+      );
 
-    return;
-  }
+    let approvedUser = null;
 
-  // USER LOGIN
-  if (
-    email.trim() === savedUser.email &&
-    password.trim() === savedUser.password
-  ) {
+    querySnapshot.forEach((docItem) => {
 
-    // CHECK APPROVAL
-    if (!savedUser.approved) {
+      const data = docItem.data();
+
+      if (data.email === email) {
+
+        approvedUser = {
+          id: docItem.id,
+          ...data,
+        };
+      }
+    });
+
+    if (!approvedUser) {
+
+      alert("User not found");
+      return;
+    }
+
+    if (!approvedUser.approved) {
 
       alert(
-        "Your account is waiting for admin approval."
+        "Waiting for admin approval"
       );
 
       return;
@@ -835,15 +843,17 @@ const adminPassword = "123456";
       "true"
     );
 
-    alert("Login Successful");
+    localStorage.setItem(
+      "user",
+      JSON.stringify(approvedUser)
+    );
 
     navigate("/dashboard");
 
-  } else {
+  } catch (error) {
 
-    alert(
-      "Invalid email or password."
-    );
+    alert(error.message);
+
   }
 };
   return (
@@ -897,100 +907,67 @@ const adminPassword = "123456";
 /* SIGNUP */
 
 function Signup() {
+
   const navigate = useNavigate();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] =
+    useState("");
 
-  const handleLogin = async () => {
+  const [email, setEmail] =
+    useState("");
 
-  // ADMIN LOGIN
-  if (
-    email.trim() === adminEmail &&
-    password.trim() === adminPassword
-  ) {
+  const [password, setPassword] =
+    useState("");
 
-    localStorage.setItem(
-      "adminLoggedIn",
-      "true"
-    );
+  const handleSignup = async () => {
 
-    localStorage.setItem(
-      "loggedIn",
-      "true"
-    );
+    if (
+      name.trim() === "" ||
+      email.trim() === "" ||
+      password.trim() === ""
+    ) {
 
-    navigate("/admin");
+      alert("Please fill all fields");
 
-    return;
-  }
-
-  try {
-
-    await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-    const querySnapshot =
-      await getDocs(
-        collection(db, "users")
-      );
-
-    let approvedUser = null;
-
-    querySnapshot.forEach((docItem) => {
-
-      const data = docItem.data();
-
-      if (
-        data.email === email
-      ) {
-        approvedUser = {
-          id: docItem.id,
-          ...data,
-        };
-      }
-    });
-
-    if (!approvedUser) {
-      alert("User not found");
       return;
     }
 
-    if (!approvedUser.approved) {
+    try {
+
+      await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      await addDoc(
+        collection(db, "users"),
+        {
+          name,
+          email,
+          approved: false,
+          dailyLearning: "2 Hours",
+          dailyEarning: "₹0",
+        }
+      );
 
       alert(
-        "Waiting for admin approval"
+        "Signup successful. Wait for admin approval."
       );
 
-      return;
+      navigate("/login");
+
+    } catch (error) {
+
+      alert(error.message);
+
     }
-
-    localStorage.setItem(
-      "loggedIn",
-      "true"
-    );
-
-    localStorage.setItem(
-      "user",
-      JSON.stringify(approvedUser)
-    );
-
-    navigate("/dashboard");
-
-  } catch (error) {
-
-    alert(error.message);
-
-  }
-};
+  };
 
   return (
     <div style={authContainer}>
       <div style={authCard}>
+
         <h1 style={authHeading}>
           Create Account
         </h1>
@@ -1042,10 +1019,12 @@ function Signup() {
             Login
           </button>
         </Link>
+
       </div>
     </div>
   );
 }
+
 /* DASHBOARD */
 
 function Dashboard() {
