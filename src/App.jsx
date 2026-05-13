@@ -316,9 +316,11 @@ function Home() {
           ))}
         </div>
       </section>
+)}
 
       {/* PRICING */}
-      <section
+      {isLoggedIn && (
+<section
         id="pricing"
         style={{
           padding: "0 60px 120px",
@@ -452,6 +454,7 @@ function Home() {
           </div>
         )}
       </section>
+      )}
 
       {/* REVIEWS */}
       <section
