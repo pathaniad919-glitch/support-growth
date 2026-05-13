@@ -754,6 +754,12 @@ const adminPassword = "123456";
   );
 
   // ADMIN LOGIN
+  if (!savedUser.approved) {
+  alert(
+    "Waiting for admin approval"
+  );
+  return;
+}
 if (
   email.trim() === adminEmail &&
   password.trim() === adminPassword
@@ -883,6 +889,7 @@ function Signup() {
       name,
       email,
       password,
+      approved: false,
       dailyLearning: "2 Hours",
       dailyEarning: "₹0",
     };
