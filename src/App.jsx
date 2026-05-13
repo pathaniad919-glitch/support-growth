@@ -318,7 +318,7 @@ function Home() {
       </section>
 
       {/* PRICING */}
-      {isLoggedIn && (
+      {isLoggedIn &&. (
         <section
 
         id="pricing"
@@ -455,6 +455,7 @@ function Home() {
         )}
       </section>
       )}
+
 
       {/* REVIEWS */}
       <section
