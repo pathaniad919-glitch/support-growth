@@ -454,7 +454,7 @@ function Home() {
           </div>
         )}
       </section>
-)}
+      )}
 
       {/* REVIEWS */}
       <section
