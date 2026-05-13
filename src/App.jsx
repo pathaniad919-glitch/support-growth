@@ -75,8 +75,9 @@ function Home() {
         <div
           style={{
             display: "flex",
-            alignItems: "center",
-            gap: "15px",
+flexDirection: "column",
+alignItems: "center",
+gap: "8px",
           }}
         >
           <img
