@@ -802,14 +802,24 @@ if (
     email.trim() === savedUser.email &&
     password.trim() === savedUser.password
   ) {
-    localStorage.setItem(
-      "loggedIn",
-      "true"
-    );
+    const approved =
+  localStorage.getItem("approved");
 
-    alert("Login Successful");
+if (approved !== "true") {
+  alert(
+    "Your account is waiting for admin approval."
+  );
+  return;
+}
 
-    navigate("/dashboard");
+localStorage.setItem(
+  "loggedIn",
+  "true"
+);
+
+alert("Login Successful");
+
+navigate("/dashboard");
   } else {
     alert(
       "Invalid email or password"
@@ -1305,19 +1315,71 @@ function AdminPanel() {
         </div>
 
         <div style={dashboardCard}>
-          <h2>Registered User</h2>
+  <h2>Registered User</h2>
 
-          <p
-            style={{
-              color: "#d1d5db",
-              lineHeight: "1.8",
-            }}
-          >
-            {user?.name}
-            <br />
-            {user?.email}
-          </p>
-        </div>
+  <p
+    style={{
+      color: "#d1d5db",
+      lineHeight: "1.8",
+    }}
+  >
+    {user?.name}
+    <br />
+    {user?.email}
+  </p>
+
+  <div
+    style={{
+      display: "flex",
+      gap: "15px",
+      marginTop: "20px",
+    }}
+  >
+    <button
+      style={{
+        padding: "12px 20px",
+        borderRadius: "10px",
+        border: "none",
+        background: "#22c55e",
+        color: "white",
+        fontWeight: "bold",
+        cursor: "pointer",
+      }}
+      onClick={() => {
+        localStorage.setItem(
+          "approved",
+          "true"
+        );
+
+        alert("User Approved");
+      }}
+    >
+      Approve
+    </button>
+
+    <button
+      style={{
+        padding: "12px 20px",
+        borderRadius: "10px",
+        border: "none",
+        background: "#ef4444",
+        color: "white",
+        fontWeight: "bold",
+        cursor: "pointer",
+      }}
+      onClick={() => {
+        localStorage.setItem(
+          "approved",
+          "false"
+        );
+
+        alert("User Disapproved");
+      }}
+    >
+      Disapprove
+    </button>
+  </div>
+</div>
 
         <div style={dashboardCard}>
           <h2>Admin Access</h2>
