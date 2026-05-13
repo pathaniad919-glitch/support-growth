@@ -765,26 +765,28 @@ const adminPassword = "123456";
     localStorage.getItem("user")
   );
 
-  // ADMIN LOGIN
-  if (!savedUser.approved) {
-  alert(
-    "Waiting for admin approval"
-  );
-  return;
-}
+// ADMIN LOGIN
+
 if (
   email.trim() === adminEmail &&
   password.trim() === adminPassword
 ) {
+
   localStorage.setItem(
     "adminLoggedIn",
     "true"
   );
-alert("Admin Login Successful");
 
-navigate("/admin");
+  localStorage.setItem(
+    "loggedIn",
+    "true"
+  );
 
-return;
+  alert("Admin Login Successful");
+
+  window.location.href = "/admin";
+
+  return;
 }
 
   if (!savedUser) {
