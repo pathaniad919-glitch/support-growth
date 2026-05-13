@@ -8,23 +8,13 @@ import {
 } from "react-router-dom";
 
 import { useState } from "react";
-import { auth, db } from "./firebase";
-
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
-
-import {
-  collection,
-  addDoc,
-  getDocs,
-} from "firebase/firestore";
 
 /* HOME */
 
 function Home() {
+  const [selectedPlan, setSelectedPlan] =
+    useState(null);
+
   const isLoggedIn =
     localStorage.getItem("loggedIn") ===
     "true";
@@ -159,7 +149,6 @@ function Home() {
       </nav>
 
       {/* HERO */}
-
       <div
         style={{
           display: "flex",
@@ -214,7 +203,6 @@ function Home() {
       </div>
 
       {/* COURSES */}
-
       <section
         id="courses"
         style={{
@@ -240,99 +228,39 @@ function Home() {
           }}
         >
           {[
-  {
-    icon: "🤖",
-    title: "AI Mastery",
-    desc:
-      "Learn ChatGPT automation, AI business systems, prompt engineering, AI workflows and advanced AI income systems used by modern digital businesses.",
-  },
+            {
+              icon: "🤖",
+              title: "AI Mastery",
+            },
 
-  {
-    icon: "🛒",
-    title:
-      "Dropshipping Empire",
-    desc:
-      "Master Shopify store building, winning product research, supplier systems, Facebook ads and ecommerce automation strategies.",
-  },
+            {
+              icon: "🛒",
+              title:
+                "Dropshipping Empire",
+            },
 
-  {
-    icon: "🚀",
-    title: "Brand Building",
-    desc:
-      "Build a strong personal brand with authority positioning, storytelling, viral strategies and audience psychology.",
-  },
+            {
+              icon: "🚀",
+              title: "Brand Building",
+            },
 
-  {
-    icon: "💻",
-    title:
-      "Digital Products",
-    desc:
-      "Create ebooks, templates, premium courses and scalable digital products that generate passive income online.",
-  },
+            {
+              icon: "💻",
+              title:
+                "Digital Products",
+            },
 
-  {
-    icon: "📈",
-    title:
-      "Marketing Psychology",
-    desc:
-      "Understand customer behavior, emotional selling, persuasion systems and conversion-focused marketing techniques.",
-  },
+            {
+              icon: "📈",
+              title:
+                "Marketing Psychology",
+            },
 
-  {
-    icon: "🌍",
-    title: "Freelancing",
-    desc:
-      "Learn client hunting, proposal writing, AI freelancing systems and premium service delivery for global clients.",
-  },
-
-  {
-    icon: "🎬",
-    title:
-      "Content Creation",
-    desc:
-      "Master YouTube, Instagram Reels, cinematic editing, storytelling hooks, viral content strategy and creator monetization.",
-  },
-
-  {
-    icon: "📱",
-    title:
-      "Social Media Handling",
-    desc:
-      "Learn Instagram growth, Facebook management, LinkedIn branding, analytics, scheduling and audience engagement systems.",
-  },
-
-  {
-    icon: "✍️",
-    title:
-      "Content Writing",
-    desc:
-      "Master copywriting, SEO writing, script writing, storytelling frameworks and high-converting content creation for brands.",
-  },
-
-  {
-    icon: "🎯",
-    title:
-      "Sales & Closing",
-    desc:
-      "Learn communication psychology, objection handling, premium sales techniques and high-ticket client closing systems.",
-  },
-
-  {
-    icon: "🧠",
-    title:
-      "Mindset & Leadership",
-    desc:
-      "Develop discipline, confidence, leadership mindset and high-performance habits required for business success.",
-  },
-
-  {
-    icon: "⚡",
-    title:
-      "Business Automation",
-    desc:
-      "Build automated workflows using CRM systems, AI tools, lead funnels and productivity systems for online businesses.",
-  },
-].map((course) => (
+            {
+              icon: "🌍",
+              title: "Freelancing",
+            },
+          ].map((course) => (
             <div
               key={course.title}
               style={courseCard}
@@ -354,103 +282,130 @@ function Home() {
                   lineHeight: "1.8",
                 }}
               >
-                {course.desc}
+                Premium mentorship and
+                advanced business systems.
               </p>
-
-              <div
-                style={{
-                  marginTop: "20px",
-                  background:
-                    "rgba(239,68,68,0.15)",
-                  padding: "12px",
-                  borderRadius: "12px",
-                  color: "#fca5a5",
-                  fontWeight: "bold",
-                  textAlign: "center",
-                }}
-              >
-                🔒 Subscription Required
-              </div>
             </div>
           ))}
         </div>
       </section>
 
-{/* PRICING */}
-
-{isLoggedIn && (
-
-<section
-  id="pricing"
-  style={{
-    padding: "0 20px 80px",
-  }}
->
-  <h2
-    style={{
-      textAlign: "center",
-      fontSize: window.innerWidth < 768
-        ? "32px"
-        : "55px",
-      marginBottom: "40px",
-    }}
-  >
-    Exclusive Membership Plans 🔥
-  </h2>
-
-  <div
-    style={{
-      display: "grid",
-      gridTemplateColumns:
-        "repeat(auto-fit,minmax(280px,1fr))",
-      gap: "25px",
-      maxWidth: "1200px",
-      margin: "0 auto",
-    }}
-  >
-    {[
-      {
-        plan: "Starter",
-        price: "₹999",
-      },
-
-      {
-        plan: "Growth",
-        price: "₹1999",
-      },
-
-      {
-        plan: "Elite",
-        price: "₹7999",
-      },
-    ].map((item) => (
-      <div
-        key={item.plan}
-        style={courseCard}
+      {/* PRICING */}
+      <section
+        id="pricing"
+        style={{
+          padding: "0 60px 120px",
+        }}
       >
-        <h2>{item.plan}</h2>
-
-        <h1
+        <h2
           style={{
-            fontSize:
-              window.innerWidth < 768
-                ? "42px"
-                : "60px",
+            textAlign: "center",
+            fontSize: "55px",
+            marginBottom: "40px",
           }}
         >
-          {item.price}
-        </h1>
+          Membership Plans
+        </h2>
 
-        <button style={joinBtn}>
-          Buy Now
-        </button>
-      </div>
-    ))}
-  </div>
-</section>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns:
+              "repeat(auto-fit,minmax(320px,1fr))",
+            gap: "30px",
+          }}
+        >
+          {[
+            {
+              plan: "Starter",
+              price: "₹999",
+            },
 
-)}
-      {/* REVIEWS */}
+            {
+              plan: "Growth",
+              price: "₹1999",
+            },
+
+            {
+              plan: "Elite",
+              price: "₹7999",
+            },
+          ].map((item) => (
+            <div
+              key={item.plan}
+              style={courseCard}
+            >
+              <h2>{item.plan}</h2>
+
+              <h1
+                style={{
+                  fontSize: "60px",
+                }}
+              >
+                {item.price}
+              </h1>
+
+              <button
+                style={joinBtn}
+                onClick={() =>
+                  setSelectedPlan(item)
+                }
+              >
+                Buy Now
+              </button>
+            </div>
+          ))}
+        </div>
+
+        {selectedPlan && (
+          <div
+            style={{
+              position: "fixed",
+              inset: 0,
+              background:
+                "rgba(0,0,0,0.7)",
+              display: "flex",
+              justifyContent:
+                "center",
+              alignItems: "center",
+              zIndex: 999,
+            }}
+          >
+            <div
+              style={{
+                width: "400px",
+                background: "#0f172a",
+                padding: "40px",
+                borderRadius: "24px",
+              }}
+            >
+              <h1>
+                {selectedPlan.plan} Plan
+              </h1>
+
+              <p
+                style={{
+                  color: "#d1d5db",
+                  marginTop: "20px",
+                }}
+              >
+                Payment gateway will be
+                added later.
+              </p>
+
+              <button
+                style={joinBtn}
+                onClick={() =>
+                  setSelectedPlan(null)
+                }
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+      </section>
+            {/* REVIEWS */}
 
       <section
         id="reviews"
@@ -505,12 +460,20 @@ function Home() {
               key={review.name}
               style={courseCard}
             >
-              <h3>{review.name}</h3>
+              <h3
+                style={{
+                  fontSize: "28px",
+                  marginBottom: "15px",
+                }}
+              >
+                {review.name}
+              </h3>
 
               <p
                 style={{
                   color: "#d1d5db",
                   lineHeight: "1.9",
+                  fontSize: "18px",
                 }}
               >
                 “{review.result}”
@@ -550,68 +513,12 @@ function Login() {
   const adminPassword =
     "123456";
 
-  const handleLogin = async () => {
-  try {
-    const userCredential =
-      await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-    const snapshot =
-      await getDocs(
-        collection(db, "users")
-      );
-
-    let foundUser = null;
-
-    snapshot.forEach((doc) => {
-      if (
-        doc.data().uid ===
-        userCredential.user.uid
-      ) {
-        foundUser = {
-          id: doc.id,
-          ...doc.data(),
-        };
-      }
-    });
-
-    if (!foundUser) {
-      alert("User not found");
-      return;
-    }
-
-    if (
-      foundUser.approvalStatus !==
-      "Approved"
-    ) {
-      alert(
-        "Waiting for admin approval"
-      );
-
-      return;
-    }
-
-    localStorage.setItem(
-      "loggedIn",
-      "true"
+  const handleLogin = () => {
+    const savedUser = JSON.parse(
+      localStorage.getItem("user")
     );
-
-    localStorage.setItem(
-      "currentUser",
-      JSON.stringify(foundUser)
-    );
-
-    navigate("/dashboard");
-  } catch (error) {
-    alert(error.message);
-  }
-};
 
     // ADMIN LOGIN
-
     if (
       email.trim() === adminEmail &&
       password.trim() === adminPassword
@@ -628,38 +535,48 @@ function Login() {
       return;
     }
 
-    const foundUser = users.find(
-      (u) =>
-        u.email === email &&
-        u.password === password
-    );
-
-    if (!foundUser) {
-      alert("Invalid Login");
-      return;
-    }
-
-    if (
-      foundUser.approvalStatus !==
-      "Approved"
-    ) {
+    // USER NOT FOUND
+    if (!savedUser) {
       alert(
-        "Waiting for admin approval."
+        "Please create account first."
       );
+
+      navigate("/signup");
+
       return;
     }
 
-    localStorage.setItem(
-      "loggedIn",
-      "true"
-    );
+    // USER LOGIN
+    if (
+      email.trim() ===
+        savedUser.email &&
+      password.trim() ===
+        savedUser.password
+    ) {
+      if (
+        savedUser.approvalStatus !==
+        "Approved"
+      ) {
+        alert(
+          "Waiting for admin approval."
+        );
 
-    localStorage.setItem(
-      "currentUser",
-      JSON.stringify(foundUser)
-    );
+        return;
+      }
 
-    navigate("/dashboard");
+      localStorage.setItem(
+        "loggedIn",
+        "true"
+      );
+
+      alert("Login Successful");
+
+      navigate("/dashboard");
+    } else {
+      alert(
+        "Invalid Email or Password"
+      );
+    }
   };
 
   return (
@@ -708,6 +625,7 @@ function Login() {
       </div>
     </div>
   );
+}
 
 /* SIGNUP */
 
@@ -727,52 +645,16 @@ function Signup() {
     setDocumentPreview] =
     useState("");
 
-  const handleSignup = async () => {
-  if (!name || !email || !password) {
-    alert("Fill all fields");
-    return;
-  }
+  const handleSignup = () => {
+    if (
+      !name ||
+      !email ||
+      !password
+    ) {
+      alert("Fill all fields");
 
-  try {
-    const userCredential =
-      await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-    await addDoc(
-      collection(db, "users"),
-      {
-        uid:
-          userCredential.user.uid,
-
-        name,
-        email,
-
-        approvalStatus:
-          "Pending",
-
-        document:
-          documentPreview,
-
-        dailyLearning:
-          "2 Hours",
-
-        dailyEarning:
-          "₹0",
-      }
-    );
-
-    alert(
-      "Account created successfully"
-    );
-
-    navigate("/login");
-  } catch (error) {
-    alert(error.message);
-  }
-};
+      return;
+    }
 
     const userData = {
       name,
@@ -784,16 +666,9 @@ function Signup() {
       dailyEarning: "₹0",
     };
 
-    const existingUsers =
-      JSON.parse(
-        localStorage.getItem("users")
-      ) || [];
-
-    existingUsers.push(userData);
-
     localStorage.setItem(
-      "users",
-      JSON.stringify(existingUsers)
+      "user",
+      JSON.stringify(userData)
     );
 
     alert(
@@ -811,7 +686,7 @@ function Signup() {
         </h1>
 
         <p style={authText}>
-          Upload PAN/Aadhaar for
+          Upload your PAN/Aadhaar for
           approval.
         </p>
 
@@ -891,32 +766,39 @@ function Signup() {
         >
           Create Account
         </button>
+
+        <Link to="/login">
+          <button style={secondaryBtn}>
+            Login
+          </button>
+        </Link>
       </div>
     </div>
   );
+}
 
 /* DASHBOARD */
 
 function Dashboard() {
   const navigate = useNavigate();
 
+  const isLoggedIn =
+    localStorage.getItem("loggedIn");
+
   const user = JSON.parse(
-    localStorage.getItem(
-      "currentUser"
-    )
+    localStorage.getItem("user")
   );
 
-  if (!user) {
+  if (
+    isLoggedIn !== "true" ||
+    !user
+  ) {
     return <Navigate to="/login" />;
   }
 
   const handleLogout = () => {
     localStorage.removeItem(
       "loggedIn"
-    );
-
-    localStorage.removeItem(
-      "currentUser"
     );
 
     navigate("/login");
@@ -1001,29 +883,28 @@ function Dashboard() {
 function AdminPanel() {
   const navigate = useNavigate();
 
-  const users =
-    JSON.parse(
-      localStorage.getItem("users")
-    ) || [];
-
-  const approveUser = (email) => {
-    const updatedUsers = users.map(
-      (user) => {
-        if (user.email === email) {
-          return {
-            ...user,
-            approvalStatus:
-              "Approved",
-          };
-        }
-
-        return user;
-      }
+  const adminLoggedIn =
+    localStorage.getItem(
+      "adminLoggedIn"
     );
 
+  if (adminLoggedIn !== "true") {
+    return <Navigate to="/login" />;
+  }
+
+  const user = JSON.parse(
+    localStorage.getItem("user")
+  );
+
+  const approveUser = () => {
+    const updatedUser = {
+      ...user,
+      approvalStatus: "Approved",
+    };
+
     localStorage.setItem(
-      "users",
-      JSON.stringify(updatedUsers)
+      "user",
+      JSON.stringify(updatedUser)
     );
 
     alert("User Approved");
@@ -1069,54 +950,47 @@ function AdminPanel() {
       <div
         style={{
           marginTop: "40px",
-          display: "grid",
-          gap: "25px",
         }}
       >
-        {users.map((user, index) => (
-          <div
-            key={index}
-            style={dashboardCard}
-          >
-            <h2>Registered User</h2>
+        <div style={dashboardCard}>
+          <h2>Registered User</h2>
 
-            <p>Name: {user.name}</p>
+          <p>
+            Name: {user?.name}
+          </p>
 
-            <p>Email: {user.email}</p>
+          <p>
+            Email: {user?.email}
+          </p>
 
-            <p>
-              Status:
-              {" "}
-              {user.approvalStatus}
-            </p>
+          <p>
+            Status:
+            {" "}
+            {user?.approvalStatus}
+          </p>
 
-            {user.document && (
-              <img
-                src={user.document}
-                alt="document"
-                style={{
-                  width: "300px",
-                  borderRadius: "14px",
-                  marginTop: "20px",
-                }}
-              />
-            )}
+          {user?.document && (
+            <img
+              src={user.document}
+              alt="document"
+              style={{
+                width: "300px",
+                borderRadius: "14px",
+                marginTop: "20px",
+              }}
+            />
+          )}
 
-            {user.approvalStatus !==
-              "Approved" && (
-              <button
-                style={joinBtn}
-                onClick={() =>
-                  approveUser(
-                    user.email
-                  )
-                }
-              >
-                Approve User
-              </button>
-            )}
-          </div>
-        ))}
+          {user?.approvalStatus !==
+            "Approved" && (
+            <button
+              style={joinBtn}
+              onClick={approveUser}
+            >
+              Approve User
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
