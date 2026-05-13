@@ -1,3 +1,4 @@
+import { auth, db } from "./firebase";
 import {
   BrowserRouter,
   Routes,
@@ -7,7 +8,19 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword
+} from "firebase/auth";
+
+import {
+  collection,
+  addDoc,
+  getDocs,
+  updateDoc,
+  doc
+} from "firebase/firestore";
 
 function Home() {
   const [selectedPlan, setSelectedPlan] =
@@ -761,84 +774,73 @@ function Login() {
 const adminPassword = "123456";
 
   const handleLogin = () => {
+
   const savedUser = JSON.parse(
     localStorage.getItem("user")
   );
 
-// ADMIN LOGIN
+  // ADMIN LOGIN
+  if (
+    email.trim() === adminEmail &&
+    password.trim() === adminPassword
+  ) {
 
-if (
-  email.trim() === adminEmail &&
-  password.trim() === adminPassword
-) {
-
-  localStorage.setItem(
-    "adminLoggedIn",
-    "true"
-  );
-
-  localStorage.setItem(
-    "loggedIn",
-    "true"
-  );
-
-  alert("Admin Login Successful");
-
-  window.location.href = "/admin";
-
-  return;
-}
-
-  if (!savedUser) {
-    alert(
-      "Please create an account first."
+    localStorage.setItem(
+      "adminLoggedIn",
+      "true"
     );
 
-    navigate("/signup");
-    return;
-  }
-
-  if (
-    email.trim() === savedUser.email &&
-    password.trim() === savedUser.password
-  ) {
-    if (!savedUser.approved) {
-  alert(
-    "Your account is waiting for admin approval."
-  );
-  return;
-} {
-  alert(
-    "Your account is waiting for admin approval."
-  );
-  return;
-}
-
-localStorage.setItem(
-  "loggedIn",
-  "true"
-);
-
-alert("Login Successful");
-
-navigate("/dashboard");
-  } else {
-    alert(
-      "Invalid email or password"
-    );
-  }
-  // VALID LOGIN
-  if (
-    email === savedUser.email &&
-    password === savedUser.password
-  ) {
     localStorage.setItem(
       "loggedIn",
       "true"
     );
 
+    alert("Admin Login Successful");
+
+    navigate("/admin");
+
+    return;
+  }
+
+  // USER NOT FOUND
+  if (!savedUser) {
+
+    alert(
+      "Please create an account first."
+    );
+
+    navigate("/signup");
+
+    return;
+  }
+
+  // USER LOGIN
+  if (
+    email.trim() === savedUser.email &&
+    password.trim() === savedUser.password
+  ) {
+
+    // CHECK APPROVAL
+    if (!savedUser.approved) {
+
+      alert(
+        "Your account is waiting for admin approval."
+      );
+
+      return;
+    }
+
+    localStorage.setItem(
+      "loggedIn",
+      "true"
+    );
+
+    alert("Login Successful");
+
     navigate("/dashboard");
+
   } else {
+
     alert(
       "Invalid email or password."
     );
@@ -901,36 +903,89 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignup = () => {
+  const handleLogin = async () => {
 
+  // ADMIN LOGIN
   if (
-    name.trim() === "" ||
-    email.trim() === "" ||
-    password.trim() === ""
+    email.trim() === adminEmail &&
+    password.trim() === adminPassword
   ) {
-    alert("Please fill all fields");
+
+    localStorage.setItem(
+      "adminLoggedIn",
+      "true"
+    );
+
+    localStorage.setItem(
+      "loggedIn",
+      "true"
+    );
+
+    navigate("/admin");
+
     return;
   }
 
-  const userData = {
-  name,
-  email,
-  password,
-  approved: false,
-  dailyLearning: "2 Hours",
-  dailyEarning: "₹0",
-};
+  try {
 
-  localStorage.setItem(
-    "user",
-    JSON.stringify(userData)
-  );
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
 
-  alert(
-    "Signup successful. Wait for admin approval."
-  );
+    const querySnapshot =
+      await getDocs(
+        collection(db, "users")
+      );
 
-  navigate("/login");
+    let approvedUser = null;
+
+    querySnapshot.forEach((docItem) => {
+
+      const data = docItem.data();
+
+      if (
+        data.email === email
+      ) {
+        approvedUser = {
+          id: docItem.id,
+          ...data,
+        };
+      }
+    });
+
+    if (!approvedUser) {
+      alert("User not found");
+      return;
+    }
+
+    if (!approvedUser.approved) {
+
+      alert(
+        "Waiting for admin approval"
+      );
+
+      return;
+    }
+
+    localStorage.setItem(
+      "loggedIn",
+      "true"
+    );
+
+    localStorage.setItem(
+      "user",
+      JSON.stringify(approvedUser)
+    );
+
+    navigate("/dashboard");
+
+  } catch (error) {
+
+    alert(error.message);
+
+  }
 };
 
   return (
