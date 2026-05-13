@@ -316,7 +316,6 @@ function Home() {
           ))}
         </div>
       </section>
-)}
 
       {/* PRICING */}
       {isLoggedIn && (
