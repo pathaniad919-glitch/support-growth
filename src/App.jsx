@@ -378,10 +378,7 @@ function Home() {
 
 {/* PRICING */}
 
-{isLoggedIn &&
- JSON.parse(
-   localStorage.getItem("currentUser")
- )?.approvalStatus === "Approved" && (
+{isLoggedIn && (
 
 <section
   id="pricing"
