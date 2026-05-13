@@ -802,10 +802,12 @@ if (
     email.trim() === savedUser.email &&
     password.trim() === savedUser.password
   ) {
-    const approved =
-  localStorage.getItem("approved");
-
-if (approved !== "true") {
+    if (!savedUser.approved) {
+  alert(
+    "Your account is waiting for admin approval."
+  );
+  return;
+} {
   alert(
     "Your account is waiting for admin approval."
   );
@@ -911,13 +913,13 @@ function Signup() {
   }
 
   const userData = {
-    name,
-    email,
-    password,
-    approved: false,
-    dailyLearning: "2 Hours",
-    dailyEarning: "₹0",
-  };
+  name,
+  email,
+  password,
+  approved: false,
+  dailyLearning: "2 Hours",
+  dailyEarning: "₹0",
+};
 
   localStorage.setItem(
     "user",
@@ -1346,10 +1348,15 @@ function AdminPanel() {
         cursor: "pointer",
       }}
       onClick={() => {
-        localStorage.setItem(
-          "approved",
-          "true"
-        );
+        const updatedUser = {
+  ...user,
+  approved: true,
+};
+
+localStorage.setItem(
+  "user",
+  JSON.stringify(updatedUser)
+);
 
         alert("User Approved");
       }}
@@ -1368,10 +1375,15 @@ function AdminPanel() {
         cursor: "pointer",
       }}
       onClick={() => {
-        localStorage.setItem(
-          "approved",
-          "false"
-        );
+        const updatedUser = {
+  ...user,
+  approved: false,
+};
+
+localStorage.setItem(
+  "user",
+  JSON.stringify(updatedUser)
+);
 
         alert("User Disapproved");
       }}
