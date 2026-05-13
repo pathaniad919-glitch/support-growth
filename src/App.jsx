@@ -539,53 +539,73 @@ function Login() {
     const adminEmail = "admin@gmail.com";
 const adminPassword = "123456";
 
-  const handleLogin = () => {
-  const savedUser = JSON.parse(
-    localStorage.getItem("user")
-  );
+const handleLogin = () => {
+
+  const users =
+    JSON.parse(
+      localStorage.getItem("users")
+    ) || [];
 
   // ADMIN LOGIN
-if (
-  email.trim() === adminEmail &&
-  password.trim() === adminPassword
-) {
-  localStorage.setItem(
-    "adminLoggedIn",
-    "true"
-  );
-alert("Admin Login Successful");
+  if (
+    email.trim() === adminEmail &&
+    password.trim() === adminPassword
+  ) {
 
-navigate("/admin");
-
-return;
-}
-
-  if (!savedUser) {
-    alert(
-      "Please create an account first."
+    localStorage.setItem(
+      "adminLoggedIn",
+      "true"
     );
 
-    navigate("/signup");
+    alert(
+      "Admin Login Successful"
+    );
+
+    navigate("/admin");
+
+    return;
+  }
+
+  const foundUser = users.find(
+    (u) =>
+      u.email === email &&
+      u.password === password
+  );
+
+  if (!foundUser) {
+
+    alert("Invalid Login");
+
     return;
   }
 
   if (
-    email.trim() === savedUser.email &&
-    password.trim() === savedUser.password
+    foundUser.approvalStatus !==
+    "Approved"
   ) {
-    localStorage.setItem(
-      "loggedIn",
-      "true"
-    );
 
-    alert("Login Successful");
-
-    navigate("/dashboard");
-  } else {
     alert(
-      "Invalid email or password"
+      "Waiting for admin approval."
     );
+
+    return;
   }
+
+  localStorage.setItem(
+    "loggedIn",
+    "true"
+  );
+
+  localStorage.setItem(
+    "currentUser",
+    JSON.stringify(foundUser)
+  );
+
+  alert("Login Successful");
+
+  navigate("/dashboard");
+};
+
   // VALID LOGIN
   if (
     email === savedUser.email &&
@@ -649,22 +669,33 @@ return;
       </div>
     </div>
   );
-}
+
 
 /* SIGNUP */
 
 function Signup() {
+
   const navigate = useNavigate();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] =
+    useState("");
+
+  const [email, setEmail] =
+    useState("");
+
+  const [password, setPassword] =
+    useState("");
+
+  const [documentPreview,
+    setDocumentPreview] =
+    useState("");
 
   const handleSignup = () => {
+
     if (
-      name.trim() === "" ||
-      email.trim() === "" ||
-      password.trim() === ""
+      !name ||
+      !email ||
+      !password
     ) {
       alert("Please fill all fields");
       return;
@@ -674,35 +705,41 @@ function Signup() {
       name,
       email,
       password,
+      approvalStatus: "Pending",
+      document: documentPreview,
       dailyLearning: "2 Hours",
       dailyEarning: "₹0",
     };
 
-    localStorage.setItem(
-      "user",
-      JSON.stringify(userData)
-    );
+    const existingUsers =
+      JSON.parse(
+        localStorage.getItem("users")
+      ) || [];
+
+    existingUsers.push(userData);
 
     localStorage.setItem(
-      "loggedIn",
-      "true"
+      "users",
+      JSON.stringify(existingUsers)
     );
 
-    alert("Account Created Successfully");
+    alert(
+      "Account created. Wait for admin approval."
+    );
 
-    navigate("/dashboard");
+    navigate("/login");
   };
 
   return (
     <div style={authContainer}>
       <div style={authCard}>
+
         <h1 style={authHeading}>
           Create Account
         </h1>
 
         <p style={authText}>
-          Create your account to unlock
-          premium dashboard access.
+          Upload PAN/Aadhaar for admin approval.
         </p>
 
         <input
@@ -735,6 +772,47 @@ function Signup() {
           }
         />
 
+        <input
+          type="file"
+          style={{
+            marginBottom: "20px",
+            color: "white",
+          }}
+          onChange={(e) => {
+
+            const file =
+              e.target.files[0];
+
+            if (file) {
+
+              const reader =
+                new FileReader();
+
+              reader.onloadend =
+                () => {
+
+                  setDocumentPreview(
+                    reader.result
+                  );
+                };
+
+              reader.readAsDataURL(file);
+            }
+          }}
+        />
+
+        {documentPreview && (
+          <img
+            src={documentPreview}
+            alt="document"
+            style={{
+              width: "100%",
+              borderRadius: "14px",
+              marginBottom: "20px",
+            }}
+          />
+        )}
+
         <button
           style={joinBtn}
           onClick={handleSignup}
@@ -747,6 +825,7 @@ function Signup() {
             Login
           </button>
         </Link>
+
       </div>
     </div>
   );
@@ -760,7 +839,7 @@ function Dashboard() {
     localStorage.getItem("loggedIn");
 
   const user = JSON.parse(
-    localStorage.getItem("user")
+    localStorage.getItem("currentUser")
   );
 
   /* PROTECTED ROUTE */
@@ -992,17 +1071,49 @@ function AdminPanel() {
   const navigate = useNavigate();
 
   const adminLoggedIn =
-    localStorage.getItem("adminLoggedIn");
+    localStorage.getItem(
+      "adminLoggedIn"
+    );
 
   if (adminLoggedIn !== "true") {
     return <Navigate to="/login" />;
   }
 
-  const user = JSON.parse(
-    localStorage.getItem("user")
-  );
+  const users =
+    JSON.parse(
+      localStorage.getItem("users")
+    ) || [];
+
+  const approveUser = (email) => {
+
+    const updatedUsers = users.map(
+      (user) => {
+
+        if (user.email === email) {
+
+          return {
+            ...user,
+            approvalStatus:
+              "Approved",
+          };
+        }
+
+        return user;
+      }
+    );
+
+    localStorage.setItem(
+      "users",
+      JSON.stringify(updatedUsers)
+    );
+
+    alert("User Approved");
+
+    window.location.reload();
+  };
 
   const handleLogout = () => {
+
     localStorage.removeItem(
       "adminLoggedIn"
     );
@@ -1019,6 +1130,7 @@ function AdminPanel() {
         padding: "40px",
       }}
     >
+
       <div
         style={{
           display: "flex",
@@ -1028,81 +1140,82 @@ function AdminPanel() {
           marginBottom: "40px",
         }}
       >
-        <div>
-          <h1
-            style={{
-              fontSize: "50px",
-            }}
-          >
-            Admin Panel 👑
-          </h1>
 
-          <p
-            style={{
-              color: "#cbd5e1",
-            }}
-          >
-            Full Website Control
-          </p>
-        </div>
+        <h1>
+          Admin Panel 👑
+        </h1>
 
         <button
-          onClick={handleLogout}
           style={loginBtn}
+          onClick={handleLogout}
         >
           Logout
         </button>
+
       </div>
 
       <div
         style={{
           display: "grid",
-          gridTemplateColumns:
-            "repeat(auto-fit,minmax(300px,1fr))",
           gap: "25px",
         }}
       >
 
-        <div style={dashboardCard}>
-          <h2>Total Users</h2>
+        {users.map((user, index) => (
 
-          <p
-            style={{
-              fontSize: "40px",
-              color: "#38bdf8",
-            }}
+          <div
+            key={index}
+            style={dashboardCard}
           >
-            1
-          </p>
-        </div>
 
-        <div style={dashboardCard}>
-          <h2>Registered User</h2>
+            <h2>
+              Registered User
+            </h2>
 
-          <p
-            style={{
-              color: "#d1d5db",
-              lineHeight: "1.8",
-            }}
-          >
-            {user?.name}
-            <br />
-            {user?.email}
-          </p>
-        </div>
+            <p>
+              Name: {user.name}
+            </p>
 
-        <div style={dashboardCard}>
-          <h2>Admin Access</h2>
+            <p>
+              Email: {user.email}
+            </p>
 
-          <p
-            style={{
-              fontSize: "30px",
-              color: "#4ade80",
-            }}
-          >
-            Active
-          </p>
-        </div>
+            <p>
+              Status:
+              {" "}
+              {user.approvalStatus}
+            </p>
+
+            {user.document && (
+
+              <img
+                src={user.document}
+                alt="document"
+                style={{
+                  width: "300px",
+                  borderRadius: "14px",
+                  marginTop: "20px",
+                }}
+              />
+            )}
+
+            {user.approvalStatus !==
+              "Approved" && (
+
+              <button
+                style={joinBtn}
+                onClick={() =>
+                  approveUser(
+                    user.email
+                  )
+                }
+              >
+                Approve User
+              </button>
+            )}
+
+          </div>
+        ))}
 
       </div>
     </div>
