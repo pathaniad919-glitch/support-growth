@@ -378,67 +378,81 @@ function Home() {
 
       {/* PRICING */}
 
-      <section
-        id="pricing"
-        style={{
-          padding: "0 60px 120px",
-        }}
+{isLoggedIn &&
+ JSON.parse(
+   localStorage.getItem("currentUser")
+ )?.approvalStatus === "Approved" && (
+
+<section
+  id="pricing"
+  style={{
+    padding: "0 20px 80px",
+  }}
+>
+  <h2
+    style={{
+      textAlign: "center",
+      fontSize: window.innerWidth < 768
+        ? "32px"
+        : "55px",
+      marginBottom: "40px",
+    }}
+  >
+    Exclusive Membership Plans 🔥
+  </h2>
+
+  <div
+    style={{
+      display: "grid",
+      gridTemplateColumns:
+        "repeat(auto-fit,minmax(280px,1fr))",
+      gap: "25px",
+      maxWidth: "1200px",
+      margin: "0 auto",
+    }}
+  >
+    {[
+      {
+        plan: "Starter",
+        price: "₹999",
+      },
+
+      {
+        plan: "Growth",
+        price: "₹1999",
+      },
+
+      {
+        plan: "Elite",
+        price: "₹7999",
+      },
+    ].map((item) => (
+      <div
+        key={item.plan}
+        style={courseCard}
       >
-        <h2
+        <h2>{item.plan}</h2>
+
+        <h1
           style={{
-            textAlign: "center",
-            fontSize: "55px",
-            marginBottom: "40px",
+            fontSize:
+              window.innerWidth < 768
+                ? "42px"
+                : "60px",
           }}
         >
-          Membership Plans
-        </h2>
+          {item.price}
+        </h1>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns:
-              "repeat(auto-fit,minmax(320px,1fr))",
-            gap: "30px",
-          }}
-        >
-          {[
-            {
-              plan: "Starter",
-              price: "₹999",
-            },
+        <button style={joinBtn}>
+          Buy Now
+        </button>
+      </div>
+    ))}
+  </div>
+</section>
 
-            {
-              plan: "Growth",
-              price: "₹1999",
-            },
-
-            {
-              plan: "Elite",
-              price: "₹7999",
-            },
-          ].map((item) => (
-            <div
-              key={item.plan}
-              style={courseCard}
-            >
-              <h2>{item.plan}</h2>
-
-              <h1
-                style={{
-                  fontSize: "60px",
-                }}
-              >
-                {item.price}
-              </h1>
-
-              <button style={joinBtn}>
-                Buy Now
-              </button>
-            </div>
-          ))}
-        </div>
-      </section>
+)}
 
       {/* REVIEWS */}
 
