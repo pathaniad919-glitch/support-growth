@@ -884,7 +884,6 @@ function Signup() {
       </div>
     </div>
   );
-}
 
 /* DASHBOARD */
 
