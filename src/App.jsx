@@ -61,149 +61,102 @@ function Home() {
       />
 
       {/* NAVBAR */}
-      <nav
-        style={{
-          display: "flex",
-          justifyContent:
-            "space-between",
-          alignItems: "center",
-          padding: "20px",
-          flexWrap: "wrap",
-          gap: "20px",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-flexDirection: "column",
-alignItems: "center",
-gap: "8px",
-          }}
-        >
-          <img
-            src="/logo.png"
-            alt="logo"
-            style={{
-              width: "55px",
-              height: "55px",
-              objectFit: "contain",
-            }}
-          />
 
-          <div>
-            <h2
-              style={{
-                margin: 0,
-                fontSize: "22px",
-              }}
-            >
-              SUPPORT & GROWTH
-            </h2>
-
-            <p
-              style={{
-                margin: 0,
-                fontSize: "12px",
-                color: "#d1d5db",
-              }}
-            >
-              LEARN • EARN • GROW
-            </p>
-          </div>
-        </div>
-
-        <div
+<nav
   style={{
     display: "flex",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    gap: "15px",
-    width: "100%",
-    marginBottom: "15px",
+    padding: "30px 20px",
+    textAlign: "center",
+    gap: "25px",
   }}
 >
-          <a href="#courses" style={menuStyle}>
-            Courses
-          </a>
 
-          <a href="#pricing" style={menuStyle}>
-            Pricing
-          </a>
+  {/* LOGO + TITLE */}
 
-          <a href="#reviews" style={menuStyle}>
-            Reviews
-          </a>
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+    }}
+  >
+    <img
+      src="/logo.png"
+      alt="logo"
+      style={{
+        width: "120px",
+        marginBottom: "15px",
+        objectFit: "contain",
+      }}
+    />
 
-          {!isLoggedIn ? (
-            <Link to="/login">
-              <button style={loginBtn}>
-                Login
-              </button>
-            </Link>
-          ) : (
-            <Link to="/dashboard">
-              <button style={loginBtn}>
-                Dashboard
-              </button>
-            </Link>
-          )}
-        </div>
-      </nav>
+    <h1
+      style={{
+        margin: 0,
+        fontSize: "55px",
+        fontWeight: "bold",
+        lineHeight: "1.1",
+        textAlign: "center",
+      }}
+    >
+      SUPPORT & GROWTH
+    </h1>
 
-      {/* HERO */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-          textAlign: "center",
-          paddingTop: "120px",
-          paddingLeft: "20px",
-          paddingRight: "20px",
-        }}
-      >
-        <h1
-          style={{
-            fontSize: "78px",
-            maxWidth: "1100px",
-            lineHeight: "1.1",
-            fontWeight: "bold",
-          }}
-        >
-          Build Your Future <br />
-          With AI & Business Skills
-        </h1>
+    <p
+      style={{
+        marginTop: "10px",
+        fontSize: "24px",
+        color: "#d1d5db",
+        letterSpacing: "2px",
+      }}
+    >
+      LEARN • EARN • GROW
+    </p>
+  </div>
 
-        <p
-          style={{
-            marginTop: "25px",
-            fontSize: "24px",
-            color: "#d1d5db",
-            maxWidth: "850px",
-            lineHeight: "1.6",
-          }}
-        >
-          Learn AI, Branding,
-          Dropshipping, Freelancing,
-          Marketing and Business Growth
-          through premium mentorship.
-        </p>
+  {/* MENU */}
 
-        {!isLoggedIn ? (
-          <Link to="/signup">
-            <button style={joinBtn}>
-              Start Learning
-            </button>
-          </Link>
-        ) : (
-          <Link to="/dashboard">
-            <button style={joinBtn}>
-              Open Dashboard
-            </button>
-          </Link>
-        )}
-      </div>
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      gap: "25px",
+      flexWrap: "wrap",
+    }}
+  >
+    <a href="#courses" style={menuStyle}>
+      Courses
+    </a>
+
+    <a href="#pricing" style={menuStyle}>
+      Pricing
+    </a>
+
+    <a href="#reviews" style={menuStyle}>
+      Reviews
+    </a>
+
+    {!isLoggedIn ? (
+      <Link to="/login">
+        <button style={loginBtn}>
+          Login
+        </button>
+      </Link>
+    ) : (
+      <Link to="/dashboard">
+        <button style={loginBtn}>
+          Dashboard
+        </button>
+      </Link>
+    )}
+  </div>
+
+</nav>
 
       {/* COURSES */}
       <section
@@ -1350,17 +1303,17 @@ const dashboardCard = {
 const menuStyle = {
   color: "white",
   textDecoration: "none",
-  fontSize: "18px",
+  fontSize: "32px",
+  fontWeight: "500",
 };
 
 const loginBtn = {
-  padding: "12px 30px",
-  borderRadius: "12px",
-  border:
-    "1px solid #8b5cf6",
+  padding: "18px 45px",
+  borderRadius: "18px",
+  border: "2px solid #8b5cf6",
   background: "transparent",
   color: "white",
-  fontSize: "16px",
+  fontSize: "30px",
   cursor: "pointer",
 };
 
