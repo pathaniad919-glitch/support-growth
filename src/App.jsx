@@ -698,7 +698,6 @@ function Login() {
       </div>
     </div>
   );
-}
 
 /* SIGNUP */
 
