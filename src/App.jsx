@@ -318,143 +318,142 @@ function Home() {
       </section>
 
       {/* PRICING */}
-      {isLoggedIn &&. (
-        <section
+{isLoggedIn && (
+  <section
+    id="pricing"
+    style={{
+      padding: "0 60px 120px",
+    }}
+  >
+    <h2
+      style={{
+        textAlign: "center",
+        fontSize: "55px",
+        marginBottom: "20px",
+      }}
+    >
+      Membership Plans
+    </h2>
 
-        id="pricing"
-        style={{
-          padding: "0 60px 120px",
-        }}
-      >
-        <h2
-          style={{
-            textAlign: "center",
-            fontSize: "55px",
-            marginBottom: "20px",
-          }}
-        >
-          Membership Plans
-        </h2>
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns:
+          "repeat(auto-fit,minmax(320px,1fr))",
+        gap: "35px",
+      }}
+    >
+      {[
+        {
+          plan: "Starter",
+          price: "₹999",
+          reason:
+            "Perfect for beginners starting online business skills.",
+        },
 
+        {
+          plan: "Growth",
+          price: "₹1999",
+          reason:
+            "For serious learners building personal brands and income systems.",
+        },
+
+        {
+          plan: "Elite",
+          price: "₹7999",
+          reason:
+            "Private mentorship and premium advanced business systems.",
+        },
+      ].map((item) => (
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns:
-              "repeat(auto-fit,minmax(320px,1fr))",
-            gap: "35px",
-          }}
+          key={item.plan}
+          style={courseCard}
         >
-          {[
-            {
-              plan: "Starter",
-              price: "₹999",
-              reason:
-                "Perfect for beginners starting online business skills.",
-            },
+          <h2>{item.plan}</h2>
 
-            {
-              plan: "Growth",
-              price: "₹1999",
-              reason:
-                "For serious learners building personal brands and income systems.",
-            },
-
-            {
-              plan: "Elite",
-              price: "₹7999",
-              reason:
-                "Private mentorship and premium advanced business systems.",
-            },
-          ].map((item) => (
-            <div
-              key={item.plan}
-              style={courseCard}
-            >
-              <h2>{item.plan}</h2>
-
-              <h1
-                style={{
-                  fontSize: "60px",
-                }}
-              >
-                {item.price}
-              </h1>
-
-              <p
-                style={{
-                  color: "#d1d5db",
-                  lineHeight: "1.8",
-                  marginBottom: "25px",
-                }}
-              >
-                {item.reason}
-              </p>
-
-              <button
-                style={joinBtn}
-                onClick={() =>
-                  setSelectedPlan(item)
-                }
-              >
-                Buy Now
-              </button>
-            </div>
-          ))}
-        </div>
-
-        {/* PAYMENT POPUP */}
-        {selectedPlan && (
-          <div
+          <h1
             style={{
-              position: "fixed",
-              inset: 0,
-              background:
-                "rgba(0,0,0,0.7)",
-              display: "flex",
-              justifyContent:
-                "center",
-              alignItems: "center",
-              zIndex: 999,
+              fontSize: "60px",
             }}
           >
-            <div
-              style={{
-                width: "450px",
-                background: "#0f172a",
-                padding: "40px",
-                borderRadius: "24px",
-                border:
-                  "1px solid rgba(255,255,255,0.1)",
-              }}
-            >
-              <h1>
-                {selectedPlan.plan} Plan
-              </h1>
+            {item.price}
+          </h1>
 
-              <p
-                style={{
-                  color: "#d1d5db",
-                  lineHeight: "1.8",
-                  marginTop: "15px",
-                }}
-              >
-                Payment gateway integration
-                will be added here later.
-              </p>
+          <p
+            style={{
+              color: "#d1d5db",
+              lineHeight: "1.8",
+              marginBottom: "25px",
+            }}
+          >
+            {item.reason}
+          </p>
 
-              <button
-                style={joinBtn}
-                onClick={() =>
-                  setSelectedPlan(null)
-                }
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        )}
-      </section>
-      )}
+          <button
+            style={joinBtn}
+            onClick={() =>
+              setSelectedPlan(item)
+            }
+          >
+            Buy Now
+          </button>
+        </div>
+      ))}
+    </div>
+
+    {/* PAYMENT POPUP */}
+    {selectedPlan && (
+      <div
+        style={{
+          position: "fixed",
+          inset: 0,
+          background:
+            "rgba(0,0,0,0.7)",
+          display: "flex",
+          justifyContent:
+            "center",
+          alignItems: "center",
+          zIndex: 999,
+        }}
+      >
+        <div
+          style={{
+            width: "450px",
+            background: "#0f172a",
+            padding: "40px",
+            borderRadius: "24px",
+            border:
+              "1px solid rgba(255,255,255,0.1)",
+          }}
+        >
+          <h1>
+            {selectedPlan.plan} Plan
+          </h1>
+
+          <p
+            style={{
+              color: "#d1d5db",
+              lineHeight: "1.8",
+              marginTop: "15px",
+            }}
+          >
+            Payment gateway integration
+            will be added here later.
+          </p>
+
+          <button
+            style={joinBtn}
+            onClick={() =>
+              setSelectedPlan(null)
+            }
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    )}
+  </section>
+)}
 
 
       {/* REVIEWS */}
