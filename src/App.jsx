@@ -88,8 +88,8 @@ function Home() {
       src="/logo.png"
       alt="logo"
       style={{
-        width: "120px",
-        marginBottom: "15px",
+        width: "240px",
+        marginBottom: "20px",
         objectFit: "contain",
       }}
     />
@@ -97,7 +97,7 @@ function Home() {
     <h1
       style={{
         margin: 0,
-        fontSize: "55px",
+        fontSize: "70px",
         fontWeight: "bold",
         lineHeight: "1.1",
         textAlign: "center",
@@ -157,6 +157,62 @@ function Home() {
   </div>
 
 </nav>
+<div
+  style={{
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+    padding: "60px 20px",
+  }}
+>
+
+  <h1
+    style={{
+      fontSize: "95px",
+      lineHeight: "1.1",
+      fontWeight: "bold",
+      maxWidth: "1000px",
+      marginBottom: "30px",
+    }}
+  >
+    Build Your Future
+    <br />
+    With AI &
+    <br />
+    Business Skills
+  </h1>
+
+  <p
+    style={{
+      fontSize: "28px",
+      color: "#d1d5db",
+      maxWidth: "900px",
+      lineHeight: "1.8",
+    }}
+  >
+    Learn AI, Branding,
+    Dropshipping, Freelancing,
+    Marketing and Business Growth
+    through premium mentorship.
+  </p>
+
+  {!isLoggedIn ? (
+    <Link to="/signup">
+      <button style={joinBtn}>
+        Start Learning
+      </button>
+    </Link>
+  ) : (
+    <Link to="/dashboard">
+      <button style={joinBtn}>
+        Open Dashboard
+      </button>
+    </Link>
+  )}
+
+</div>
 
       {/* COURSES */}
       <section
