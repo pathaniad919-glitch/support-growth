@@ -112,12 +112,15 @@ function Home() {
         </div>
 
         <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "12px",
-          }}
-        >
+  style={{
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "15px",
+    width: "100%",
+    marginBottom: "15px",
+  }}
+>
           <a href="#courses" style={menuStyle}>
             Courses
           </a>
@@ -1156,7 +1159,7 @@ function Dashboard() {
                 style={{
                   display: "flex",
                   justifyContent:
-                    "space-between",
+                    "center",
                   marginBottom: "8px",
                 }}
               >
