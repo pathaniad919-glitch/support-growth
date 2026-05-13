@@ -67,7 +67,7 @@ function Home() {
           justifyContent:
             "space-between",
           alignItems: "center",
-          padding: "25px 60px",
+          padding: "20px",
           flexWrap: "wrap",
           gap: "20px",
         }}
@@ -83,8 +83,8 @@ function Home() {
             src="/logo.png"
             alt="logo"
             style={{
-              width: "70px",
-              height: "70px",
+              width: "55px",
+              height: "55px",
               objectFit: "contain",
             }}
           />
@@ -93,7 +93,7 @@ function Home() {
             <h2
               style={{
                 margin: 0,
-                fontSize: "24px",
+                fontSize: "22px",
               }}
             >
               SUPPORT & GROWTH
@@ -115,7 +115,7 @@ function Home() {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "30px",
+            gap: "12px",
           }}
         >
           <a href="#courses" style={menuStyle}>
@@ -524,7 +524,6 @@ function Home() {
           ))}
         </div>
       </section>
-      /* ABOUT US */
 
 <section
   id="about"
