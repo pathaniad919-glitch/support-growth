@@ -319,7 +319,8 @@ function Home() {
 
       {/* PRICING */}
       {isLoggedIn && (
-<section
+        <section
+
         id="pricing"
         style={{
           padding: "0 60px 120px",
