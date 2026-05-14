@@ -957,7 +957,7 @@ function Signup() {
     name,
     email,
     status: "pending",
-    dailyLearning: "2 Hours",
+    dailyLearning: "0 Hours",
     dailyEarning: "₹0",
 
     courses: {
