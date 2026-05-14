@@ -825,24 +825,9 @@ const adminPassword = "123456";
 
     if (!approvedUser) {
 
-  await addDoc(
-    collection(db, "users"),
-    {
-      name: "New User",
-      email,
-      approved: true,
-      dailyLearning: "2 Hours",
-      dailyEarning: "₹0",
-    }
-  );
+  alert("User not found");
 
-  approvedUser = {
-    name: "New User",
-    email,
-    approved: true,
-    dailyLearning: "2 Hours",
-    dailyEarning: "₹0",
-  };
+  return;
 }
 
     if (approvedUser.status !== "approved") {
