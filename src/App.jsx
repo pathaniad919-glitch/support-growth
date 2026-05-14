@@ -845,14 +845,14 @@ const adminPassword = "123456";
   };
 }
 
-    if (!approvedUser.approved) {
+    if (approvedUser.status !== "approved") {
 
-      alert(
-        "Waiting for admin approval"
-      );
+  alert(
+    "Waiting for admin approval"
+  );
 
-      return;
-    }
+  return;
+}
 
     localStorage.setItem(
       "loggedIn",
@@ -961,7 +961,7 @@ function Signup() {
         {
           name,
           email,
-          approved: false,
+          status: "pending",
           dailyLearning: "2 Hours",
           dailyEarning: "₹0",
         }
@@ -1288,9 +1288,45 @@ function AdminPanel() {
     return <Navigate to="/login" />;
   }
 
-  const user = JSON.parse(
-    localStorage.getItem("user")
+  const [users, setUsers] = useState([]);
+  const pendingUsers =
+  users.filter(
+    (user) =>
+      user.status === "pending"
   );
+
+const approvedUsers =
+  users.filter(
+    (user) =>
+      user.status === "approved"
+  );
+
+useEffect(() => {
+
+  const fetchUsers = async () => {
+
+    const querySnapshot =
+      await getDocs(
+        collection(db, "users")
+      );
+
+    const usersData = [];
+
+    querySnapshot.forEach((docItem) => {
+
+      usersData.push({
+        id: docItem.id,
+        ...docItem.data(),
+      });
+
+    });
+
+    setUsers(usersData);
+  };
+
+  fetchUsers();
+
+}, []);
 
   const handleLogout = () => {
     localStorage.removeItem(
@@ -1353,66 +1389,129 @@ function AdminPanel() {
         }}
       >
 
-        <div style={dashboardCard}>
-          <h2>Total Users</h2>
+       {/* PENDING USERS */}
 
-          <p
-            style={{
-              fontSize: "40px",
-              color: "#38bdf8",
-            }}
-          >
-            1
-          </p>
-        </div>
+<h1
+  style={{
+    marginTop: "40px",
+    marginBottom: "25px",
+  }}
+>
+  Pending Users
+</h1>
 
-        <div style={dashboardCard}>
-  <h2>Registered User</h2>
-
-  <p
-    style={{
-      color: "#d1d5db",
-      lineHeight: "1.8",
-    }}
-  >
-    {user?.name}
-    <br />
-    {user?.email}
-  </p>
+{pendingUsers.map((user) => (
 
   <div
+    key={user.id}
     style={{
-      display: "flex",
-      gap: "15px",
-      marginTop: "20px",
+      ...dashboardCard,
+      marginBottom: "25px",
     }}
   >
-    <button
+
+    <h2>{user.name}</h2>
+
+    <p>{user.email}</p>
+
+    <div
       style={{
-        padding: "12px 20px",
-        borderRadius: "10px",
-        border: "none",
-        background: "#22c55e",
-        color: "white",
-        fontWeight: "bold",
-        cursor: "pointer",
-      }}
-      onClick={() => {
-        const updatedUser = {
-  ...user,
-  approved: true,
-};
-
-localStorage.setItem(
-  "user",
-  JSON.stringify(updatedUser)
-);
-
-        alert("User Approved");
+        display: "flex",
+        gap: "15px",
+        marginTop: "20px",
       }}
     >
-      Approve
-    </button>
+
+      <button
+        style={{
+          padding: "12px 20px",
+          borderRadius: "10px",
+          border: "none",
+          background: "#22c55e",
+          color: "white",
+          fontWeight: "bold",
+          cursor: "pointer",
+        }}
+        onClick={async () => {
+
+          await updateDoc(
+            doc(db, "users", user.id),
+            {
+              status: "approved",
+            }
+          );
+
+          window.location.reload();
+
+        }}
+      >
+        Approve
+      </button>
+
+      <button
+        style={{
+          padding: "12px 20px",
+          borderRadius: "10px",
+          border: "none",
+          background: "#ef4444",
+          color: "white",
+          fontWeight: "bold",
+          cursor: "pointer",
+        }}
+        onClick={async () => {
+
+          await updateDoc(
+            doc(db, "users", user.id),
+            {
+              status: "rejected",
+            }
+          );
+
+          window.location.reload();
+
+        }}
+      >
+        Disapprove
+      </button>
+
+    </div>
+
+  </div>
+
+))}
+{/* APPROVED USERS */}
+
+<h1
+  style={{
+    marginTop: "50px",
+    marginBottom: "25px",
+  }}
+>
+  Approved Users
+</h1>
+
+{approvedUsers.map((user) => (
+
+  <div
+    key={user.id}
+    style={{
+      ...dashboardCard,
+      marginBottom: "25px",
+    }}
+  >
+
+    <h2>{user.name}</h2>
+
+    <p>{user.email}</p>
+
+    <p
+      style={{
+        color: "#22c55e",
+        marginTop: "10px",
+      }}
+    >
+      Active User
+    </p>
 
     <button
       style={{
@@ -1423,25 +1522,27 @@ localStorage.setItem(
         color: "white",
         fontWeight: "bold",
         cursor: "pointer",
+        marginTop: "20px",
       }}
-      onClick={() => {
-        const updatedUser = {
-  ...user,
-  approved: false,
-};
+      onClick={async () => {
 
-localStorage.setItem(
-  "user",
-  JSON.stringify(updatedUser)
-);
+        await updateDoc(
+          doc(db, "users", user.id),
+          {
+            status: "pending",
+          }
+        );
 
-        alert("User Disapproved");
+        window.location.reload();
+
       }}
     >
-      Disapprove
+      Make Inactive
     </button>
+
   </div>
-</div>
+
+))}
 
         <div style={dashboardCard}>
           <h2>Admin Access</h2>
