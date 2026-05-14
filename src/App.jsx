@@ -220,7 +220,7 @@ function Home() {
   </p>
 
   {!isLoggedIn ? (
-    <Link to="/signup">
+    <Link to="/intro">
       <button style={joinBtn}>
         Start Learning
       </button>
@@ -787,20 +787,21 @@ function IntroPage() {
   const handleRegister = async () => {
 
     if (
-      name.trim() === "" ||
-      phone.trim() === "" ||
-      email.trim() === ""
+      !name ||
+      !phone ||
+      !email
     ) {
-
       alert("Please fill all fields");
-
       return;
     }
 
     try {
 
       await addDoc(
-        collection(db, "introRegistrations"),
+        collection(
+          db,
+          "introRegistrations"
+        ),
         {
           name,
           phone,
@@ -828,79 +829,261 @@ function IntroPage() {
   };
 
   return (
+
     <div
       style={{
         minHeight: "100vh",
-        background: "#050816",
+        background:
+          "linear-gradient(180deg,#020617,#050816,#0f172a)",
         color: "white",
-        padding: "40px 20px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
+        position: "relative",
+        overflow: "hidden",
+        padding:
+          window.innerWidth < 768
+            ? "30px 20px"
+            : "60px",
       }}
     >
 
-      <h1
+      {/* GLOW EFFECTS */}
+
+      <div
         style={{
-          fontSize:
-            window.innerWidth < 768
-              ? "38px"
-              : "70px",
-          textAlign: "center",
-          marginBottom: "20px",
+          position: "absolute",
+          width: "500px",
+          height: "500px",
+          borderRadius: "999px",
+          background:
+            "rgba(139,92,246,0.25)",
+          filter: "blur(120px)",
+          top: "-120px",
+          left: "-120px",
+        }}
+      />
+
+      <div
+        style={{
+          position: "absolute",
+          width: "500px",
+          height: "500px",
+          borderRadius: "999px",
+          background:
+            "rgba(56,189,248,0.18)",
+          filter: "blur(120px)",
+          bottom: "-120px",
+          right: "-120px",
+        }}
+      />
+
+      {/* MAIN CONTENT */}
+
+      <div
+        style={{
+          position: "relative",
+          zIndex: 10,
+          maxWidth: "1300px",
+          margin: "0 auto",
         }}
       >
-        Support & Growth
-      </h1>
 
-      <p
-        style={{
-          color: "#cbd5e1",
-          marginBottom: "40px",
-          textAlign: "center",
-          maxWidth: "700px",
-          lineHeight: "1.8",
-        }}
-      >
-        Watch this introduction video
-        and register to join our
-        mentorship platform.
-      </p>
+        {/* TOP BADGE */}
 
-      {/* VIDEO */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: "30px",
+          }}
+        >
 
-      <video
-        controls
-        autoPlay
-        playsInline
-        style={{
-          width: "100%",
-          maxWidth: "900px",
-          borderRadius: "20px",
-          marginBottom: "35px",
-        }}
-      >
-        <source
-          src="/intro.mp4"
-          type="video/mp4"
-        />
-      </video>
+          <div
+            style={{
+              background:
+                "rgba(255,255,255,0.08)",
+              border:
+                "1px solid rgba(255,255,255,0.08)",
+              padding: "12px 22px",
+              borderRadius: "999px",
+              fontSize: "15px",
+              backdropFilter:
+                "blur(10px)",
+            }}
+          >
+            🚀 Premium Mentorship Platform
+          </div>
 
-      {/* BUTTON */}
+        </div>
 
-      <button
-        style={{
-          ...joinBtn,
-          maxWidth: "350px",
-        }}
-        onClick={() =>
-          setShowForm(true)
-        }
-      >
-        Register Now
-      </button>
+        {/* HERO TITLE */}
 
-      {/* FORM POPUP */}
+        <h1
+          style={{
+            textAlign: "center",
+            fontSize:
+              window.innerWidth < 768
+                ? "52px"
+                : "95px",
+            lineHeight: "1",
+            fontWeight: "800",
+            marginBottom: "30px",
+          }}
+        >
+          Build Your
+          <br />
+
+          <span
+            style={{
+              background:
+                "linear-gradient(to right,#8b5cf6,#38bdf8)",
+              WebkitBackgroundClip:
+                "text",
+              WebkitTextFillColor:
+                "transparent",
+            }}
+          >
+            Dream Future
+          </span>
+        </h1>
+
+        {/* SUBTEXT */}
+
+        <p
+          style={{
+            textAlign: "center",
+            color: "#cbd5e1",
+            fontSize:
+              window.innerWidth < 768
+                ? "18px"
+                : "24px",
+            maxWidth: "900px",
+            margin: "0 auto",
+            lineHeight: "1.9",
+            marginBottom: "60px",
+          }}
+        >
+          Learn AI, Branding,
+          Freelancing, Digital Business,
+          Dropshipping and High Income
+          Skills through our premium
+          mentorship ecosystem.
+        </p>
+
+        {/* VIDEO CARD */}
+
+        <div
+          style={{
+            background:
+              "rgba(255,255,255,0.06)",
+            border:
+              "1px solid rgba(255,255,255,0.08)",
+            borderRadius: "35px",
+            padding:
+              window.innerWidth < 768
+                ? "18px"
+                : "30px",
+            backdropFilter:
+              "blur(14px)",
+            boxShadow:
+              "0 0 60px rgba(139,92,246,0.2)",
+            marginBottom: "50px",
+          }}
+        >
+
+          <video
+            controls
+            autoPlay
+            playsInline
+            preload="auto"
+            style={{
+              width: "100%",
+              borderRadius: "24px",
+              background: "black",
+            }}
+          >
+            <source
+              src="/intro.mp4"
+              type="video/mp4"
+            />
+          </video>
+
+        </div>
+
+        {/* CTA */}
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+
+          <button
+            onClick={() =>
+              setShowForm(true)
+            }
+            style={{
+              padding:
+                "20px 55px",
+              borderRadius: "18px",
+              border: "none",
+              background:
+                "linear-gradient(to right,#8b5cf6,#38bdf8)",
+              color: "white",
+              fontSize: "22px",
+              fontWeight: "bold",
+              cursor: "pointer",
+              boxShadow:
+                "0 0 35px rgba(139,92,246,0.4)",
+            }}
+          >
+            Join Premium Access
+          </button>
+
+        </div>
+
+        {/* TRUST */}
+
+        <div
+          style={{
+            marginTop: "70px",
+            display: "grid",
+            gridTemplateColumns:
+              "repeat(auto-fit,minmax(220px,1fr))",
+            gap: "25px",
+          }}
+        >
+
+          {[
+            "AI Skills",
+            "Business Mentorship",
+            "Freelancing",
+            "Digital Income",
+          ].map((item) => (
+
+            <div
+              key={item}
+              style={{
+                background:
+                  "rgba(255,255,255,0.05)",
+                border:
+                  "1px solid rgba(255,255,255,0.08)",
+                padding: "30px",
+                borderRadius: "24px",
+                textAlign: "center",
+                fontSize: "20px",
+                fontWeight: "600",
+              }}
+            >
+              ✨ {item}
+            </div>
+
+          ))}
+
+        </div>
+
+      </div>
+
+      {/* POPUP FORM */}
 
       {showForm && (
 
@@ -915,26 +1098,31 @@ function IntroPage() {
               "center",
             alignItems: "center",
             zIndex: 999,
+            padding: "20px",
           }}
         >
 
           <div
             style={{
-              width: "90%",
-              maxWidth: "500px",
-              background: "#0f172a",
-              padding: "35px",
-              borderRadius: "24px",
+              width: "100%",
+              maxWidth: "520px",
+              background:
+                "#0f172a",
+              padding: "40px",
+              borderRadius: "30px",
+              border:
+                "1px solid rgba(255,255,255,0.08)",
             }}
           >
 
-            <h2
+            <h1
               style={{
                 marginBottom: "25px",
+                textAlign: "center",
               }}
             >
-              Registration Form
-            </h2>
+              Register Now
+            </h1>
 
             <input
               type="text"
@@ -994,6 +1182,7 @@ function IntroPage() {
 /* LOGIN */
 
 function Login() {
+  
   const navigate = useNavigate();
 
   const [email, setEmail] =
@@ -1608,6 +1797,8 @@ function AdminPanel() {
   }
 
   const [users, setUsers] = useState([]);
+  const [introUsers, setIntroUsers] =
+  useState([]);
   const [courseCode, setCourseCode] =
   useState("");
 
@@ -1646,6 +1837,26 @@ useEffect(() => {
     });
 
     setUsers(usersData);
+    const introSnapshot =
+  await getDocs(
+    collection(
+      db,
+      "introRegistrations"
+    )
+  );
+
+const introData = [];
+
+introSnapshot.forEach((docItem) => {
+
+  introData.push({
+    id: docItem.id,
+    ...docItem.data(),
+  });
+
+});
+
+setIntroUsers(introData);
   };
 
   fetchUsers();
@@ -1704,15 +1915,35 @@ useEffect(() => {
         </button>
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns:
-            "repeat(auto-fit,minmax(300px,1fr))",
-          gap: "25px",
-        }}
-      >
+      <div>
+<h1
+  style={{
+    marginBottom: "25px",
+    fontSize: "40px",
+  }}
+>
+  Intro Registrations
+</h1>
 
+{introUsers.map((item) => (
+
+  <div
+    key={item.id}
+    style={{
+      ...dashboardCard,
+      marginBottom: "25px",
+    }}
+  >
+
+    <h2>{item.name}</h2>
+
+    <p>{item.phone}</p>
+
+    <p>{item.email}</p>
+
+  </div>
+
+))}
        {/* PENDING USERS */}
 
 <h1
@@ -2108,6 +2339,7 @@ function App() {
         <Route
   path="/admin"
   element={<AdminPanel />}
+
 />
 <Route
   path="/intro"
