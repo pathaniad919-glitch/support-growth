@@ -110,7 +110,10 @@ function Home() {
     <h1
       style={{
         margin: 0,
-        fontSize: "70px",
+        fontSize:
+  window.innerWidth < 768
+    ? "42px"
+    : "70px",
         fontWeight: "bold",
         lineHeight: "1.1",
         textAlign: "center",
@@ -183,7 +186,10 @@ function Home() {
 
   <h1
     style={{
-      fontSize: "95px",
+      fontSize:
+  window.innerWidth < 768
+    ? "55px"
+    : "95px",
       lineHeight: "1.1",
       fontWeight: "bold",
       maxWidth: "1000px",
@@ -231,7 +237,10 @@ function Home() {
       <section
         id="courses"
         style={{
-          padding: "120px 60px",
+          padding:
+  window.innerWidth < 768
+    ? "80px 20px"
+    : "120px 60px",
         }}
       >
         <h2
@@ -1753,7 +1762,10 @@ const dashboardCard = {
 const menuStyle = {
   color: "white",
   textDecoration: "none",
-  fontSize: "32px",
+  fontSize:
+  window.innerWidth < 768
+    ? "18px"
+    : "32px",
   fontWeight: "500",
 };
 
