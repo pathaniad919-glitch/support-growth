@@ -47,23 +47,21 @@ function Home() {
   loop
   playsInline
   preload="auto"
-  webkit-playsinline="true"
-        style={{
-          position: "absolute",
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          backgroundColor: "#000",
-          top: 0,
-          left: 0,
-          zIndex: -2,
-        }}
-      >
-        <source
-          src="/bgvideo.mp4"
-          type="video/mp4"
-        />
-      </video>
+  style={{
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    top: 0,
+    left: 0,
+    zIndex: -2,
+  }}
+>
+  <source
+    src="/bgvideo.mp4"
+    type="video/mp4"
+  />
+</video>
 
       {/* OVERLAY */}
       <div
