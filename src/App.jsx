@@ -19,7 +19,8 @@ import {
   addDoc,
   getDocs,
   updateDoc,
-  doc
+  doc,
+  serverTimestamp
 } from "firebase/firestore";
 
 function Home() {
@@ -767,7 +768,229 @@ function Home() {
     </div>
   );
 }
+/* INTRO VIDEO PAGE */
 
+function IntroPage() {
+
+  const [showForm, setShowForm] =
+    useState(false);
+
+  const [name, setName] =
+    useState("");
+
+  const [phone, setPhone] =
+    useState("");
+
+  const [email, setEmail] =
+    useState("");
+
+  const handleRegister = async () => {
+
+    if (
+      name.trim() === "" ||
+      phone.trim() === "" ||
+      email.trim() === ""
+    ) {
+
+      alert("Please fill all fields");
+
+      return;
+    }
+
+    try {
+
+      await addDoc(
+        collection(db, "introRegistrations"),
+        {
+          name,
+          phone,
+          email,
+          createdAt:
+            serverTimestamp(),
+        }
+      );
+
+      alert(
+        "Registration Successful"
+      );
+
+      setName("");
+      setPhone("");
+      setEmail("");
+
+      setShowForm(false);
+
+    } catch (error) {
+
+      alert(error.message);
+
+    }
+  };
+
+  return (
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "#050816",
+        color: "white",
+        padding: "40px 20px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+
+      <h1
+        style={{
+          fontSize:
+            window.innerWidth < 768
+              ? "38px"
+              : "70px",
+          textAlign: "center",
+          marginBottom: "20px",
+        }}
+      >
+        Support & Growth
+      </h1>
+
+      <p
+        style={{
+          color: "#cbd5e1",
+          marginBottom: "40px",
+          textAlign: "center",
+          maxWidth: "700px",
+          lineHeight: "1.8",
+        }}
+      >
+        Watch this introduction video
+        and register to join our
+        mentorship platform.
+      </p>
+
+      {/* VIDEO */}
+
+      <video
+        controls
+        autoPlay
+        playsInline
+        style={{
+          width: "100%",
+          maxWidth: "900px",
+          borderRadius: "20px",
+          marginBottom: "35px",
+        }}
+      >
+        <source
+          src="/intro.mp4"
+          type="video/mp4"
+        />
+      </video>
+
+      {/* BUTTON */}
+
+      <button
+        style={{
+          ...joinBtn,
+          maxWidth: "350px",
+        }}
+        onClick={() =>
+          setShowForm(true)
+        }
+      >
+        Register Now
+      </button>
+
+      {/* FORM POPUP */}
+
+      {showForm && (
+
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            background:
+              "rgba(0,0,0,0.75)",
+            display: "flex",
+            justifyContent:
+              "center",
+            alignItems: "center",
+            zIndex: 999,
+          }}
+        >
+
+          <div
+            style={{
+              width: "90%",
+              maxWidth: "500px",
+              background: "#0f172a",
+              padding: "35px",
+              borderRadius: "24px",
+            }}
+          >
+
+            <h2
+              style={{
+                marginBottom: "25px",
+              }}
+            >
+              Registration Form
+            </h2>
+
+            <input
+              type="text"
+              placeholder="Full Name"
+              value={name}
+              onChange={(e) =>
+                setName(e.target.value)
+              }
+              style={inputStyle}
+            />
+
+            <input
+              type="text"
+              placeholder="Phone Number"
+              value={phone}
+              onChange={(e) =>
+                setPhone(e.target.value)
+              }
+              style={inputStyle}
+            />
+
+            <input
+              type="email"
+              placeholder="Email Address"
+              value={email}
+              onChange={(e) =>
+                setEmail(e.target.value)
+              }
+              style={inputStyle}
+            />
+
+            <button
+              style={joinBtn}
+              onClick={handleRegister}
+            >
+              Submit Registration
+            </button>
+
+            <button
+              style={secondaryBtn}
+              onClick={() =>
+                setShowForm(false)
+              }
+            >
+              Close
+            </button>
+
+          </div>
+
+        </div>
+
+      )}
+
+    </div>
+  );
+}
 /* LOGIN */
 
 function Login() {
@@ -1885,6 +2108,10 @@ function App() {
         <Route
   path="/admin"
   element={<AdminPanel />}
+/>
+<Route
+  path="/intro"
+  element={<IntroPage />}
 />
       </Routes>
     </BrowserRouter>
