@@ -942,15 +942,22 @@ function Signup() {
       );
 
       await addDoc(
-        collection(db, "users"),
-        {
-          name,
-          email,
-          status: "pending",
-          dailyLearning: "2 Hours",
-          dailyEarning: "₹0",
-        }
-      );
+  collection(db, "users"),
+  {
+    name,
+    email,
+    status: "pending",
+    dailyLearning: "2 Hours",
+    dailyEarning: "₹0",
+
+    courses: {
+      ai: false,
+      dropshipping: false,
+      branding: false,
+      digital: false,
+    },
+  }
+);
 
       alert(
         "Signup successful. Wait for admin approval."
@@ -1037,6 +1044,57 @@ function Dashboard() {
   const user = JSON.parse(
     localStorage.getItem("user")
   );
+  const [courseCode, setCourseCode] =
+  useState("");
+
+const [selectedCourse, setSelectedCourse] =
+  useState("");
+
+const coursesData = [
+  {
+    icon: "🤖",
+    title: "AI Mastery",
+    progress: "72%",
+    key: "ai",
+    unlockCode: "AI100",
+
+    description:
+      "Learn AI tools, automation and online income systems.",
+  },
+
+  {
+    icon: "🛒",
+    title: "Dropshipping Empire",
+    progress: "48%",
+    key: "dropshipping",
+    unlockCode: "DROP200",
+
+    description:
+      "Build ecommerce stores and scaling systems.",
+  },
+
+  {
+    icon: "🚀",
+    title: "Brand Building",
+    progress: "91%",
+    key: "branding",
+    unlockCode: "BRAND300",
+
+    description:
+      "Build authority and social media influence.",
+  },
+
+  {
+    icon: "💻",
+    title: "Digital Products",
+    progress: "36%",
+    key: "digital",
+    unlockCode: "DIGITAL400",
+
+    description:
+      "Create ebooks, templates and digital assets.",
+  },
+];
 
   /* PROTECTED ROUTE */
   if (
@@ -1166,96 +1224,139 @@ function Dashboard() {
           gap: "30px",
         }}
       >
-        {[
-          {
-            icon: "🤖",
-            title: "AI Mastery",
-            progress: "72%",
-          },
+        {coursesData.map((course) => {
 
-          {
-            icon: "🛒",
-            title:
-              "Dropshipping Empire",
-            progress: "48%",
-          },
+  const unlocked =
+    user?.courses?.[course.key];
 
-          {
-            icon: "🚀",
-            title: "Brand Building",
-            progress: "91%",
-          },
+  return (
 
-          {
-            icon: "💻",
-            title:
-              "Digital Products",
-            progress: "36%",
-          },
-        ].map((course) => (
+    <div
+      key={course.title}
+      style={dashboardCard}
+    >
+
+      <div
+        style={{
+          fontSize: "60px",
+          marginBottom: "20px",
+        }}
+      >
+        {course.icon}
+      </div>
+
+      <h2>{course.title}</h2>
+
+      <p
+        style={{
+          color: "#cbd5e1",
+          lineHeight: "1.8",
+          marginTop: "10px",
+        }}
+      >
+        {course.description}
+      </p>
+
+      <div
+        style={{
+          marginTop: "15px",
+          marginBottom: "15px",
+        }}
+      >
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent:
+              "space-between",
+            marginBottom: "8px",
+          }}
+        >
+          <span>Progress</span>
+
+          <span>
+            {unlocked
+              ? course.progress
+              : "Locked"}
+          </span>
+
+        </div>
+
+        <div
+          style={{
+            width: "100%",
+            height: "10px",
+            borderRadius: "20px",
+            background:
+              "rgba(255,255,255,0.1)",
+          }}
+        >
+
           <div
-            key={course.title}
-            style={dashboardCard}
-          >
-            <div
-              style={{
-                fontSize: "60px",
-                marginBottom: "20px",
-              }}
-            >
-              {course.icon}
-            </div>
+            style={{
+              width: unlocked
+                ? course.progress
+                : "0%",
+              height: "10px",
+              borderRadius: "20px",
+              background:
+                "linear-gradient(to right,#8b5cf6,#38bdf8)",
+            }}
+          />
 
-            <h2>{course.title}</h2>
+        </div>
 
-            <div
-              style={{
-                marginTop: "15px",
-                marginBottom: "15px",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent:
-                    "center",
-                  marginBottom: "8px",
-                }}
-              >
-                <span>Progress</span>
+      </div>
 
-                <span>
-                  {course.progress}
-                </span>
-              </div>
+      {!unlocked ? (
 
-              <div
-                style={{
-                  width: "100%",
-                  height: "10px",
-                  borderRadius: "20px",
-                  background:
-                    "rgba(255,255,255,0.1)",
-                }}
-              >
-                <div
-                  style={{
-                    width:
-                      course.progress,
-                    height: "10px",
-                    borderRadius: "20px",
-                    background:
-                      "linear-gradient(to right,#8b5cf6,#38bdf8)",
-                  }}
-                />
-              </div>
-            </div>
+        <button
+          style={{
+            ...joinBtn,
+            background: "#ef4444",
+          }}
+          onClick={() => {
 
-            <button style={joinBtn}>
-              Watch Course
-            </button>
-          </div>
-        ))}
+            const enteredCode =
+              prompt(
+                "Enter Premium Course Code"
+              );
+
+            if (
+              enteredCode ===
+              course.unlockCode
+            ) {
+
+              alert(
+                "Course Unlocked Successfully"
+              );
+
+            } else {
+
+              alert(
+                "Only Elite Users Can Access"
+              );
+
+            }
+
+          }}
+        >
+          🔒 Locked Course
+        </button>
+
+      ) : (
+
+        <button style={joinBtn}>
+          Watch Course
+        </button>
+
+      )}
+
+    </div>
+
+  );
+
+})}
       </div>
     </div>
   );
@@ -1274,6 +1375,11 @@ function AdminPanel() {
   }
 
   const [users, setUsers] = useState([]);
+  const [courseCode, setCourseCode] =
+  useState("");
+
+const [selectedUser, setSelectedUser] =
+  useState(null);
   const pendingUsers =
   users.filter(
     (user) =>
@@ -1498,50 +1604,126 @@ useEffect(() => {
       Active User
     </p>
 
-    <button
+    <div
       style={{
-        padding: "12px 20px",
-        borderRadius: "10px",
-        border: "none",
-        background: "#ef4444",
-        color: "white",
-        fontWeight: "bold",
-        cursor: "pointer",
         marginTop: "20px",
       }}
-      onClick={async () => {
-
-        await updateDoc(
-          doc(db, "users", user.id),
-          {
-            status: "pending",
-          }
-        );
-
-        window.location.reload();
-
-      }}
     >
-      Make Inactive
-    </button>
+
+      <input
+        type="text"
+        placeholder="Enter Course Code"
+        value={
+          selectedUser === user.id
+            ? courseCode
+            : ""
+        }
+        onChange={(e) => {
+          setSelectedUser(user.id);
+          setCourseCode(e.target.value);
+        }}
+        style={{
+          width: "100%",
+          padding: "12px",
+          borderRadius: "10px",
+          border: "none",
+          marginBottom: "15px",
+        }}
+      />
+
+      <button
+        style={{
+          padding: "12px 20px",
+          borderRadius: "10px",
+          border: "none",
+          background: "#3b82f6",
+          color: "white",
+          fontWeight: "bold",
+          cursor: "pointer",
+          width: "100%",
+        }}
+        onClick={async () => {
+
+          let updateData = {};
+
+          if (courseCode === "AI100") {
+            updateData = {
+              "courses.ai": true,
+            };
+          }
+
+          else if (courseCode === "DROP200") {
+            updateData = {
+              "courses.dropshipping": true,
+            };
+          }
+
+          else if (courseCode === "BRAND300") {
+            updateData = {
+              "courses.branding": true,
+            };
+          }
+
+          else if (courseCode === "DIGITAL400") {
+            updateData = {
+              "courses.digital": true,
+            };
+          }
+
+          else {
+
+            alert("Invalid Code");
+            return;
+
+          }
+
+          await updateDoc(
+            doc(db, "users", user.id),
+            updateData
+          );
+
+          alert("Course Access Granted");
+
+          window.location.reload();
+
+        }}
+      >
+        Unlock Course
+      </button>
+
+      <button
+        style={{
+          padding: "12px 20px",
+          borderRadius: "10px",
+          border: "none",
+          background: "#ef4444",
+          color: "white",
+          fontWeight: "bold",
+          cursor: "pointer",
+          marginTop: "20px",
+          width: "100%",
+        }}
+        onClick={async () => {
+
+          await updateDoc(
+            doc(db, "users", user.id),
+            {
+              status: "pending",
+            }
+          );
+
+          window.location.reload();
+
+        }}
+      >
+        Make Inactive
+      </button>
+
+    </div>
 
   </div>
 
 ))}
-
-        <div style={dashboardCard}>
-          <h2>Admin Access</h2>
-
-          <p
-            style={{
-              fontSize: "30px",
-              color: "#4ade80",
-            }}
-          >
-            Active
-          </p>
-        </div>
-
       </div>
     </div>
   );
