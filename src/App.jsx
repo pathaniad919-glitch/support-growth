@@ -1,28 +1,28 @@
 import { auth, db } from "./firebase";
 import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link,
-  Navigate,
-  useNavigate,
-} from "react-router-dom";
+  collection,
+  addDoc,
+  getDocs,
+  updateDoc,
+  doc,
+  serverTimestamp,
+  getDoc
+} from "firebase/firestore";
 
 import { useState, useEffect } from "react";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword
 } from "firebase/auth";
-
 import {
-  collection,
-  addDoc,
-  getDocs,
-  updateDoc,
-  doc,
-  serverTimestamp
-} from "firebase/firestore";
-
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+  Navigate,
+  useNavigate,
+  useParams
+} from "react-router-dom";
 function Home() {
   const [selectedPlan, setSelectedPlan] =
     useState(null);
@@ -1179,6 +1179,201 @@ function IntroPage() {
     </div>
   );
 }
+
+function PremiumAccessPage() {
+  const { code } = useParams();
+
+  const [timeLeft, setTimeLeft] =
+    useState(20);
+
+  const [expired, setExpired] =
+    useState(false);
+
+  useEffect(() => {
+
+  const checkAccess = async () => {
+
+    const accessRef =
+      doc(
+        db,
+        "premiumLinks",
+        code
+      );
+
+    const accessSnap =
+      await getDoc(accessRef);
+
+    if (
+      !accessSnap.exists()
+    ) {
+
+      setExpired(true);
+
+      return;
+    }
+
+    const data =
+      accessSnap.data();
+
+    if (data.used === true) {
+
+      setExpired(true);
+
+      return;
+    }
+    else {
+
+  await updateDoc(
+    accessRef,
+    {
+      used: true,
+    }
+  );
+
+}
+
+    const timer =
+      setInterval(() => {
+
+        setTimeLeft((prev) => {
+
+          if (prev <= 1) {
+
+            clearInterval(timer);
+
+            updateDoc(
+              accessRef,
+              {
+                used: true,
+              }
+            );
+
+            setExpired(true);
+
+            return 0;
+          }
+
+          return prev - 1;
+
+        });
+
+      }, 1000);
+
+  };
+
+  checkAccess();
+
+}, [code]);
+
+  if (expired) {
+
+    return (
+
+      <div
+        style={{
+          minHeight: "100vh",
+          background: "#050816",
+          color: "white",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
+
+        <h1
+          style={{
+            fontSize: "60px",
+          }}
+        >
+          Access Expired
+        </h1>
+
+        <p
+          style={{
+            color: "#cbd5e1",
+            fontSize: "22px",
+          }}
+        >
+          This premium access
+          has already been used.
+        </p>
+
+      </div>
+
+    );
+  }
+
+  return (
+
+    <div
+      style={{
+        minHeight: "100vh",
+        background:
+          "linear-gradient(180deg,#020617,#0f172a,#111827)",
+        color: "white",
+        padding: "40px",
+      }}
+    >
+
+      <h1
+        style={{
+          textAlign: "center",
+          fontSize: "70px",
+          marginBottom: "20px",
+        }}
+      >
+        Premium Business Training
+      </h1>
+
+      <h2
+        style={{
+          textAlign: "center",
+          color: "#38bdf8",
+          marginBottom: "40px",
+        }}
+      >
+        Time Left:
+        {" "}
+        {Math.floor(timeLeft / 60)}
+        :
+        {String(timeLeft % 60)
+          .padStart(2, "0")}
+      </h2>
+
+      <div
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          background:
+            "rgba(255,255,255,0.05)",
+          padding: "25px",
+          borderRadius: "30px",
+          backdropFilter:
+            "blur(12px)",
+        }}
+      >
+
+        <iframe
+          width="100%"
+          height="700"
+          src="https://www.youtube.com/embed/WOgDkIVF_Xo"
+          title="Premium Training"
+          frameBorder="0"
+          allowFullScreen
+          style={{
+            borderRadius: "20px",
+            marginBottom: "30px",
+          }}
+        />
+
+      </div>
+
+    </div>
+
+  );
+}
+
 /* LOGIN */
 
 function Login() {
@@ -2344,6 +2539,10 @@ function App() {
 <Route
   path="/intro"
   element={<IntroPage />}
+/>
+<Route
+  path="/premium-access/:code"
+  element={<PremiumAccessPage />}
 />
       </Routes>
     </BrowserRouter>
