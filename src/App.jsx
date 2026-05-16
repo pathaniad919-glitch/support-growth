@@ -6,7 +6,8 @@ import {
   updateDoc,
   doc,
   serverTimestamp,
-  getDoc
+  getDoc,
+  setDoc
 } from "firebase/firestore";
 
 import { useState, useEffect } from "react";
@@ -1184,7 +1185,7 @@ function PremiumAccessPage() {
   const { code } = useParams();
 
   const [timeLeft, setTimeLeft] =
-    useState(20);
+  useState(2400);
 
   const [expired, setExpired] =
     useState(false);
@@ -1999,6 +2000,31 @@ function AdminPanel() {
 
 const [selectedUser, setSelectedUser] =
   useState(null);
+  const generatePremiumLink = async () => {
+
+  const randomCode =
+    Math.random()
+      .toString(36)
+      .substring(2, 8)
+      .toUpperCase();
+
+  await setDoc(
+    doc(db, "premiumLinks", randomCode),
+    {
+      used: false,
+      createdAt: serverTimestamp(),
+    }
+  );
+
+  const finalLink =
+    `${window.location.origin}/premium-access/${randomCode}`;
+
+  navigator.clipboard.writeText(finalLink);
+
+  alert(
+    `Premium Link Copied:\n${finalLink}`
+  );
+};
   const pendingUsers =
   users.filter(
     (user) =>
@@ -2100,6 +2126,16 @@ setIntroUsers(introData);
           >
             Full Website Control
           </p>
+          <button
+  style={{
+    ...joinBtn,
+    marginTop: "20px",
+    width: "300px",
+  }}
+  onClick={generatePremiumLink}
+>
+  Generate Premium Link
+</button>
         </div>
 
         <button
