@@ -994,22 +994,17 @@ setShowPayment(true);
           }}
         >
 
-          <video
-            controls
-            autoPlay
-            playsInline
-            preload="auto"
-            style={{
-              width: "100%",
-              borderRadius: "24px",
-              background: "black",
-            }}
-          >
-            <source
-              src="/intro.mp4"
-              type="video/mp4"
-            />
-          </video>
+          <iframe
+  width="100%"
+  height="700"
+  src="https://www.youtube.com/embed/zeGZ3HayuK8"
+  title="Intro Video"
+  frameBorder="0"
+  allowFullScreen
+  style={{
+    borderRadius: "24px",
+  }}
+/>
 
         </div>
 
