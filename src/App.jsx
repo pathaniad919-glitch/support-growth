@@ -812,15 +812,15 @@ function IntroPage() {
         }
       );
 
-      alert(
-        "Registration Successful"
-      );
+      setSubmittedUser({
+  name,
+  phone,
+  email,
+});
 
-      setName("");
-      setPhone("");
-      setEmail("");
+setShowForm(false);
 
-      setShowForm(false);
+setShowPayment(true);
 
     } catch (error) {
 
@@ -1176,6 +1176,108 @@ function IntroPage() {
         </div>
 
       )}
+      {/* PAYMENT POPUP */}
+
+{showPayment && (
+
+  <div
+    style={{
+      position: "fixed",
+      inset: 0,
+      background: "rgba(0,0,0,0.85)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 999,
+      padding: "20px",
+    }}
+  >
+
+    <div
+      style={{
+        width: "100%",
+        maxWidth: "500px",
+        background: "#0f172a",
+        padding: "40px",
+        borderRadius: "30px",
+        textAlign: "center",
+        border:
+          "1px solid rgba(255,255,255,0.08)",
+      }}
+    >
+
+      <h1
+        style={{
+          marginBottom: "20px",
+        }}
+      >
+        Pay Registration Fee
+      </h1>
+
+      <p
+        style={{
+          color: "#cbd5e1",
+          lineHeight: "1.8",
+          marginBottom: "25px",
+        }}
+      >
+        Scan QR and pay ₹99 to continue
+        your premium registration.
+      </p>
+
+      <img
+        src="/scanner.jpeg"
+        alt="scanner"
+        style={{
+          width: "280px",
+          borderRadius: "20px",
+          marginBottom: "25px",
+        }}
+      />
+
+      <h2
+        style={{
+          color: "#38bdf8",
+          marginBottom: "25px",
+        }}
+      >
+        Registration Fee: ₹99
+      </h2>
+
+      <button
+        style={joinBtn}
+        onClick={async () => {
+
+          await addDoc(
+            collection(
+              db,
+              "paymentRequests"
+            ),
+            {
+              ...submittedUser,
+              paymentStatus:
+                "pending",
+              createdAt:
+                serverTimestamp(),
+            }
+          );
+
+          alert(
+            "Payment Request Submitted Successfully"
+          );
+
+          setShowPayment(false);
+
+        }}
+      >
+        I Have Paid
+      </button>
+
+    </div>
+
+  </div>
+
+)}
 
     </div>
   );
@@ -1383,6 +1485,11 @@ function Login() {
 
   const [email, setEmail] =
     useState("");
+    const [showPayment, setShowPayment] =
+  useState(false);
+
+const [submittedUser, setSubmittedUser] =
+  useState(null);
 
   const [password, setPassword] =
     useState("");
@@ -1995,6 +2102,8 @@ function AdminPanel() {
   const [users, setUsers] = useState([]);
   const [introUsers, setIntroUsers] =
   useState([]);
+  const [paymentRequests, setPaymentRequests] =
+  useState([]);
   const [courseCode, setCourseCode] =
   useState("");
 
@@ -2078,6 +2187,26 @@ introSnapshot.forEach((docItem) => {
 });
 
 setIntroUsers(introData);
+const paymentSnapshot =
+  await getDocs(
+    collection(
+      db,
+      "paymentRequests"
+    )
+  );
+
+const paymentData = [];
+
+paymentSnapshot.forEach((docItem) => {
+
+  paymentData.push({
+    id: docItem.id,
+    ...docItem.data(),
+  });
+
+});
+
+setPaymentRequests(paymentData);
   };
 
   fetchUsers();
@@ -2171,6 +2300,56 @@ setIntroUsers(introData);
     <p>{item.phone}</p>
 
     <p>{item.email}</p>
+    <p
+  style={{
+    marginTop: "10px",
+    color: item.payment
+      ? "#22c55e"
+      : "#ef4444",
+    fontWeight: "bold",
+  }}
+>
+  {item.payment
+    ? "✅ Payment Submitted"
+    : "❌ Payment Pending"}
+</p>
+
+  </div>
+
+))}
+<h1
+  style={{
+    marginTop: "50px",
+    marginBottom: "25px",
+  }}
+>
+  Payment Requests
+</h1>
+
+{paymentRequests.map((item) => (
+
+  <div
+    key={item.id}
+    style={{
+      ...dashboardCard,
+      marginBottom: "25px",
+    }}
+  >
+
+    <h2>{item.name}</h2>
+
+    <p>{item.phone}</p>
+
+    <p>{item.email}</p>
+
+    <p
+      style={{
+        color: "#facc15",
+        marginTop: "10px",
+      }}
+    >
+      ₹99 Payment Submitted
+    </p>
 
   </div>
 
