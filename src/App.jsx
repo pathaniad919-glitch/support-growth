@@ -784,6 +784,10 @@ function IntroPage() {
 
   const [email, setEmail] =
     useState("");
+    const [showPayment, setShowPayment] =
+  useState(false);
+  const [submittedUser, setSubmittedUser] =
+  useState(null);
 
   const handleRegister = async () => {
 
@@ -1485,11 +1489,6 @@ function Login() {
 
   const [email, setEmail] =
     useState("");
-    const [showPayment, setShowPayment] =
-  useState(false);
-
-const [submittedUser, setSubmittedUser] =
-  useState(null);
 
   const [password, setPassword] =
     useState("");
