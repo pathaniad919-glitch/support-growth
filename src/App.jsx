@@ -1749,47 +1749,42 @@ const [selectedCourse, setSelectedCourse] =
 
 const coursesData = [
   {
-    icon: "🤖",
-    title: "AI Mastery",
-    progress: "72%",
-    key: "ai",
-    unlockCode: "AI100",
+    icon: "🎬",
+    title: "Project 1",
+    progress: "25%",
+    key: "project1",
+    unlockCode: "PROJECT100",
+
+    price: "₹999",
 
     description:
-      "Learn AI tools, automation and online income systems.",
-  },
-
-  {
-    icon: "🛒",
-    title: "Dropshipping Empire",
-    progress: "48%",
-    key: "dropshipping",
-    unlockCode: "DROP200",
-
-    description:
-      "Build ecommerce stores and scaling systems.",
-  },
-
-  {
-    icon: "🚀",
-    title: "Brand Building",
-    progress: "91%",
-    key: "branding",
-    unlockCode: "BRAND300",
-
-    description:
-      "Build authority and social media influence.",
+      "Video Editing Basic to Advance + Website Design Basic to Advance",
   },
 
   {
     icon: "💻",
-    title: "Digital Products",
-    progress: "36%",
-    key: "digital",
-    unlockCode: "DIGITAL400",
+    title: "Project 2",
+    progress: "60%",
+    key: "project2",
+    unlockCode: "PROJECT200",
+
+    price: "₹2999",
 
     description:
-      "Create ebooks, templates and digital assets.",
+      "Video Editing, Website Design, Digital Products and Social Media Handling",
+  },
+
+  {
+    icon: "🚀",
+    title: "Project 3",
+    progress: "100%",
+    key: "project3",
+    unlockCode: "PROJECT300",
+
+    price: "₹9999",
+
+    description:
+      "All Premium Skills + One To One Support + Online Workshops + Advanced Mentorship",
   },
 ];
 
@@ -1898,7 +1893,7 @@ const coursesData = [
               color: "#facc15",
             }}
           >
-            6 Courses
+            3 Projects
           </p>
         </div>
       </div>
@@ -1910,7 +1905,7 @@ const coursesData = [
           fontSize: "42px",
         }}
       >
-        Your Premium Courses
+        Your Premium Projects
       </h1>
 
       <div
@@ -1924,7 +1919,7 @@ const coursesData = [
         {coursesData.map((course) => {
 
   const unlocked =
-    user?.courses?.[course.key];
+  user?.projects?.[course.key];
 
   return (
 
@@ -1952,6 +1947,14 @@ const coursesData = [
         }}
       >
         {course.description}
+        <h2
+  style={{
+    color: "#38bdf8",
+    marginTop: "15px",
+  }}
+>
+  {course.price}
+</h2>
       </p>
 
       <div
@@ -2038,7 +2041,7 @@ const coursesData = [
 
           }}
         >
-          🔒 Locked Course
+          🔒 Locked Project
         </button>
 
       ) : (
