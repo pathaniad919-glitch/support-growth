@@ -253,7 +253,7 @@ function Home() {
             marginBottom: "20px",
           }}
         >
-          Premium Skill Programs
+          Premium Projects
         </h2>
 
         <div
@@ -265,50 +265,28 @@ function Home() {
           }}
         >
           {[
-            {
-              icon: "🤖",
-              title: "AI Mastery",
-              desc:
-                "Learn AI tools, automation and online income systems.",
-            },
+            [
+  {
+    icon: "🎬",
+    title: "Project 1",
+    desc:
+      "Video Editing Basic to Advance + Website Design Basic to Advance",
+  },
 
-            {
-              icon: "🛒",
-              title:
-                "Dropshipping Empire",
-              desc:
-                "Build ecommerce stores and scaling systems.",
-            },
+  {
+    icon: "💻",
+    title: "Project 2",
+    desc:
+      "Video Editing, Website Design, Digital Products and Social Media Handling",
+  },
 
-            {
-              icon: "🚀",
-              title: "Brand Building",
-              desc:
-                "Build authority and social media influence.",
-            },
-
-            {
-              icon: "💻",
-              title:
-                "Digital Products",
-              desc:
-                "Create ebooks, templates and digital assets.",
-            },
-
-            {
-              icon: "📈",
-              title:
-                "Marketing Psychology",
-              desc:
-                "Understand customer psychology and sales systems.",
-            },
-
-            {
-              icon: "🌍",
-              title: "Freelancing",
-              desc:
-                "Build global freelance income streams.",
-            },
+  {
+    icon: "🚀",
+    title: "Project 3",
+    desc:
+      "All Premium Skills + One To One Support + Online Workshops + Advanced Mentorship",
+  },
+]
           ].map((course) => (
             <div
               key={course.title}
