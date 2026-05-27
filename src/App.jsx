@@ -2018,7 +2018,7 @@ const coursesData = [
 
             const enteredCode =
               prompt(
-                "Enter Premium Course Code"
+                "Enter Premium Project Code"
               );
 
             if (
@@ -2460,7 +2460,7 @@ setPaymentRequests(paymentData);
 
       <input
         type="text"
-        placeholder="Enter Course Code"
+        placeholder="Enter Project Code"
         value={
           selectedUser === user.id
             ? courseCode
@@ -2494,36 +2494,37 @@ setPaymentRequests(paymentData);
 
           let updateData = {};
 
-          if (courseCode === "AI100") {
-            updateData = {
-              "courses.ai": true,
-            };
-          }
+if (courseCode === "PROJECT100") {
 
-          else if (courseCode === "DROP200") {
-            updateData = {
-              "courses.dropshipping": true,
-            };
-          }
+  updateData = {
+    "projects.project1": true,
+  };
 
-          else if (courseCode === "BRAND300") {
-            updateData = {
-              "courses.branding": true,
-            };
-          }
+}
 
-          else if (courseCode === "DIGITAL400") {
-            updateData = {
-              "courses.digital": true,
-            };
-          }
+else if (courseCode === "PROJECT200") {
 
-          else {
+  updateData = {
+    "projects.project2": true,
+  };
 
-            alert("Invalid Code");
-            return;
+}
 
-          }
+else if (courseCode === "PROJECT300") {
+
+  updateData = {
+    "projects.project3": true,
+  };
+
+}
+
+else {
+
+  alert("Invalid Project Code");
+
+  return;
+
+}
 
           await updateDoc(
             doc(db, "users", user.id),
@@ -2536,7 +2537,7 @@ setPaymentRequests(paymentData);
 
         }}
       >
-        Unlock Course
+        Unlock Project
       </button>
 
       <button
