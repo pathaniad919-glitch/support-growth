@@ -221,11 +221,16 @@ function Home() {
   </p>
 
   {!isLoggedIn ? (
-    <Link to="/intro">
-      <button style={joinBtn}>
-        Start Learning
-      </button>
-    </Link>
+    <button
+  style={joinBtn}
+  onClick={() => {
+    alert(
+      "Registration Link Available Through Invitation Only"
+    );
+  }}
+>
+  Start Learning
+</button>
   ) : (
     <Link to="/dashboard">
       <button style={joinBtn}>
