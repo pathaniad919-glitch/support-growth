@@ -324,7 +324,18 @@ function Home() {
         {topEarners.project1}
       </h1>
 
-      <h2>Project 1 Participant</h2>
+      <h2>
+  {topEarners.project1Name}
+</h2>
+
+<p
+  style={{
+    color: "#94a3b8",
+    marginBottom: "10px",
+  }}
+>
+  📍 {topEarners.project1City}
+</p>
 
       <p
         style={{
@@ -348,7 +359,18 @@ function Home() {
         {topEarners.project2}
       </h1>
 
-      <h2>Project 2 Participant</h2>
+      <h2>
+  {topEarners.project2Name}
+</h2>
+
+<p
+  style={{
+    color: "#94a3b8",
+    marginBottom: "10px",
+  }}
+>
+  📍 {topEarners.project2City}
+</p>
 
       <p
         style={{
@@ -372,7 +394,18 @@ function Home() {
         {topEarners.project3}
       </h1>
 
-      <h2>Project 3 Participant</h2>
+      <h2>
+  {topEarners.project3Name}
+</h2>
+
+<p
+  style={{
+    color: "#94a3b8",
+    marginBottom: "10px",
+  }}
+>
+  📍 {topEarners.project3City}
+</p>
 
       <p
         style={{
@@ -2243,14 +2276,40 @@ const [project2Earning, setProject2Earning] =
 
 const [project3Earning, setProject3Earning] =
   useState("");
+  const [project1Name, setProject1Name] =
+  useState("");
+
+const [project1City, setProject1City] =
+  useState("");
+
+const [project2Name, setProject2Name] =
+  useState("");
+
+const [project2City, setProject2City] =
+  useState("");
+
+const [project3Name, setProject3Name] =
+  useState("");
+
+const [project3City, setProject3City] =
+  useState("");
   const updateTopEarners = async () => {
 
   await setDoc(
     doc(db, "topEarners", "today"),
     {
       project1: project1Earning,
-      project2: project2Earning,
-      project3: project3Earning,
+project1Name,
+project1City,
+
+project2: project2Earning,
+project2Name,
+project2City,
+
+project3: project3Earning,
+project3Name,
+project3City,
+      
     }
   );
 
@@ -2440,12 +2499,31 @@ setPaymentRequests(paymentData);
   <input
     type="text"
     placeholder="Project 1 Earning"
-    value={project1Earning}
+   value={project1Earning}
     onChange={(e) =>
       setProject1Earning(e.target.value)
     }
     style={inputStyle}
   />
+  <input
+  type="text"
+  placeholder="Project 1 Name"
+  value={project1Name}
+  onChange={(e) =>
+    setProject1Name(e.target.value)
+  }
+  style={inputStyle}
+/>
+
+<input
+  type="text"
+  placeholder="Project 1 City"
+  value={project1City}
+  onChange={(e) =>
+    setProject1City(e.target.value)
+  }
+  style={inputStyle}
+/>
 
   <input
     type="text"
@@ -2456,6 +2534,25 @@ setPaymentRequests(paymentData);
     }
     style={inputStyle}
   />
+  <input
+  type="text"
+  placeholder="Project 2 Name"
+  value={project2Name}
+  onChange={(e) =>
+    setProject2Name(e.target.value)
+  }
+  style={inputStyle}
+/>
+
+<input
+  type="text"
+  placeholder="Project 2 City"
+  value={project2City}
+  onChange={(e) =>
+    setProject2City(e.target.value)
+  }
+  style={inputStyle}
+/>
 
   <input
     type="text"
@@ -2466,6 +2563,25 @@ setPaymentRequests(paymentData);
     }
     style={inputStyle}
   />
+  <input
+  type="text"
+  placeholder="Project 3 Name"
+  value={project3Name}
+  onChange={(e) =>
+    setProject3Name(e.target.value)
+  }
+  style={inputStyle}
+/>
+
+<input
+  type="text"
+  placeholder="Project 3 City"
+  value={project3City}
+  onChange={(e) =>
+    setProject3City(e.target.value)
+  }
+  style={inputStyle}
+/>
 
   <button
     style={joinBtn}
