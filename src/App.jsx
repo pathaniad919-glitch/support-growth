@@ -27,10 +27,42 @@ import {
 function Home() {
   const [selectedPlan, setSelectedPlan] =
     useState(null);
+    const [topEarners, setTopEarners] =
+  useState({
+    project1: "₹0",
+    project2: "₹0",
+    project3: "₹0",
+  });
 
   const isLoggedIn =
     localStorage.getItem("loggedIn") ===
     "true";
+    useEffect(() => {
+
+  const fetchTopEarners = async () => {
+
+    const docRef = doc(
+      db,
+      "topEarners",
+      "today"
+    );
+
+    const docSnap =
+      await getDoc(docRef);
+
+    if (docSnap.exists()) {
+
+      setTopEarners(
+        docSnap.data()
+      );
+
+    }
+
+  };
+
+  fetchTopEarners();
+
+}, []);
 
   return (
     <div
@@ -240,7 +272,122 @@ function Home() {
   )}
 
 </div>
+{/* TOP EARNERS */}
 
+<section
+  style={{
+    padding:
+      window.innerWidth < 768
+        ? "80px 20px"
+        : "120px 60px",
+  }}
+>
+
+  <h2
+    style={{
+      textAlign: "center",
+      fontSize: "55px",
+      marginBottom: "20px",
+    }}
+  >
+    Yesterday Top Earners 🚀
+  </h2>
+
+  <p
+    style={{
+      textAlign: "center",
+      color: "#cbd5e1",
+      marginBottom: "50px",
+      fontSize: "20px",
+    }}
+  >
+    Live project participants earnings
+  </p>
+
+  <div
+    style={{
+      display: "grid",
+      gridTemplateColumns:
+        "repeat(auto-fit,minmax(300px,1fr))",
+      gap: "30px",
+    }}
+  >
+
+    <div style={courseCard}>
+
+      <h1
+        style={{
+          fontSize: "55px",
+          color: "#22c55e",
+        }}
+      >
+        {topEarners.project1}
+      </h1>
+
+      <h2>Project 1 Participant</h2>
+
+      <p
+        style={{
+          color: "#cbd5e1",
+          lineHeight: "1.8",
+        }}
+      >
+        Video Editing and Website Design earnings.
+      </p>
+
+    </div>
+
+    <div style={courseCard}>
+
+      <h1
+        style={{
+          fontSize: "55px",
+          color: "#38bdf8",
+        }}
+      >
+        {topEarners.project2}
+      </h1>
+
+      <h2>Project 2 Participant</h2>
+
+      <p
+        style={{
+          color: "#cbd5e1",
+          lineHeight: "1.8",
+        }}
+      >
+        Social Media Handling and Digital Product earnings.
+      </p>
+
+    </div>
+
+    <div style={courseCard}>
+
+      <h1
+        style={{
+          fontSize: "55px",
+          color: "#facc15",
+        }}
+      >
+        {topEarners.project3}
+      </h1>
+
+      <h2>Project 3 Participant</h2>
+
+      <p
+        style={{
+          color: "#cbd5e1",
+          lineHeight: "1.8",
+        }}
+      >
+        Advanced mentorship and premium business earnings.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
       {/* COURSES */}
       <section
         id="courses"
@@ -2088,6 +2235,28 @@ function AdminPanel() {
 
 const [selectedUser, setSelectedUser] =
   useState(null);
+  const [project1Earning, setProject1Earning] =
+  useState("");
+
+const [project2Earning, setProject2Earning] =
+  useState("");
+
+const [project3Earning, setProject3Earning] =
+  useState("");
+  const updateTopEarners = async () => {
+
+  await setDoc(
+    doc(db, "topEarners", "today"),
+    {
+      project1: project1Earning,
+      project2: project2Earning,
+      project3: project3Earning,
+    }
+  );
+
+  alert("Top Earners Updated");
+
+};
   const generatePremiumLink = async () => {
 
   const randomCode =
@@ -2253,7 +2422,59 @@ setPaymentRequests(paymentData);
           Logout
         </button>
       </div>
+<div
+  style={{
+    ...dashboardCard,
+    marginBottom: "40px",
+  }}
+>
 
+  <h1
+    style={{
+      marginBottom: "25px",
+    }}
+  >
+    Update Top Earners
+  </h1>
+
+  <input
+    type="text"
+    placeholder="Project 1 Earning"
+    value={project1Earning}
+    onChange={(e) =>
+      setProject1Earning(e.target.value)
+    }
+    style={inputStyle}
+  />
+
+  <input
+    type="text"
+    placeholder="Project 2 Earning"
+    value={project2Earning}
+    onChange={(e) =>
+      setProject2Earning(e.target.value)
+    }
+    style={inputStyle}
+  />
+
+  <input
+    type="text"
+    placeholder="Project 3 Earning"
+    value={project3Earning}
+    onChange={(e) =>
+      setProject3Earning(e.target.value)
+    }
+    style={inputStyle}
+  />
+
+  <button
+    style={joinBtn}
+    onClick={updateTopEarners}
+  >
+    Update Homepage Earnings
+  </button>
+
+</div>
       <div>
 <h1
   style={{
