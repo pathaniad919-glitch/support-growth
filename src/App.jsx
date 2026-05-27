@@ -361,25 +361,25 @@ function Home() {
     >
       {[
         {
-          plan: "Starter",
-          price: "₹999",
-          reason:
-            "Perfect for beginners starting online business skills.",
-        },
+  plan: "Project 1",
+  price: "₹999",
+  reason:
+    "Video Editing Basic to Advance and Website Design Basic to Advance.",
+},
 
-        {
-          plan: "Growth",
-          price: "₹1999",
-          reason:
-            "For serious learners building personal brands and income systems.",
-        },
+{
+  plan: "Project 2",
+  price: "₹2999",
+  reason:
+    "Video Editing, Website Design, Digital Products and Social Media Handling.",
+},
 
-        {
-          plan: "Elite",
-          price: "₹7999",
-          reason:
-            "Private mentorship and premium advanced business systems.",
-        },
+{
+  plan: "Project 3",
+  price: "₹9999",
+  reason:
+    "All Premium Skills, 1-to-1 Support, Online Workshops and Advanced Mentorship.",
+},
       ].map((item) => (
         <div
           key={item.plan}
