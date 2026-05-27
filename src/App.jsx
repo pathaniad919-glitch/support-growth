@@ -1647,12 +1647,11 @@ function Signup() {
     dailyLearning: "0 Hours",
     dailyEarning: "₹0",
 
-    courses: {
-      ai: false,
-      dropshipping: false,
-      branding: false,
-      digital: false,
-    },
+    projects: {
+  project1: false,
+  project2: false,
+  project3: false,
+},
   }
 );
 
