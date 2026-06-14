@@ -2462,13 +2462,16 @@ setPaymentRequests(paymentData);
           >
             Full Website Control
           </p>
-          <button
+         <button
   style={{
     ...joinBtn,
     marginTop: "20px",
     width: "300px",
   }}
-  onClick={generatePremiumLink}
+  onClick={() => {
+    alert("Button clicked");
+    generatePremiumLink();
+  }}
 >
   Generate Premium Link
 </button>
