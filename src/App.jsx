@@ -2317,29 +2317,35 @@ project3City,
 
 };
   const generatePremiumLink = async () => {
+  alert("Button clicked");
 
-  const randomCode =
-    Math.random()
-      .toString(36)
-      .substring(2, 8)
-      .toUpperCase();
+  try {
+    const randomCode =
+      Math.random()
+        .toString(36)
+        .substring(2, 8)
+        .toUpperCase();
 
-  await setDoc(
-    doc(db, "premiumLinks", randomCode),
-    {
-      used: false,
-      createdAt: serverTimestamp(),
-    }
-  );
+    alert("Code created: " + randomCode);
 
-  const finalLink =
-    `${window.location.origin}/premium-access/${randomCode}`;
+    await setDoc(
+      doc(db, "premiumLinks", randomCode),
+      {
+        used: false,
+        createdAt: serverTimestamp(),
+      }
+    );
 
-  navigator.clipboard.writeText(finalLink);
+    alert("Saved in Firebase");
 
-  alert(
-    `Premium Link Copied:\n${finalLink}`
-  );
+    const finalLink =
+      `${window.location.origin}/premium-access/${randomCode}`;
+
+    alert("Generated Link: " + finalLink);
+
+  } catch (error) {
+    alert("Error: " + error.message);
+  }
 };
   const pendingUsers =
   users.filter(
