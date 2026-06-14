@@ -1455,80 +1455,20 @@ function PremiumAccessPage() {
     useState(false);
 
   useEffect(() => {
+  const timer = setInterval(() => {
+    setTimeLeft((prev) => {
+      if (prev <= 1) {
+        clearInterval(timer);
+        setExpired(true);
+        return 0;
+      }
 
-  const checkAccess = async () => {
+      return prev - 1;
+    });
+  }, 1000);
 
-    const accessRef =
-      doc(
-        db,
-        "premiumLinks",
-        code
-      );
-
-    const accessSnap =
-      await getDoc(accessRef);
-
-    if (
-      !accessSnap.exists()
-    ) {
-
-      setExpired(true);
-
-      return;
-    }
-
-    const data =
-      accessSnap.data();
-
-    if (data.used === true) {
-
-      setExpired(true);
-
-      return;
-    }
-    else {
-
-  await updateDoc(
-    accessRef,
-    {
-      used: true,
-    }
-  );
-
-}
-
-    const timer =
-      setInterval(() => {
-
-        setTimeLeft((prev) => {
-
-          if (prev <= 1) {
-
-            clearInterval(timer);
-
-            updateDoc(
-              accessRef,
-              {
-                used: true,
-              }
-            );
-
-            setExpired(true);
-
-            return 0;
-          }
-
-          return prev - 1;
-
-        });
-
-      }, 1000);
-
-  };
-
-  checkAccess();
-
-}, [code]);
+  return () => clearInterval(timer);
+}, []);
 
   if (expired) {
 
@@ -2316,30 +2256,16 @@ project3City,
   alert("Top Earners Updated");
 
 };
-  const generatePremiumLink = async () => {
-  try {
-    const randomCode = Math.random()
-      .toString(36)
-      .substring(2, 8)
-      .toUpperCase();
+  const generatePremiumLink = () => {
+  const randomCode = Math.random()
+    .toString(36)
+    .substring(2, 8)
+    .toUpperCase();
 
-    await setDoc(
-      doc(db, "premiumLinks", randomCode),
-      {
-        used: false,
-        createdAt: serverTimestamp(),
-      }
-    );
+  const finalLink =
+    `${window.location.origin}/premium-access/${randomCode}`;
 
-    const finalLink =
-      `${window.location.origin}/premium-access/${randomCode}`;
-
-    navigator.clipboard.writeText(finalLink);
-alert("Premium link copied!");
-
-  } catch (error) {
-    alert(error.message);
-  }
+  prompt("Copy this premium link:", finalLink);
 };
   const pendingUsers =
   users.filter(
