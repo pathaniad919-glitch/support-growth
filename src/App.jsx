@@ -1622,7 +1622,7 @@ function PremiumAccessPage() {
         <iframe
           width="100%"
           height="700"
-          src="https://www.youtube.com/watch?v=5plT_MEpK6g"
+          src="https://www.youtube.com/embed/5plT_MEpK6g"
           title="Premium Training"
           frameBorder="0"
           allowFullScreen
@@ -2334,7 +2334,8 @@ project3City,
     const finalLink =
       `${window.location.origin}/premium-access/${randomCode}`;
 
-    prompt("Copy this premium link:", finalLink);
+    navigator.clipboard.writeText(finalLink);
+alert("Premium link copied!");
 
   } catch (error) {
     alert(error.message);
