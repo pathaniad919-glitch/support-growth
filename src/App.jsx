@@ -450,6 +450,7 @@ function Home() {
           }}
         >
           {[
+            [
   {
     icon: "🎬",
     title: "Project 1",
@@ -2123,16 +2124,14 @@ const coursesData = [
       <h2>{course.title}</h2>
 
       <p
-  style={{
-    color: "#cbd5e1",
-    lineHeight: "1.8",
-    marginTop: "10px",
-  }}
->
-  {course.description}
-</p>
-
-<h2
+        style={{
+          color: "#cbd5e1",
+          lineHeight: "1.8",
+          marginTop: "10px",
+        }}
+      >
+        {course.description}
+        <h2
   style={{
     color: "#38bdf8",
     marginTop: "15px",
@@ -2140,6 +2139,7 @@ const coursesData = [
 >
   {course.price}
 </h2>
+      </p>
 
       <div
         style={{
@@ -2335,21 +2335,11 @@ project3City,
   const finalLink =
     `${window.location.origin}/premium-access/${randomCode}`;
 
-  try {
-
-  await navigator.clipboard.writeText(finalLink);
+  navigator.clipboard.writeText(finalLink);
 
   alert(
-    "Premium Link Copied:\n" + finalLink
+    `Premium Link Copied:\n${finalLink}`
   );
-
-} catch (error) {
-
-  alert(
-    "Link Created:\n" + finalLink
-  );
-
-}
 };
   const pendingUsers =
   users.filter(
