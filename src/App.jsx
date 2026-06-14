@@ -1160,7 +1160,7 @@ setShowPayment(true);
           <iframe
   width="100%"
   height="700"
-  src="https://www.youtube.com/embed/5plT_MEpK6g"
+  src="https://www.youtube.com/embed/zeGZ3HayuK8"
   title="Intro Video"
   frameBorder="0"
   allowFullScreen
@@ -2462,18 +2462,13 @@ setPaymentRequests(paymentData);
           >
             Full Website Control
           </p>
-         <button
-  type="button"
+          <button
   style={{
     ...joinBtn,
     marginTop: "20px",
     width: "300px",
-    position: "relative",
-    zIndex: 9999,
   }}
-  onClick={() => {
-    generatePremiumLink();
-  }}
+  onClick={generatePremiumLink}
 >
   Generate Premium Link
 </button>
