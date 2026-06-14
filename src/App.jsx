@@ -2317,16 +2317,11 @@ project3City,
 
 };
   const generatePremiumLink = async () => {
-  alert("Button clicked");
-
   try {
-    const randomCode =
-      Math.random()
-        .toString(36)
-        .substring(2, 8)
-        .toUpperCase();
-
-    alert("Code created: " + randomCode);
+    const randomCode = Math.random()
+      .toString(36)
+      .substring(2, 8)
+      .toUpperCase();
 
     await setDoc(
       doc(db, "premiumLinks", randomCode),
@@ -2336,15 +2331,13 @@ project3City,
       }
     );
 
-    alert("Saved in Firebase");
-
     const finalLink =
       `${window.location.origin}/premium-access/${randomCode}`;
 
-    alert("Generated Link: " + finalLink);
+    prompt("Copy this premium link:", finalLink);
 
   } catch (error) {
-    alert("Error: " + error.message);
+    alert(error.message);
   }
 };
   const pendingUsers =
