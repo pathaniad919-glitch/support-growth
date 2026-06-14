@@ -2256,29 +2256,25 @@ project3City,
   alert("Top Earners Updated");
 
 };
-  const generatePremiumLink = () => {
+  const generatePremiumLink = async () => {
   const randomCode = Math.random()
     .toString(36)
     .substring(2, 8)
     .toUpperCase();
+
+  await setDoc(
+    doc(db, "premiumLinks", randomCode),
+    {
+      used: false,
+      createdAt: serverTimestamp(),
+    }
+  );
 
   const finalLink =
     `${window.location.origin}/premium-access/${randomCode}`;
 
   prompt("Copy this premium link:", finalLink);
 };
-  const pendingUsers =
-  users.filter(
-    (user) =>
-      user.status === "pending"
-  );
-
-const approvedUsers =
-  users.filter(
-    (user) =>
-      user.status === "approved"
-  );
-
 useEffect(() => {
 
   const fetchUsers = async () => {
