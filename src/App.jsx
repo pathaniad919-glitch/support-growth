@@ -2512,11 +2512,14 @@ const approvedUsers = users.filter(
 />
 
   <button
-    style={joinBtn}
-    onClick={updateTopEarners}
-  >
-    Update Homepage Earnings
-  </button>
+  style={joinBtn}
+  onClick={() => {
+    alert("Button clicked");
+    updateTopEarners();
+  }}
+>
+  Update Homepage Earnings
+</button>
 
 </div>
       <div>
