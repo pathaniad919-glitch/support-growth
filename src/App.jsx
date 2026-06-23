@@ -2349,7 +2349,13 @@ setPaymentRequests(paymentData);
 
     navigate("/login");
   };
+const pendingUsers = users.filter(
+  (user) => user.status === "pending"
+);
 
+const approvedUsers = users.filter(
+  (user) => user.status === "approved"
+);
   return (
     <div
       style={{
