@@ -1860,7 +1860,7 @@ function Dashboard() {
   const navigate = useNavigate();
 
   const isLoggedIn =
-    localStorage.getItem("loggedIn");
+  localStorage.getItem("loggedIn") === "true";
 
   const user = JSON.parse(
     localStorage.getItem("user")
@@ -1913,19 +1913,18 @@ const coursesData = [
 ];
 
   /* PROTECTED ROUTE */
-  if (
-    isLoggedIn !== "true" ||
-    !user
-  ) {
-    return <Navigate to="/login" />;
-  }
+  if (!isLoggedIn || !user) {
+  return <Navigate to="/login" />;
+}
 
   const handleLogout = () => {
-    localStorage.clear();
+  localStorage.removeItem("loggedIn");
+  localStorage.removeItem("adminLoggedIn");
+  localStorage.removeItem("user");
 
-    navigate("/login");
-  };
-
+  navigate("/");
+  window.location.reload();
+};
   return (
     <div
       style={{
