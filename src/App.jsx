@@ -13,7 +13,8 @@ import {
 import { useState, useEffect } from "react";
 import {
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  signOut
 } from "firebase/auth";
 import {
   BrowserRouter,
@@ -1917,7 +1918,8 @@ const coursesData = [
   return <Navigate to="/login" />;
 }
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await signOut(auth);
   localStorage.removeItem("loggedIn");
   localStorage.removeItem("adminLoggedIn");
   localStorage.removeItem("user");
