@@ -2234,27 +2234,29 @@ const [project3Name, setProject3Name] =
 const [project3City, setProject3City] =
   useState("");
   const updateTopEarners = async () => {
+  try {
+    await setDoc(
+      doc(db, "topEarners", "today"),
+      {
+        project1: project1Earning,
+        project1Name,
+        project1City,
 
-  await setDoc(
-    doc(db, "topEarners", "today"),
-    {
-      project1: project1Earning,
-project1Name,
-project1City,
+        project2: project2Earning,
+        project2Name,
+        project2City,
 
-project2: project2Earning,
-project2Name,
-project2City,
+        project3: project3Earning,
+        project3Name,
+        project3City,
+      }
+    );
 
-project3: project3Earning,
-project3Name,
-project3City,
-      
-    }
-  );
-
-  alert("Top Earners Updated");
-
+    alert("Top Earners Updated");
+  } catch (error) {
+    console.log(error);
+    alert(error.message);
+  }
 };
   const generatePremiumLink = async () => {
   const randomCode = Math.random()
