@@ -49,13 +49,22 @@ const deleteLead = async (id) => {
   return (
   <div
     style={{
-      padding: "20px",
-      backgroundColor: "white",
+      padding: "30px",
+      background: "linear-gradient(135deg, #0f172a, #1e293b)",
       minHeight: "100vh",
-      color: "black",
+      color: "white",
+      fontFamily: "Arial, sans-serif",
     }}
   >
-    <h1>All Leads</h1>
+    <h1
+      style={{
+        fontSize: "32px",
+        marginBottom: "25px",
+        fontWeight: "bold",
+      }}
+    >
+      Lead Dashboard 🚀
+    </h1>
 
     {leads.length === 0 ? (
       <p>No leads found</p>
@@ -64,52 +73,94 @@ const deleteLead = async (id) => {
         <div
           key={lead.id}
           style={{
-            border: "1px solid #ccc",
-            padding: "15px",
-            marginBottom: "10px",
-            background: "#f5f5f5",
-            color: "black",
+            background: "rgba(255,255,255,0.08)",
+            backdropFilter: "blur(12px)",
+            borderRadius: "18px",
+            padding: "20px",
+            marginBottom: "18px",
+            border: "1px solid rgba(255,255,255,0.1)",
+            boxShadow: "0 8px 20px rgba(0,0,0,0.25)",
           }}
         >
-          <p><strong>Name:</strong> {lead.name}</p>
-<p>
-  <strong>Phone:</strong>{" "}
-  <a href={`tel:${lead.phone}`}>{lead.phone}</a>
-</p>
-<p>
-  <strong>Status:</strong>{" "}
-  <span
-    style={{
-      color:
-        lead.status === "picked"
-          ? "green"
-          : lead.status === "redial"
-          ? "orange"
-          : "red",
-      fontWeight: "bold",
-    }}
-  >
-    {lead.status || "new"}
-  </span>
-</p>
+          <p style={{ fontSize: "18px" }}>
+            <strong>Name:</strong> {lead.name}
+          </p>
 
-<button
-  style={{ marginRight: "10px" }}
-  onClick={() => updateStatus(lead.id, "picked")}
->
-  Picked
-</button>
+          <p style={{ fontSize: "18px" }}>
+            <strong>Phone:</strong>{" "}
+            <a
+              href={`tel:${lead.phone}`}
+              style={{ color: "#38bdf8", textDecoration: "none" }}
+            >
+              {lead.phone}
+            </a>
+          </p>
 
-<button
-  style={{ marginRight: "10px" }}
-  onClick={() => updateStatus(lead.id, "redial")}
->
-  Redial
-</button>
+          <p>
+            <strong>Status:</strong>{" "}
+            <span
+              style={{
+                padding: "6px 12px",
+                borderRadius: "20px",
+                background:
+                  lead.status === "picked"
+                    ? "green"
+                    : lead.status === "redial"
+                    ? "orange"
+                    : "red",
+                color: "white",
+                fontWeight: "bold",
+              }}
+            >
+              {lead.status || "new"}
+            </span>
+          </p>
 
-<button onClick={() => deleteLead(lead.id)}>
-  Delete
-</button>
+          <div style={{ marginTop: "15px" }}>
+            <button
+              style={{
+                background: "#22c55e",
+                color: "white",
+                border: "none",
+                padding: "10px 16px",
+                borderRadius: "10px",
+                marginRight: "10px",
+                cursor: "pointer",
+              }}
+              onClick={() => updateStatus(lead.id, "picked")}
+            >
+              Picked
+            </button>
+
+            <button
+              style={{
+                background: "#f59e0b",
+                color: "white",
+                border: "none",
+                padding: "10px 16px",
+                borderRadius: "10px",
+                marginRight: "10px",
+                cursor: "pointer",
+              }}
+              onClick={() => updateStatus(lead.id, "redial")}
+            >
+              Redial
+            </button>
+
+            <button
+              style={{
+                background: "#ef4444",
+                color: "white",
+                border: "none",
+                padding: "10px 16px",
+                borderRadius: "10px",
+                cursor: "pointer",
+              }}
+              onClick={() => deleteLead(lead.id)}
+            >
+              Delete
+            </button>
+          </div>
         </div>
       ))
     )}
