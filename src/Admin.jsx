@@ -6,19 +6,17 @@ export default function Admin() {
   const [leads, setLeads] = useState([]);
 
   useEffect(() => {
-    async function fetchLeads() {
-      const querySnapshot = await getDocs(collection(db, "leads"));
+  const unsubscribe = onSnapshot(collection(db, "leads"), (snapshot) => {
+    const leadList = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
-      const leadList = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+    setLeads(leadList);
+  });
 
-      setLeads(leadList);
-    }
-
-    fetchLeads();
-  }, []);
+  return () => unsubscribe();
+}, []);
 
   return (
   <div
