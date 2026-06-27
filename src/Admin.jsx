@@ -45,7 +45,10 @@ export default function Admin() {
             color: "black",
           }}
         >
-          <pre>{JSON.stringify(lead, null, 2)}</pre>
+          <p><strong>Name:</strong> {lead.Name}</p>
+<p><strong>Phone:</strong> {lead.phone}</p>
+<p><strong>Email:</strong> {lead.email}</p>
+<p><strong>Course:</strong> {lead.course}</p>
         </div>
       ))
     )}
