@@ -19,23 +19,24 @@ export default async function handler(req, res) {
 
   // Receive lead
   if (req.method === "POST") {
-    try {
-      console.log("Webhook received:", req.body);
+  try {
+    console.log("Webhook received:", JSON.stringify(req.body, null, 2));
 
-      const leadData = req.body.entry?.[0]?.changes?.[0]?.value;
+    const leadgenId =
+      req.body.entry?.[0]?.changes?.[0]?.value?.leadgen_id;
 
-      await addDoc(collection(db, "leads"), {
-        name: leadData?.name || "Unknown",
-        phone: leadData?.phone || "Unknown",
-        createdAt: new Date(),
-      });
+    await addDoc(collection(db, "leads"), {
+      name: "Test Lead",
+      phone: leadgenId || "No ID",
+      createdAt: new Date(),
+    });
 
-      return res.status(200).send("EVENT_RECEIVED");
-    } catch (error) {
-      console.error(error);
-      return res.status(500).send("Error saving lead");
-    }
+    return res.status(200).send("EVENT_RECEIVED");
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Error saving lead");
   }
+}
 
   return res.status(405).send("Method Not Allowed");
 }
