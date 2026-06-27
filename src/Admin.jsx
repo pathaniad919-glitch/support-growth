@@ -25,9 +25,9 @@ const deleteLead = async (id) => {
 
   const unsubscribe = onSnapshot(collection(db, "leads"), (snapshot) => {
     const leadList = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+  id: doc.id,
+  ...doc.data(),
+}));
 
     if (!firstLoad && snapshot.docChanges().length > 0) {
       snapshot.docChanges().forEach((change) => {
@@ -72,14 +72,38 @@ const deleteLead = async (id) => {
           }}
         >
           <p><strong>Name:</strong> {lead.name}</p>
-<p><strong>Phone:</strong> {lead.phone}</p>
-<p><strong>Status:</strong> {lead.status || "new"}</p>
+<p>
+  <strong>Phone:</strong>{" "}
+  <a href={`tel:${lead.phone}`}>{lead.phone}</a>
+</p>
+<p>
+  <strong>Status:</strong>{" "}
+  <span
+    style={{
+      color:
+        lead.status === "picked"
+          ? "green"
+          : lead.status === "redial"
+          ? "orange"
+          : "red",
+      fontWeight: "bold",
+    }}
+  >
+    {lead.status || "new"}
+  </span>
+</p>
 
-<button onClick={() => updateStatus(lead.id, "picked")}>
+<button
+  style={{ marginRight: "10px" }}
+  onClick={() => updateStatus(lead.id, "picked")}
+>
   Picked
 </button>
 
-<button onClick={() => updateStatus(lead.id, "redial")}>
+<button
+  style={{ marginRight: "10px" }}
+  onClick={() => updateStatus(lead.id, "redial")}
+>
   Redial
 </button>
 
