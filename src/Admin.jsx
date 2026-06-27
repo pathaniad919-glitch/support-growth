@@ -22,7 +22,6 @@ const deleteLead = async (id) => {
 };
 
   useEffect(() => {
-  let firstLoad = true;
 
   const unsubscribe = onSnapshot(collection(db, "leads"), (snapshot) => {
     const leadList = snapshot.docs.map((doc) => ({
@@ -56,6 +55,16 @@ audioRef.current.play().catch((err) => console.log(err));
     }}
   >
     <h1>All Leads</h1>
+    <button
+  onClick={() => {
+    audioRef.current.play().then(() => {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    });
+  }}
+>
+  Enable Sound 🔔
+</button>
 
     {leads.length === 0 ? (
       <p>No leads found</p>
