@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { db } from "./firebase";
 import {
   collection,
@@ -9,7 +9,8 @@ import {
 } from "firebase/firestore";
 export default function Admin() {
   const [leads, setLeads] = useState([]);
-  const [audio] = useState(new Audio("/notification.mp3"));
+  const audioRef = useRef(new Audio("/notification.mp3"));
+const firstLoad = useRef(true);
   const updateStatus = async (id, status) => {
   await updateDoc(doc(db, "leads", id), {
     status,
@@ -29,17 +30,16 @@ const deleteLead = async (id) => {
   ...doc.data(),
 }));
 
-    if (!firstLoad && snapshot.docChanges().length > 0) {
+    if (!firstLoad.current && snapshot.docChanges().length > 0) {
       snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {
-          audio.currentTime = 0;
-          audio.play().catch((err) => console.log(err));
-          alert("New Lead Arrived!");
+          audioRef.current.currentTime = 0;
+audioRef.current.play().catch((err) => console.log(err));
         }
       });
     }
 
-    firstLoad = false;
+    firstLoad.current = false;
     setLeads(leadList);
   });
 
