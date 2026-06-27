@@ -1,5 +1,4 @@
-import { db } from "../firebase";
-import { collection, addDoc } from "firebase/firestore";
+
 export default async function handler(req, res) {
   const VERIFY_TOKEN = "support-growth-123";
 
@@ -39,11 +38,7 @@ export default async function handler(req, res) {
 console.log("Lead Details:", JSON.stringify(leadData, null, 2));
 
 // Save lead to Firestore
-await addDoc(collection(db, "leads"), {
-  leadId,
-  leadData,
-  createdAt: new Date(),
-});
+
 
 console.log("Lead saved in Firestore");
         }
