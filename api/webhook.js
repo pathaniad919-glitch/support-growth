@@ -1,6 +1,3 @@
-import { db } from "../src/firebase";
-import { collection, addDoc } from "firebase/firestore";
-
 export default async function handler(req, res) {
   const VERIFY_TOKEN = "support-growth-123";
 
@@ -17,16 +14,7 @@ export default async function handler(req, res) {
   }
 
   if (req.method === "POST") {
-    const body = req.body;
-
-    await addDoc(collection(db, "leads"), {
-      source: "Meta Lead Ad",
-      data: body,
-      createdAt: new Date(),
-    });
-
-    console.log("Lead saved:", body);
-
+    console.log("Webhook received:", req.body);
     return res.status(200).send("EVENT_RECEIVED");
   }
 
