@@ -51,15 +51,17 @@ let name = "";
 let phone = "";
 
 fields.forEach((field) => {
-  if (field.name === "full_name") {
+  if (field.name === "full_name" || field.name === "name") {
     name = field.values[0];
   }
 
-  if (field.name === "phone_number") {
+  if (field.name === "phone_number" || field.name === "phone") {
     phone = field.values[0];
   }
 });
-
+if (!name && !phone) {
+  return res.status(200).send("No real lead data");
+}
 await addDoc(collection(db, "leads"), {
   name,
   phone,
