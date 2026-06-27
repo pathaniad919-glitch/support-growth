@@ -1,3 +1,4 @@
+import Admin from "./Admin";
 import { auth, db } from "./firebase";
 import {
   collection,
@@ -2977,6 +2978,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+      <Route
+  path="/leads"
+  element={<Admin />}
+/>
         <Route
           path="/"
           element={<Home />}
