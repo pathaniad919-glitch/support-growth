@@ -12,7 +12,10 @@ export default function Admin() {
   const todayLeads = leads.filter((lead) => {
   if (!lead.createdAt) return false;
 
-  const leadDate = lead.createdAt.toDate();
+  const leadDate = lead.createdAt?.seconds
+    ? new Date(lead.createdAt.seconds * 1000)
+    : new Date(lead.createdAt);
+
   const today = new Date();
 
   return (
