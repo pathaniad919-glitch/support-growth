@@ -24,10 +24,12 @@ const deleteLead = async (id) => {
   useEffect(() => {
 
   const unsubscribe = onSnapshot(collection(db, "leads"), (snapshot) => {
-    const leadList = snapshot.docs.map((doc) => ({
-  id: doc.id,
-  ...doc.data(),
-}));
+    const leadList = snapshot.docs
+  .map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }))
+  .sort((a, b) => b.createdAt?.seconds - a.createdAt?.seconds);
 
     if (!firstLoad.current && snapshot.docChanges().length > 0) {
       snapshot.docChanges().forEach((change) => {
