@@ -43,10 +43,8 @@ export default function Admin() {
             color: "black",
           }}
         >
-          <p><strong>Name:</strong> {lead.Name}</p>
+          <p><strong>Name:</strong> {lead.name}</p>
 <p><strong>Phone:</strong> {lead.phone}</p>
-<p><strong>Email:</strong> {lead.email}</p>
-<p><strong>Course:</strong> {lead.course}</p>
         </div>
       ))
     )}
