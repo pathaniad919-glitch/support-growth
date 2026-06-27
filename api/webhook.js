@@ -35,11 +35,36 @@ export default async function handler(req, res) {
       const leadgenId =
         req.body.entry?.[0]?.changes?.[0]?.value?.leadgen_id;
 
-      await addDoc(collection(db, "leads"), {
-        name: "Meta Test",
-        phone: leadgenId || "No lead ID",
-        createdAt: new Date(),
-      });
+      const accessToken = "YOUR_ACCESS_TOKEN";
+
+const response = await fetch(
+  `https://graph.facebook.com/v25.0/${leadgenId}?fields=field_data&access_token=${accessToken}`
+);
+
+const data = await response.json();
+
+console.log("Lead data:", data);
+
+const fields = data.field_data || [];
+
+let name = "";
+let phone = "";
+
+fields.forEach((field) => {
+  if (field.name === "full_name") {
+    name = field.values[0];
+  }
+
+  if (field.name === "phone_number") {
+    phone = field.values[0];
+  }
+});
+
+await addDoc(collection(db, "leads"), {
+  name,
+  phone,
+  createdAt: new Date(),
+});
 
       return res.status(200).send("EVENT_RECEIVED");
     } catch (error) {
