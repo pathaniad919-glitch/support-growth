@@ -35,7 +35,7 @@ export default async function handler(req, res) {
       const leadgenId =
         req.body.entry?.[0]?.changes?.[0]?.value?.leadgen_id;
 
-      const accessToken = "YOUR_ACCESS_TOKEN";
+      const accessToken = "EAAOxcIZAWrgQBR4iyj1WX2TuZC4Em1xPVRqD86fw4jDSVz37I1axabj5oDuPpN28l6bJYATl772rggiR0Yl8BE1PoUTlYtGCh8ASXFyfjWLaE33fWZC7JB57NGOtU8ERdGjyOPk3HTFU7IYjHQhzhzR0yd92ULfWLn6uCybjn0lZAfmA7LXwmeW2ix8necd15SeRYrkATVKVY3HcfSb4yjUmNApLUTl09AZDZD";
 
 const response = await fetch(
   `https://graph.facebook.com/v25.0/${leadgenId}?fields=field_data&access_token=${accessToken}`
