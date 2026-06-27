@@ -1,6 +1,9 @@
+import { db } from "../firebase";
+import { collection, addDoc } from "firebase/firestore";
 export default async function handler(req, res) {
   const VERIFY_TOKEN = "support-growth-123";
 
+  // Verify webhook
   if (req.method === "GET") {
     const mode = req.query["hub.mode"];
     const token = req.query["hub.verify_token"];
@@ -14,7 +17,10 @@ export default async function handler(req, res) {
     return res.status(403).send("Verification failed");
   }
 
+  // Receive leads
   if (req.method === "POST") {
+    console.log("NEW WEBHOOK EVENT:", JSON.stringify(req.body, null, 2));
+
     const body = req.body;
 
     for (const entry of body.entry || []) {
@@ -30,7 +36,16 @@ export default async function handler(req, res) {
 
           const leadData = await response.json();
 
-          console.log("Lead Details:", leadData);
+console.log("Lead Details:", JSON.stringify(leadData, null, 2));
+
+// Save lead to Firestore
+await addDoc(collection(db, "leads"), {
+  leadId,
+  leadData,
+  createdAt: new Date(),
+});
+
+console.log("Lead saved in Firestore");
         }
       }
     }
