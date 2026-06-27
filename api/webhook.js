@@ -1,10 +1,21 @@
-import { db } from "../src/firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCfd86Y26SCCgNV4RYWQglUOyEZPDiTxdE",
+  authDomain: "support-and-growth-2.firebaseapp.com",
+  projectId: "support-and-growth-2",
+  storageBucket: "support-and-growth-2.firebasestorage.app",
+  messagingSenderId: "203468837565",
+  appId: "1:203468837565:web:afa6f73d35665a4cda9dd4"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 export default async function handler(req, res) {
   const VERIFY_TOKEN = "support-growth-123";
 
-  // Verification
   if (req.method === "GET") {
     const mode = req.query["hub.mode"];
     const token = req.query["hub.verify_token"];
@@ -17,26 +28,25 @@ export default async function handler(req, res) {
     return res.status(403).send("Verification failed");
   }
 
-  // Receive lead
   if (req.method === "POST") {
-  try {
-    console.log("Webhook received:", JSON.stringify(req.body, null, 2));
+    try {
+      console.log("Webhook received:", req.body);
 
-    const leadgenId =
-      req.body.entry?.[0]?.changes?.[0]?.value?.leadgen_id;
+      const leadgenId =
+        req.body.entry?.[0]?.changes?.[0]?.value?.leadgen_id;
 
-    await addDoc(collection(db, "leads"), {
-      name: "Test Lead",
-      phone: leadgenId || "No ID",
-      createdAt: new Date(),
-    });
+      await addDoc(collection(db, "leads"), {
+        name: "Meta Test",
+        phone: leadgenId || "No lead ID",
+        createdAt: new Date(),
+      });
 
-    return res.status(200).send("EVENT_RECEIVED");
-  } catch (error) {
-    console.error(error);
-    return res.status(500).send("Error saving lead");
+      return res.status(200).send("EVENT_RECEIVED");
+    } catch (error) {
+      console.error("Firebase save error:", error);
+      return res.status(500).send("Save failed");
+    }
   }
-}
 
-  return res.status(405).send("Method Not Allowed");
+  return res.status(405).send("Method not allowed");
 }
