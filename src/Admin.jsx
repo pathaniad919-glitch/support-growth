@@ -9,7 +9,7 @@ import {
 } from "firebase/firestore";
 export default function Admin() {
   const [leads, setLeads] = useState([]);
-  const audio = new Audio("/notification.mp3");
+  const [audio] = useState(new Audio("/notification.mp3"));
   const updateStatus = async (id, status) => {
   await updateDoc(doc(db, "leads", id), {
     status,
@@ -21,22 +21,30 @@ const deleteLead = async (id) => {
 };
 
   useEffect(() => {
+  let firstLoad = true;
+
   const unsubscribe = onSnapshot(collection(db, "leads"), (snapshot) => {
     const leadList = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
 
-    if (leadList.length > leads.length) {
-      audio.play();
-      alert("New Lead Arrived!");
+    if (!firstLoad && snapshot.docChanges().length > 0) {
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === "added") {
+          audio.currentTime = 0;
+          audio.play().catch((err) => console.log(err));
+          alert("New Lead Arrived!");
+        }
+      });
     }
 
+    firstLoad = false;
     setLeads(leadList);
   });
 
   return () => unsubscribe();
-}, [leads]);
+}, []);
 
   return (
   <div
