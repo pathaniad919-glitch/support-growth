@@ -1,8 +1,6 @@
-export default async function handler(req, res) {
-  // Meta webhook verification
-  if (req.method === "GET") {
+export default function handler(req, res) {
     const VERIFY_TOKEN = "support-growth-123";
-
+  if (req.method === "GET") {
     const mode = req.query["hub.mode"];
     const token = req.query["hub.verify_token"];
     const challenge = req.query["hub.challenge"];
@@ -14,12 +12,10 @@ export default async function handler(req, res) {
     return res.status(403).send("Verification failed");
   }
 
-  // Receive new leads
   if (req.method === "POST") {
-    console.log("New Lead:", JSON.stringify(req.body));
-
+    console.log(req.body);
     return res.status(200).send("EVENT_RECEIVED");
   }
 
-  res.status(405).send("Method Not Allowed");
+  return res.status(405).end();
 }
