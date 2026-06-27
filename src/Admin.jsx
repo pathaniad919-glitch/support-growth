@@ -6,7 +6,7 @@ export default function Admin() {
   const [leads, setLeads] = useState([]);
 
   useEffect(() => {
-    const fetchLeads = async () => {
+    async function fetchLeads() {
       const querySnapshot = await getDocs(collection(db, "leads"));
 
       const leadList = querySnapshot.docs.map((doc) => ({
@@ -15,27 +15,40 @@ export default function Admin() {
       }));
 
       setLeads(leadList);
-    };
+    }
 
     fetchLeads();
   }, []);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>All Leads</h1>
+  <div
+    style={{
+      padding: "20px",
+      backgroundColor: "white",
+      minHeight: "100vh",
+      color: "black",
+    }}
+  >
+    <h1>All Leads</h1>
 
-      {leads.map((lead) => (
+    {leads.length === 0 ? (
+      <p>No leads found</p>
+    ) : (
+      leads.map((lead) => (
         <div
           key={lead.id}
           style={{
             border: "1px solid #ccc",
             padding: "15px",
             marginBottom: "10px",
+            background: "#f5f5f5",
+            color: "black",
           }}
         >
           <pre>{JSON.stringify(lead, null, 2)}</pre>
         </div>
-      ))}
-    </div>
-  );
+      ))
+    )}
+  </div>
+);
 }
