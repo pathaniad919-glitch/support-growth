@@ -9,6 +9,18 @@ import {
 } from "firebase/firestore";
 export default function Admin() {
   const [leads, setLeads] = useState([]);
+  const todayLeads = leads.filter((lead) => {
+  if (!lead.createdAt) return false;
+
+  const leadDate = lead.createdAt.toDate();
+  const today = new Date();
+
+  return (
+    leadDate.getDate() === today.getDate() &&
+    leadDate.getMonth() === today.getMonth() &&
+    leadDate.getFullYear() === today.getFullYear()
+  );
+});
   const audioRef = useRef(new Audio("/notification.mp3"));
 const firstLoad = useRef(true);
   const updateStatus = async (id, status) => {
@@ -57,6 +69,7 @@ audioRef.current.play().catch((err) => console.log(err));
     }}
   >
     <h1>All Leads</h1>
+    <p>Today's Leads: {todayLeads.length}</p>
     <button
   onClick={() => {
     audioRef.current.play().then(() => {
