@@ -33,10 +33,10 @@ function Admin() {
             border: "1px solid #ccc",
             padding: "15px",
             marginBottom: "10px",
+            color: "white"
           }}
         >
-          <p><strong>Lead ID:</strong> {lead.leadId}</p>
-          <pre>{JSON.stringify(lead.leadData, null, 2)}</pre>
+          <pre>{JSON.stringify(lead, null, 2)}</pre>
         </div>
       ))}
     </div>
