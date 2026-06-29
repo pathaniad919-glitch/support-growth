@@ -1,3 +1,4 @@
+import Training from "./Training";
 import Admin from "./Admin";
 import { auth, db } from "./firebase";
 import {
@@ -2986,6 +2987,8 @@ function App() {
           path="/"
           element={<Home />}
         />
+
+<Route path="/training" element={<Training />} />
 
         <Route
           path="/login"
