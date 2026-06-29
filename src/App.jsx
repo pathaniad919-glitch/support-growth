@@ -2983,12 +2983,10 @@ function App() {
   path="/leads"
   element={<Admin />}
 />
-        <Route
-          path="/"
-          element={<Home />}
-        />
-
-<Route path="/training" element={<Training />} />
+        <Routes>
+  <Route path="/" element={<Home />} />
+  <Route path="/training" element={<Training />} />
+</Routes>
 
         <Route
           path="/login"
