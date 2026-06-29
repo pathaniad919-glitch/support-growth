@@ -11,7 +11,7 @@ function Training() {
         <iframe
   width="100%"
   height="500"
-  src="https://www.youtube-nocookie.com/embed/n0aDkEbelgg?modestbranding=1&rel=0&fs=0"
+  src="https://drive.google.com/file/d/1E2UqtcqGg11fBQoRElw3Hp0QDW4XbdoJ/view?usp=drivesdk"
   title="S&G Training Video"
   frameBorder="0"
   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
