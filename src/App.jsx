@@ -2979,43 +2979,15 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-      <Route
-  path="/leads"
-  element={<Admin />}
-/>
-        <Routes>
-  <Route path="/" element={<Home />} />
-  <Route path="/training" element={<Training />} />
-</Routes>
-
-        <Route
-          path="/login"
-          element={<Login />}
-        />
-
-        <Route
-          path="/signup"
-          element={<Signup />}
-        />
-
-        <Route
-          path="/dashboard"
-          element={<Dashboard />}
-        />
-
-        <Route
-  path="/admin"
-  element={<AdminPanel />}
-
-/>
-<Route
-  path="/intro"
-  element={<IntroPage />}
-/>
-<Route
-  path="/premium-access/:code"
-  element={<PremiumAccessPage />}
-/>
+        <Route path="/" element={<Home />} />
+        <Route path="/training" element={<Training />} />
+        <Route path="/leads" element={<Admin />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/admin" element={<AdminPanel />} />
+        <Route path="/intro" element={<IntroPage />} />
+        <Route path="/premium-access/:code" element={<PremiumAccessPage />} />
       </Routes>
     </BrowserRouter>
   );
