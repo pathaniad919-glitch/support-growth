@@ -1550,32 +1550,29 @@ function PremiumAccessPage() {
       </h2>
 
       <div
-        style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          background:
-            "rgba(255,255,255,0.05)",
-          padding: "25px",
-          borderRadius: "30px",
-          backdropFilter:
-            "blur(12px)",
-        }}
-      >
-
-        <iframe
-          width="100%"
-          height="700"
-          src="https://www.youtube.com/embed/3fEAYVgQcLQ"
-          title="Premium Training"
-          frameBorder="0"
-          allowFullScreen
-          style={{
-            borderRadius: "20px",
-            marginBottom: "30px",
-          }}
-        />
-
-      </div>
+  style={{
+    position: "relative",
+    width: "100%",
+    paddingTop: "56.25%", // 16:9 ratio
+    borderRadius: "20px",
+    overflow: "hidden",
+  }}
+>
+  <iframe
+    src="https://www.youtube.com/embed/3fEAYVgQcLQ"
+    title="Premium Training"
+    frameBorder="0"
+    allowFullScreen
+    style={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      borderRadius: "20px",
+    }}
+  />
+</div>
 
     </div>
 
