@@ -1452,31 +1452,29 @@ function PremiumAccessPage() {
   const { code } = useParams();
 
   const [timeLeft, setTimeLeft] =
-  useState(1200);
+    useState(1200); // 20 minutes
 
   const [expired, setExpired] =
     useState(false);
 
   useEffect(() => {
-  const timer = setInterval(() => {
-    setTimeLeft((prev) => {
-      if (prev <= 1) {
-        clearInterval(timer);
-        setExpired(true);
-        return 0;
-      }
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          setExpired(true);
+          return 0;
+        }
 
-      return prev - 1;
-    });
-  }, 1000);
+        return prev - 1;
+      });
+    }, 1000);
 
-  return () => clearInterval(timer);
-}, []);
+    return () => clearInterval(timer);
+  }, []);
 
   if (expired) {
-
     return (
-
       <div
         style={{
           minHeight: "100vh",
@@ -1486,12 +1484,25 @@ function PremiumAccessPage() {
           justifyContent: "center",
           alignItems: "center",
           flexDirection: "column",
+          padding: "20px",
+          textAlign: "center",
         }}
       >
+        <img
+          src="/logo.png"
+          alt="S&G Logo"
+          style={{
+            width: "180px",
+            marginBottom: "25px",
+          }}
+        />
 
         <h1
           style={{
-            fontSize: "60px",
+            fontSize:
+              window.innerWidth < 768
+                ? "40px"
+                : "60px",
           }}
         >
           Access Expired
@@ -1501,87 +1512,171 @@ function PremiumAccessPage() {
           style={{
             color: "#cbd5e1",
             fontSize:
-  window.innerWidth < 768
-    ? "18px"
-    : "22px",
+              window.innerWidth < 768
+                ? "18px"
+                : "22px",
+            marginTop: "15px",
           }}
         >
-          This premium access
-          has already been used.
+          This premium access session has ended.
         </p>
-
       </div>
-
     );
   }
 
   return (
-
     <div
       style={{
         minHeight: "100vh",
         background:
           "linear-gradient(180deg,#020617,#0f172a,#111827)",
         color: "white",
-        padding: "40px",
+        padding:
+          window.innerWidth < 768
+            ? "20px"
+            : "40px",
       }}
     >
+      {/* LOGO */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginBottom: "20px",
+        }}
+      >
+        <img
+          src="/logo.png"
+          alt="S&G Logo"
+          style={{
+            width:
+              window.innerWidth < 768
+                ? "180px"
+                : "240px",
+          }}
+        />
+      </div>
 
+      {/* HEADING */}
       <h1
         style={{
           textAlign: "center",
           fontSize:
-  window.innerWidth < 768
-    ? "38px"
-    : "70px",
-          marginBottom: "20px",
+            window.innerWidth < 768
+              ? "36px"
+              : "70px",
+          marginBottom: "15px",
+          fontWeight: "800",
+          lineHeight: "1.2",
         }}
       >
-        Premium Business Training
+        Build Your Future With S&G 🚀
       </h1>
 
+      {/* TRUST TEXT */}
+      <p
+        style={{
+          textAlign: "center",
+          color: "#cbd5e1",
+          fontSize:
+            window.innerWidth < 768
+              ? "16px"
+              : "20px",
+          marginBottom: "25px",
+          lineHeight: "1.8",
+        }}
+      >
+        Trusted by 500+ learners • Premium Mentorship • Real Earning Systems
+      </p>
+
+      {/* SECURE BADGE */}
+      <div
+        style={{
+          textAlign: "center",
+          marginBottom: "20px",
+          color: "#22c55e",
+          fontWeight: "bold",
+          fontSize: "18px",
+        }}
+      >
+        🔒 Secure Premium Access Verified
+      </div>
+
+      {/* TIMER */}
       <h2
         style={{
           textAlign: "center",
           color: "#38bdf8",
-          marginBottom: "40px",
+          marginBottom: "35px",
+          fontSize:
+            window.innerWidth < 768
+              ? "20px"
+              : "28px",
         }}
       >
-        Time Left:
-        {" "}
-        {Math.floor(timeLeft / 60)}
-        :
-        {String(timeLeft % 60)
-          .padStart(2, "0")}
+        Time Left:{" "}
+        {Math.floor(timeLeft / 60)}:
+        {String(timeLeft % 60).padStart(
+          2,
+          "0"
+        )}
       </h2>
 
+      {/* VIDEO CARD */}
       <div
-  style={{
-    position: "relative",
-    width: "100%",
-    paddingTop: "56.25%", // 16:9 ratio
-    borderRadius: "20px",
-    overflow: "hidden",
-  }}
->
-  <iframe
-    src="https://www.youtube.com/embed/3fEAYVgQcLQ"
-    title="Premium Training"
-    frameBorder="0"
-    allowFullScreen
-    style={{
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      borderRadius: "20px",
-    }}
-  />
-</div>
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          background:
+            "rgba(255,255,255,0.05)",
+          padding:
+            window.innerWidth < 768
+              ? "15px"
+              : "25px",
+          borderRadius: "25px",
+          backdropFilter: "blur(12px)",
+          border:
+            "1px solid rgba(255,255,255,0.08)",
+        }}
+      >
+        <div
+          style={{
+            position: "relative",
+            width: "100%",
+            paddingTop: "56.25%",
+            borderRadius: "20px",
+            overflow: "hidden",
+          }}
+        >
+          <iframe
+            src="https://www.youtube.com/embed/3fEAYVgQcLQ"
+            title="Premium Training"
+            frameBorder="0"
+            allowFullScreen
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              borderRadius: "20px",
+            }}
+          />
+        </div>
+      </div>
 
+      {/* FOOTER */}
+      <div
+        style={{
+          textAlign: "center",
+          marginTop: "30px",
+          color: "#94a3b8",
+          fontSize: "16px",
+        }}
+      >
+        © 2026 Support & Growth | Learn • Earn • Grow
+      </div>
     </div>
-
   );
 }
 
