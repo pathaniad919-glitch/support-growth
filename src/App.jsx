@@ -1452,7 +1452,7 @@ function PremiumAccessPage() {
   const { code } = useParams();
 
   const [timeLeft, setTimeLeft] =
-  useState(2400);
+  useState(1200);
 
   const [expired, setExpired] =
     useState(false);
@@ -1500,7 +1500,10 @@ function PremiumAccessPage() {
         <p
           style={{
             color: "#cbd5e1",
-            fontSize: "22px",
+            fontSize:
+  window.innerWidth < 768
+    ? "18px"
+    : "22px",
           }}
         >
           This premium access
@@ -1527,7 +1530,10 @@ function PremiumAccessPage() {
       <h1
         style={{
           textAlign: "center",
-          fontSize: "70px",
+          fontSize:
+  window.innerWidth < 768
+    ? "38px"
+    : "70px",
           marginBottom: "20px",
         }}
       >
