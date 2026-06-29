@@ -11,7 +11,7 @@ function Training() {
         <iframe
   width="100%"
   height="500"
-  src="https://drive.google.com/file/d/1E2UqtcqGg11fBQoRElw3Hp0QDW4XbdoJ/view?usp=drivesdk"
+  src="https://drive.google.com/file/d/1E2UqtcqGg11fBQoRElw3Hp0QDW4XbdoJ/preview?usp=drivesdk"
   title="S&G Training Video"
   frameBorder="0"
   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
