@@ -9,14 +9,14 @@ function Training() {
 
       <div className="video-wrapper">
         <iframe
-          width="100%"
-          height="500"
-          src="https://www.youtube.com/embed/n0aDkEbelgg"
-          title="S&G Training Video"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
+  width="100%"
+  height="500"
+  src="https://www.youtube-nocookie.com/embed/n0aDkEbelgg?modestbranding=1&rel=0&fs=0"
+  title="S&G Training Video"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+></iframe>
       </div>
 
       <div className="training-notes">
