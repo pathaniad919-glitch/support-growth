@@ -1565,7 +1565,7 @@ function PremiumAccessPage() {
         <iframe
           width="100%"
           height="700"
-          src="https://www.youtube.com/embed/5plT_MEpK6g"
+          src="https://www.youtube.com/embed/3fEAYVgQcLQ"
           title="Premium Training"
           frameBorder="0"
           allowFullScreen
