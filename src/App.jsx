@@ -1649,7 +1649,7 @@ function PremiumAccessPage() {
           }}
         >
           <iframe
-            src="src="https://www.youtube.com/embed/NEdZDEDy440""
+            src="src="src="https://www.youtube.com/embed/NEdZDEDy440"
             title="Premium Training"
             frameBorder="0"
             allowFullScreen
