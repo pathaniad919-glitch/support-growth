@@ -1644,35 +1644,40 @@ function PremiumAccessPage() {
       background: "#000",
     }}
   >
-    <iframe
-  src="https://www.dropbox.com/scl/fi/l6sqpvk4aza4bt2veaz5v/1784225170367200.MP4?rlkey=e6jx0pjdzpnt7ax97vt8cka0j&st=ra0d1low&raw=1"
-  title="Premium Training"
-  frameBorder="0"
-  allow="autoplay; fullscreen; picture-in-picture"
-  allowFullScreen
-  style={{
-    position: "absolute",
-    inset: 0,
-    width: "100%",
-    height: "100%",
-    border: "none",
-    display: "block",
-  }}
-/>
+    <video
+      controls
+      playsInline
+      preload="metadata"
+      style={{
+        position: "absolute",
+        inset: 0,
+        width: "100%",
+        height: "100%",
+        objectFit: "contain",
+        background: "#000",
+      }}
+    >
+      <source
+        src="https://www.dropbox.com/scl/fi/l6sqpvk4aza4bt2veaz5v/1784225170367200.MP4?rlkey=e6jx0pjdzpnt7ax97vt8cka0j&st=ra0d1low&raw=1"
+        type="video/mp4"
+      />
+
+      Your browser does not support video playback.
+    </video>
   </div>
 </div>
 
-      {/* FOOTER */}
-      <div
-        style={{
-          textAlign: "center",
-          marginTop: "30px",
-          color: "#94a3b8",
-          fontSize: "16px",
-        }}
-      >
-        © 2026 Support & Growth | Learn • Earn • Grow
-      </div>
+{/* FOOTER */}
+<div
+  style={{
+    textAlign: "center",
+    marginTop: "30px",
+    color: "#94a3b8",
+    fontSize: "16px",
+  }}
+>
+  © 2026 Support & Growth | Learn • Earn • Grow
+</div>
     </div>
   );
 }
