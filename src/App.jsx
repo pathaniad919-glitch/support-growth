@@ -1645,18 +1645,20 @@ function PremiumAccessPage() {
     }}
   >
     <video
-      controls
-      playsInline
-      preload="metadata"
-      style={{
-        position: "absolute",
-        inset: 0,
-        width: "100%",
-        height: "100%",
-        objectFit: "contain",
-        background: "#000",
-      }}
-    >
+  controls
+  controlsList="nodownload"
+  playsInline
+  preload="metadata"
+  onContextMenu={(e) => e.preventDefault()}
+  style={{
+    position: "absolute",
+    inset: 0,
+    width: "100%",
+    height: "100%",
+    objectFit: "contain",
+    background: "#000",
+  }}
+>
       <source
         src="https://www.dropbox.com/scl/fi/l6sqpvk4aza4bt2veaz5v/1784225170367200.MP4?rlkey=e6jx0pjdzpnt7ax97vt8cka0j&st=ra0d1low&raw=1"
         type="video/mp4"
