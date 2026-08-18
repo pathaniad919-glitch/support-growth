@@ -1645,20 +1645,20 @@ function PremiumAccessPage() {
     }}
   >
     <iframe
-      src="https://drive.google.com/file/d/1c5IUL88G9do1SUBCxlJXfeAV61YLWFc3/preview"
-      title="Premium Training"
-      frameBorder="0"
-      allow="autoplay; fullscreen"
-      allowFullScreen
-      style={{
-        position: "absolute",
-        inset: 0,
-        width: "100%",
-        height: "100%",
-        border: "none",
-        display: "block",
-      }}
-    />
+  src="https://www.dropbox.com/scl/fi/l6sqpvk4aza4bt2veaz5v/1784225170367200.MP4?rlkey=e6jx0pjdzpnt7ax97vt8cka0j&st=ra0d1low&raw=1"
+  title="Premium Training"
+  frameBorder="0"
+  allow="autoplay; fullscreen"
+  allowFullScreen
+  style={{
+    position: "absolute",
+    inset: 0,
+    width: "100%",
+    height: "100%",
+    border: "none",
+    display: "block",
+  }}
+/>
   </div>
 </div>
 
