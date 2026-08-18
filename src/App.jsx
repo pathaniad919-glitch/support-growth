@@ -1623,47 +1623,44 @@ function PremiumAccessPage() {
       </h2>
 
       {/* VIDEO CARD */}
-      <div
-        style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          background:
-            "rgba(255,255,255,0.05)",
-          padding:
-            window.innerWidth < 768
-              ? "15px"
-              : "25px",
-          borderRadius: "25px",
-          backdropFilter: "blur(12px)",
-          border:
-            "1px solid rgba(255,255,255,0.08)",
-        }}
-      >
-        <div
-          style={{
-            position: "relative",
-            width: "100%",
-            paddingTop: "56.25%",
-            borderRadius: "20px",
-            overflow: "hidden",
-          }}
-        >
-          <iframe
-           src="https://drive.google.com/file/d/1c5IUL88G9do1SUBCxlJXfeAV61YLWFc3/preview"
-            title="Premium Training"
-            frameBorder="0"
-            allowFullScreen
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              borderRadius: "20px",
-            }}
-          />
-        </div>
-      </div>
+<div
+  style={{
+    maxWidth: "1200px",
+    margin: "0 auto",
+    background: "rgba(255,255,255,0.05)",
+    padding: window.innerWidth < 768 ? "10px" : "25px",
+    borderRadius: "25px",
+    backdropFilter: "blur(12px)",
+    border: "1px solid rgba(255,255,255,0.08)",
+  }}
+>
+  <div
+    style={{
+      position: "relative",
+      width: "100%",
+      aspectRatio: "16 / 9",
+      borderRadius: "20px",
+      overflow: "hidden",
+      background: "#000",
+    }}
+  >
+    <iframe
+      src="https://drive.google.com/file/d/1c5IUL88G9do1SUBCxlJXfeAV61YLWFc3/preview"
+      title="Premium Training"
+      frameBorder="0"
+      allow="autoplay; fullscreen"
+      allowFullScreen
+      style={{
+        position: "absolute",
+        inset: 0,
+        width: "100%",
+        height: "100%",
+        border: "none",
+        display: "block",
+      }}
+    />
+  </div>
+</div>
 
       {/* FOOTER */}
       <div
