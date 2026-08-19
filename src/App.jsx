@@ -1622,64 +1622,60 @@ function PremiumAccessPage() {
         )}
       </h2>
 
-      {/* VIDEO CARD */}
-<div
-  style={{
-    maxWidth: "1200px",
-    margin: "0 auto",
-    background: "rgba(255,255,255,0.05)",
-    padding: window.innerWidth < 768 ? "10px" : "25px",
-    borderRadius: "25px",
-    backdropFilter: "blur(12px)",
-    border: "1px solid rgba(255,255,255,0.08)",
-  }}
->
-  <div
-    style={{
-      position: "relative",
-      width: "100%",
-      aspectRatio: "16 / 9",
-      borderRadius: "20px",
-      overflow: "hidden",
-      background: "#000",
-    }}
-  >
-    <video
-  controls
-  controlsList="nodownload"
-  playsInline
-  preload="metadata"
-  onContextMenu={(e) => e.preventDefault()}
-  style={{
-    position: "absolute",
-    inset: 0,
-    width: "100%",
-    height: "100%",
-    objectFit: "contain",
-    background: "#000",
-  }}
->
-      <source
-        src="https://www.youtube.com/embed/FkKFAqCCDbU"
-        type="video/mp4"
-      />
+       {/* VIDEO CARD */}
+      <div
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          background:
+            "rgba(255,255,255,0.05)",
+          padding:
+            window.innerWidth < 768
+              ? "15px"
+              : "25px",
+          borderRadius: "25px",
+          backdropFilter: "blur(12px)",
+          border:
+            "1px solid rgba(255,255,255,0.08)",
+        }}
+      >
+        <div
+          style={{
+            position: "relative",
+            width: "100%",
+            paddingTop: "56.25%",
+            borderRadius: "20px",
+            overflow: "hidden",
+          }}
+        >
+          <iframe
+           src="https://www.youtube.com/embed/FkKFAqCCDbU"
+            title="Premium Training"
+            frameBorder="0"
+            allowFullScreen
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              borderRadius: "20px",
+            }}
+          />
+        </div>
+      </div>
 
-      Your browser does not support video playback.
-    </video>
-  </div>
-</div>
-
-{/* FOOTER */}
-<div
-  style={{
-    textAlign: "center",
-    marginTop: "30px",
-    color: "#94a3b8",
-    fontSize: "16px",
-  }}
->
-  © 2026 Support & Growth | Learn • Earn • Grow
-</div>
+      {/* FOOTER */}
+      <div
+        style={{
+          textAlign: "center",
+          marginTop: "30px",
+          color: "#94a3b8",
+          fontSize: "16px",
+        }}
+      >
+        © 2026 Support & Growth | Learn • Earn • Grow
+      </div>
     </div>
   );
 }
