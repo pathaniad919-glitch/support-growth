@@ -1649,19 +1649,20 @@ function PremiumAccessPage() {
           }}
         >
           <iframe
-           src="https://www.youtube.com/embed/FkKFAqCCDbU"
-            title="Premium Training"
-            frameBorder="0"
-            allowFullScreen
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              borderRadius: "20px",
-            }}
-          />
+  src="https://www.youtube.com/embed/FkKFAqCCDbU?autoplay=1&mute=1&playsinline=1&modestbranding=1&rel=0"
+  title="Premium Training"
+  frameBorder="0"
+  allow="autoplay; fullscreen"
+  allowFullScreen
+  style={{
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    borderRadius: "20px",
+  }}
+/>
         </div>
       </div>
 
