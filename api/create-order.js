@@ -8,11 +8,12 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { name, phone, email } = req.body;
+    const { name, phone } = req.body;
 
-    if (!name || !phone || !email) {
+    if (!name || !phone) {
       return res.status(400).json({
-        message: "Name, phone and email are required",
+        success: false,
+        message: "Name and phone are required",
       });
     }
 
@@ -25,25 +26,31 @@ export default async function handler(req, res) {
       amount: 9900,
       currency: "INR",
       receipt: `sg_${Date.now()}`,
+
       notes: {
         name,
         phone,
-        email,
       },
     };
 
-    const order = await razorpay.orders.create(options);
+    const order =
+      await razorpay.orders.create(options);
 
     return res.status(200).json({
       success: true,
       order,
     });
+
   } catch (error) {
-    console.error("Razorpay Order Error:", error);
+    console.error(
+      "Razorpay Order Error:",
+      error
+    );
 
     return res.status(500).json({
       success: false,
-      message: "Unable to create Razorpay order",
+      message:
+        "Unable to create Razorpay order",
     });
   }
 }

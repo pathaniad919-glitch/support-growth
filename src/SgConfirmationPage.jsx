@@ -7,18 +7,11 @@ function SgConfirmationPage() {
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
 
   const playerRef = useRef(null);
 
   // =====================================================
-  // PUT YOUR YOUTUBE VIDEO ID HERE
-  // =====================================================
-
-  const YOUTUBE_VIDEO_ID = "YOUR_YOUTUBE_VIDEO_ID";
-
-  // =====================================================
-  // LOAD YOUTUBE IFRAME API
+  // YOUTUBE VIDEO
   // =====================================================
 
   useEffect(() => {
@@ -32,16 +25,16 @@ function SgConfirmationPage() {
       }
 
       playerRef.current = new window.YT.Player(
-  "sg-funnel-video",
-  {
-    videoId: "FkKFAqCCDbU",
+        "sg-funnel-video",
+        {
+          videoId: "FkKFAqCCDbU",
 
-    playerVars: {
-      rel: 0,
-      modestbranding: 1,
-    },
+          playerVars: {
+            rel: 0,
+            modestbranding: 1,
+          },
 
-    events: {
+          events: {
             onStateChange: (event) => {
               if (
                 event.data ===
@@ -64,8 +57,7 @@ function SgConfirmationPage() {
         );
 
       if (!existingScript) {
-        const tag =
-          document.createElement("script");
+        const tag = document.createElement("script");
 
         tag.id = "youtube-iframe-api";
         tag.src =
@@ -87,7 +79,7 @@ function SgConfirmationPage() {
   }, []);
 
   // =====================================================
-  // LOAD RAZORPAY CHECKOUT
+  // LOAD RAZORPAY
   // =====================================================
 
   const loadRazorpay = () => {
@@ -97,68 +89,54 @@ function SgConfirmationPage() {
         return;
       }
 
-      const script =
-        document.createElement("script");
+      const script = document.createElement("script");
 
       script.src =
         "https://checkout.razorpay.com/v1/checkout.js";
 
-      script.onload = () => {
-        resolve(true);
-      };
-
-      script.onerror = () => {
-        resolve(false);
-      };
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
 
       document.body.appendChild(script);
     });
   };
 
   // =====================================================
-  // HANDLE REGISTRATION + RAZORPAY
+  // REGISTER + PAYMENT
   // =====================================================
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    if (!name || !phone || !email) {
-      alert("Please fill all details.");
+    if (!name.trim() || !phone.trim()) {
+      alert("Please fill your name and WhatsApp number.");
       return;
     }
 
     const cleanPhone = phone.replace(/\D/g, "");
 
     if (cleanPhone.length !== 10) {
-      alert(
-        "Please enter a valid 10-digit mobile number."
-      );
+      alert("Please enter a valid 10-digit mobile number.");
       return;
     }
 
     setLoading(true);
 
     try {
-      // -----------------------------------------------
       // LOAD RAZORPAY
-      // -----------------------------------------------
-
       const razorpayLoaded =
         await loadRazorpay();
 
       if (!razorpayLoaded) {
         alert(
-          "Razorpay could not be loaded. Please check your internet connection and try again."
+          "Razorpay could not be loaded. Please check your internet connection."
         );
 
         setLoading(false);
         return;
       }
 
-      // -----------------------------------------------
-      // CREATE RAZORPAY ORDER
-      // -----------------------------------------------
-
+      // CREATE ORDER
       const response = await fetch(
         "/api/create-order",
         {
@@ -169,9 +147,8 @@ function SgConfirmationPage() {
           },
 
           body: JSON.stringify({
-            name,
+            name: name.trim(),
             phone: cleanPhone,
-            email,
           }),
         }
       );
@@ -185,10 +162,7 @@ function SgConfirmationPage() {
         );
       }
 
-      // -----------------------------------------------
       // RAZORPAY CHECKOUT
-      // -----------------------------------------------
-
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
 
@@ -204,15 +178,13 @@ function SgConfirmationPage() {
         order_id: data.order.id,
 
         prefill: {
-          name: name,
-          email: email,
+          name: name.trim(),
           contact: cleanPhone,
         },
 
         notes: {
-          name: name,
+          name: name.trim(),
           phone: cleanPhone,
-          email: email,
         },
 
         theme: {
@@ -225,18 +197,17 @@ function SgConfirmationPage() {
             paymentResponse
           );
 
-          // -------------------------------------------
+          // =================================================
           // WHATSAPP CONFIRMATION
-          // -------------------------------------------
+          // =================================================
 
           const message = `
 Hello Support & Growth 👋
 
 I have successfully registered for the ₹99 Premium Training Workshop.
 
-Name: ${name}
+Name: ${name.trim()}
 Phone: ${cleanPhone}
-Email: ${email}
 
 Payment ID:
 ${paymentResponse.razorpay_payment_id}
@@ -247,6 +218,9 @@ ${paymentResponse.razorpay_order_id}
 Please confirm my workshop registration.
 `;
 
+          // IMPORTANT:
+          // Apna WhatsApp number yahan rakho
+          // 91 + 10 digit number
           const whatsappNumber =
             "917657986067";
 
@@ -317,7 +291,7 @@ Please confirm my workshop registration.
       }}
     >
 
-      {/* TOP BRAND */}
+      {/* BRAND */}
 
       <div
         style={{
@@ -438,11 +412,8 @@ Please confirm my workshop registration.
               window.innerWidth < 768
                 ? "10px"
                 : "18px",
-            boxShadow:
-              "0 0 60px rgba(56,189,248,0.08)",
           }}
         >
-
           <div
             style={{
               position: "relative",
@@ -452,7 +423,6 @@ Please confirm my workshop registration.
               borderRadius: "18px",
             }}
           >
-
             <div
               id="sg-funnel-video"
               style={{
@@ -463,12 +433,10 @@ Please confirm my workshop registration.
                 height: "100%",
               }}
             />
-
           </div>
-
         </div>
 
-        {/* VIDEO STATUS */}
+        {/* STATUS */}
 
         <div
           style={{
@@ -499,7 +467,7 @@ Please confirm my workshop registration.
             : "🔒 Please watch the complete training video to continue."}
         </div>
 
-        {/* REGISTER BUTTON */}
+        {/* REGISTER */}
 
         <button
           disabled={!videoCompleted}
@@ -532,11 +500,6 @@ Please confirm my workshop registration.
               videoCompleted
                 ? 1
                 : 0.7,
-
-            boxShadow:
-              videoCompleted
-                ? "0 0 35px rgba(139,92,246,0.3)"
-                : "none",
           }}
         >
           {videoCompleted
@@ -555,7 +518,6 @@ Please confirm my workshop registration.
             gap: "18px",
           }}
         >
-
           {[
             "🤖 AI Skills",
             "💼 Digital Business",
@@ -578,11 +540,10 @@ Please confirm my workshop registration.
               {item}
             </div>
           ))}
-
         </div>
       </div>
 
-      {/* REGISTRATION POPUP */}
+      {/* FORM POPUP */}
 
       {showForm && (
         <div
@@ -596,20 +557,15 @@ Please confirm my workshop registration.
             alignItems: "center",
             padding: "20px",
             zIndex: 9999,
-            overflowY: "auto",
           }}
         >
-
           <div
             style={{
               width: "100%",
               maxWidth: "500px",
               background: "#0f172a",
               borderRadius: "25px",
-              padding:
-                window.innerWidth < 768
-                  ? "25px"
-                  : "40px",
+              padding: "30px",
               border:
                 "1px solid rgba(255,255,255,0.1)",
               boxSizing: "border-box",
@@ -664,19 +620,7 @@ Please confirm my workshop registration.
                 style={inputStyle}
               />
 
-              {/* EMAIL */}
-
-              <input
-                type="email"
-                placeholder="Email Address"
-                value={email}
-                onChange={(e) =>
-                  setEmail(e.target.value)
-                }
-                style={inputStyle}
-              />
-
-              {/* PAYMENT BUTTON */}
+              {/* PAYMENT */}
 
               <button
                 type="submit"
@@ -695,10 +639,7 @@ Please confirm my workshop registration.
                   ? "Opening Payment..."
                   : "Continue to ₹99 Payment"}
               </button>
-
             </form>
-
-            {/* CANCEL */}
 
             <button
               disabled={loading}
@@ -734,7 +675,7 @@ Please confirm my workshop registration.
 }
 
 // =====================================================
-// BUTTON STYLE
+// STYLES
 // =====================================================
 
 const joinBtn = {
@@ -747,12 +688,7 @@ const joinBtn = {
   color: "white",
   fontSize: "18px",
   fontWeight: "bold",
-  cursor: "pointer",
 };
-
-// =====================================================
-// INPUT STYLE
-// =====================================================
 
 const inputStyle = {
   width: "100%",
@@ -769,10 +705,6 @@ const inputStyle = {
   fontSize: "16px",
 };
 
-// =====================================================
-// CLOSE BUTTON
-// =====================================================
-
 const closeBtn = {
   width: "100%",
   padding: "14px",
@@ -783,7 +715,6 @@ const closeBtn = {
   background: "transparent",
   color: "#cbd5e1",
   fontSize: "16px",
-  cursor: "pointer",
 };
 
 export default SgConfirmationPage;
