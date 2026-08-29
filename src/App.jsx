@@ -1,6 +1,7 @@
 import Training from "./Training";
 import Admin from "./Admin";
 import { auth, db } from "./firebase";
+import SgConfirmationPage from "./SgConfirmationPage";
 import {
   collection,
   addDoc,
@@ -3087,6 +3088,10 @@ function App() {
         <Route path="/admin" element={<AdminPanel />} />
         <Route path="/intro" element={<IntroPage />} />
         <Route path="/premium-access/:code" element={<PremiumAccessPage />} />
+        <Route
+  path="/sg-confirmation"
+  element={<SgConfirmationPage />}
+/>
       </Routes>
     </BrowserRouter>
   );
